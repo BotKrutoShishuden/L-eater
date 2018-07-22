@@ -87,6 +87,7 @@ public class GameMap {
 
             bufferedReader = new BufferedReader(new FileReader(address));
 
+            //Добавляем еще координаты mapObjectов
             while (currentY < maxY) {
                 c = bufferedReader.read();
                 boolean finded = false;
@@ -94,33 +95,40 @@ public class GameMap {
                     case 'R':
                         if (botCounter == 0) {
                             finded = true;
-                            mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.BOT);
+                            mapObjects[currentX][currentY] =
+                                    new MapObject(NextStep.STAY, Species.BOT, currentX, currentY);
                             botCounter++;
                         }
                         break;
                     case 'L':
                         finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.LIFT);
+                        mapObjects[currentX][currentY] =
+                                new MapObject(NextStep.STAY, Species.LIFT, currentX, currentY);
                         break;
                     case '#':
                         finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.WALL);
+                        mapObjects[currentX][currentY] =
+                                new MapObject(NextStep.STAY, Species.WALL, currentX, currentY);
                         break;
                     case '*':
                         finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.STONE);
+                        mapObjects[currentX][currentY] =
+                                new MapObject(NextStep.STAY, Species.STONE, currentX, currentY);
                         break;
                     case 92:
                         finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.LAMBDA);
+                        mapObjects[currentX][currentY] =
+                                new MapObject(NextStep.STAY, Species.LAMBDA, currentX, currentY);
                         break;
                     case '.':
                         finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.EARTH);
+                        mapObjects[currentX][currentY] =
+                                new MapObject(NextStep.STAY, Species.EARTH, currentX, currentY);
                         break;
                     case ' ':
                         finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(NextStep.STAY, Species.AIR);
+                        mapObjects[currentX][currentY] =
+                                new MapObject(NextStep.STAY, Species.AIR, currentX, currentY);
                         break;
                     case '\n':
                         finded = true;
@@ -146,7 +154,6 @@ public class GameMap {
     и передвигает объекты*/
     public void moveAllObjects(NextStep botNextStep) {
 
-
     }
 
     @Override
@@ -163,6 +170,28 @@ public class GameMap {
         return stringBuilder.toString();
     }
 
+    public MapObject[][] getObjects(){
+        return mapObjects;
+    }
 
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMaxY() {
+        return maxY;
+    }
+
+    public int getGrowth() {
+        return growth;
+    }
+
+    public int getRazors() {
+        return razors;
+    }
+
+    public GameMap getLastCondition() {
+        return lastCondition;
+    }
 }
 

@@ -3,11 +3,14 @@ package MapObject;
 public class MapObject {
     private NextStep nextStep;
     private Species species;
+    private Coordinates coordinates;
 
-
-    public MapObject(NextStep nextStep, Species species) {
+    //плюс координаты
+    public MapObject(NextStep nextStep, Species species, int x, int y) {
         this.nextStep = nextStep;
         this.species = species;
+        this.coordinates.setX(x);
+        this.coordinates.setY(y);
     }
 
 
@@ -27,6 +30,22 @@ public class MapObject {
 
     public Species getSpecies() {
         return species;
+    }
+
+    public int getX(){
+        return coordinates.getX();
+    }
+
+    public int getY(){
+        return coordinates.getY();
+    }
+
+    public void setX(int iks){
+        this.coordinates.setX(iks);
+    }
+
+    public void setY(int igrek){
+        this.coordinates.setY(igrek);
     }
 
     public char getSymbol() {
