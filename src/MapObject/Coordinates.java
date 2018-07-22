@@ -4,6 +4,8 @@ public class Coordinates {
     private int x;
     private int y;
 
+    //данек сакура
+
     Coordinates(){}
 
     public int getX() {
