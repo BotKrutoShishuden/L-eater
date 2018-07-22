@@ -1,22 +1,38 @@
+package Bot;
+
+import GameMap.*;
 import MapObject.*;
 
 import java.util.ArrayList;
 
 
 public class LeaterBot extends MapObject {
-    private GameMap gameMap;
+    NextStep nextStep;
 
-    //Миша cool челик
-
-    public int getDistance(MapObject first, MapObject second) {
-        return Math.abs(first.getX() - second.getX()) + Math.abs(first.getY() - second.getY());
-    }
 
     public LeaterBot() {
 
     }
 
-    //Главный метод бота
+
+    //Логика бота----------------------------------------------------------------------------------
+    private int calculateDistance(MapObject first, MapObject second) {
+        return Math.abs(first.getX() - second.getX()) + Math.abs(first.getY() - second.getY());
+    }
+
+
+    private MapObject findClosestLambda(ArrayList<MapObject> lambdas) {
+        MapObject current = lambdas.get(0);
+        int min = calculateDistance(this, current);
+        for (int i = 1; i < lambdas.size(); i++) {
+            current = lambdas.get(i);
+            if (calculateDistance(this, current) < min)
+                min = calculateDistance(this, current);
+        }
+        return current;
+    }
+
+
     public String calculateStepsSequence(GameMap gameMap) {
         StringBuilder result = new StringBuilder();
 
@@ -37,7 +53,7 @@ public class LeaterBot extends MapObject {
         }
 
         //Находим ближайшую лямбду
-        MapObject target = getClosestLambda(lambdas);
+        MapObject target = findClosestLambda(lambdas);
 
         //Сделать проверку на препятствия и метод их обхода
         while (this.getX() != target.getX()) {
@@ -57,15 +73,5 @@ public class LeaterBot extends MapObject {
         return result.toString();
     }
 
-    private MapObject getClosestLambda(ArrayList<MapObject> lambdas) {
-        MapObject current = lambdas.get(0);
-        int min = getDistance(this, current);
-        for (int i = 1; i < lambdas.size(); i++) {
-            current = lambdas.get(i);
-            if (getDistance(this, current) < min)
-                min = getDistance(this, current);
-        }
-        return current;
-    }
 }
 

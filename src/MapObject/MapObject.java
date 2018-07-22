@@ -1,16 +1,15 @@
 package MapObject;
 
 public class MapObject {
-    private NextStep nextStep;
     private Species species;
-    private Coordinates coordinates;
+    private int x;
+    private int y;
 
     //плюс координаты
-    public MapObject(NextStep nextStep, Species species, int x, int y) {
-        this.nextStep = nextStep;
+    public MapObject(Species species, int x, int y) {
         this.species = species;
-        this.coordinates.setX(x);
-        this.coordinates.setY(y);
+        this.x = x;
+        this.y = y;
     }
 
 
@@ -23,29 +22,24 @@ public class MapObject {
         return species.name();
     }
 
-
-    public NextStep getNextStep() {
-        return nextStep;
-    }
-
     public Species getSpecies() {
         return species;
     }
 
-    public int getX(){
-        return coordinates.getX();
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public int getY(){
-        return coordinates.getY();
+    public void setY(int y) {
+        this.y = y;
     }
 
-    public void setX(int iks){
-        this.coordinates.setX(iks);
+    public int getX() {
+        return x;
     }
 
-    public void setY(int igrek){
-        this.coordinates.setY(igrek);
+    public int getY() {
+        return y;
     }
 
     public char getSymbol() {
