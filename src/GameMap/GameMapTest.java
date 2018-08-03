@@ -1,226 +1,76 @@
 package GameMap;
 
-import org.junit.Before;
+import Bot.NextStep;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
 
-import static Bot.NextStep.LEFT;
-import static Bot.NextStep.RIGHT;
+import java.io.*;
+
 import static org.junit.Assert.*;
 
 public class GameMapTest {
-    private final int mapsDigit = 5;
-    private GameMap gameMaps[] = new GameMap[mapsDigit];
 
 
-    @Before
-    public void buildMaps() {
-        String address = "..\\L-eater\\maps\\0_test.map";
-        gameMaps[0] = new GameMap(address);
-        for (int i = 1; i < mapsDigit; i++) {
-            address = address.replace(i - 1 + "", i + "");
-            gameMaps[i] = new GameMap(address);
+    private void makeTestFromFormatedFile(String address) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+
+            GameMap inputMap = GameMap.cutMap(bufferedReader, 'i', 'i');
+
+            NextStep nextSteps[] = GameMap.cutSteps(bufferedReader);
+
+            for (NextStep nextStep : nextSteps)
+                inputMap.moveAllObjects(nextStep);
+
+            GameMap outputMap = GameMap.cutMap(bufferedReader, 'o', 'o');
+            bufferedReader.close();
+
+            assertEquals(outputMap.toString(), inputMap.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
 
-
-    @Test
+    @Test//TODO
     public void constructor() {
-        assertEquals(true, gameMaps[0].getMaxX() == 7);
-        assertEquals(true, gameMaps[0].getMaxY() == 4);
 
     }
 
-    private void leftStep() {
+
+    //-----------------------------------------------------------------------------------
+
+    private void stepTests(int testNumber, String testName, String address) {
         int numberOfErrorTest = 0;
+
+
         try {
 
-            //0----------------------------------------------------------------------------------
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#     #\n" +
-                            "#######\n", gameMaps[0].toString());
-
-            gameMaps[0].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#######\n" +
-                            "# R * #\n" +
-                            "#*    #\n" +
-                            "#######\n", gameMaps[0].toString());
-
-            numberOfErrorTest++;
-
-            //1----------------------------------------------------------------------------------
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-            gameMaps[1].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#######\n" +
-                            "#*R * #\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-
-            numberOfErrorTest++;
-            //2----------------------------------------------------------------------------------
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####\n", gameMaps[2].toString());
-
-            gameMaps[2].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####\n", gameMaps[2].toString());
-
-            numberOfErrorTest++;
-
-            //3----------------------------------------------------------------------------------
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-            gameMaps[3].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-
-            numberOfErrorTest++;
-
-            //4----------------------------------------------------------------------------------
-            assertEquals(
-                    "#########\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#   R   #\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#########\n", gameMaps[4].toString());
-
-
-            gameMaps[4].moveAllObjects(LEFT);
-
-
-            assertEquals(
-                    "#########\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#  R    #\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#########\n", gameMaps[4].toString());
-
-            gameMaps[4].moveAllObjects(LEFT);
-            gameMaps[4].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#########\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#R      #\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#########\n", gameMaps[4].toString());
-
+            for (int i = 0; i < testNumber; ) {
+                makeTestFromFormatedFile(address);
+                numberOfErrorTest++;
+                i++;
+                address = address.replace("" + (i - 1), "" + i);
+            }
 
         } catch (ComparisonFailure e) {
-            System.out.println("Error in left step\nTest number = " + numberOfErrorTest);
+            System.out.println("Error in " + testName + "\nTest number = " + numberOfErrorTest);
             throw e;
         }
-    }
-
-    private void rightStep() {
-        try {
-
-
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#     #\n" +
-                            "#######\n", gameMaps[0].toString());
-
-            gameMaps[0].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "#######\n" +
-                            "# * R #\n" +
-                            "#    *#\n" +
-                            "#######\n", gameMaps[0].toString());
-
-
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-            gameMaps[1].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "#######\n" +
-                            "# * R*#\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####", gameMaps[2].toString());
-
-            gameMaps[2].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####", gameMaps[2].toString());
-
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-            gameMaps[2].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-
-        } catch (ComparisonFailure e) {
-            System.out.println("Error in left step");
-            throw e;
-        }
-
     }
 
     @Test
     public void moveAllObjects() {
-        leftStep();
+        stepTests(5, "left step tests", "maps/testsForMoveLeft/0_test.map");
 
+        stepTests(5, "right step tests", "maps/testsForMoveRight/0_test.map");
+
+        stepTests(5, "down step tests", "maps/testsForMoveDown/0_test.map");
+
+        stepTests(5, "up step tests", "maps/testsForMoveUp/0_test.map");
 
     }
+    //-----------------------------------------------------------------------------------
+
 }
