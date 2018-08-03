@@ -494,7 +494,7 @@ public class GameMap {
     }
 
     //TODO
-    private void moveLambda(int xLambda, int yLambda) {
+    private void moveAStone(int xAStone, int yAStone) {
 
     }
 
@@ -509,8 +509,8 @@ public class GameMap {
                     case STONE:
                         moveStone(x, y);
                         break;
-                    case LAMBDA:
-                        moveLambda(x, y);
+                    case A_STONE:
+                        moveAStone(x, y);
                         break;
                     default:
                         break;
