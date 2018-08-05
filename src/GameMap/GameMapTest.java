@@ -13,29 +13,24 @@ public class GameMapTest {
 
     private void makeTestFromFormatedFile(String address) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
 
-            GameMap inputMap = GameMap.cutMap(bufferedReader, 'i', 'i');
 
-            NextStep nextSteps[] = GameMap.cutSteps(bufferedReader);
+            GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
+
+            NextStep nextSteps[] = GameMap.cutSteps(address);
 
             for (NextStep nextStep : nextSteps)
                 inputMap.moveAllObjects(nextStep);
 
-            GameMap outputMap = GameMap.cutMap(bufferedReader, 'o', 'o');
-            bufferedReader.close();
+            GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
 
             assertEquals(outputMap.toString(), inputMap.toString());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("IOOOOO");
+        } catch (NullPointerException e) {
+            System.out.println("Error in file = " + address);
         }
-
-    }
-
-    @Test//TODO
-    public void constructor() {
-
     }
 
 
@@ -73,4 +68,14 @@ public class GameMapTest {
     }
     //-----------------------------------------------------------------------------------
 
+    @Test
+    public void cutNormalMap() {
+        GameMap gameMap = GameMap.cutNormalMap("maps/beard1.map");
+
+        assertEquals(10, gameMap.getMaxX());
+        assertEquals(10, gameMap.getMaxY());
+        assertEquals(15, gameMap.getGrowth());
+        assertEquals(0, gameMap.getRazors());
+
+    }
 }

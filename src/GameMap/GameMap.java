@@ -4,9 +4,7 @@ import Bot.*;
 import MapObject.MapObject;
 import MapObject.Species;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 
 public class GameMap {
@@ -17,296 +15,105 @@ public class GameMap {
     private int razors;
     private GameMap lastCondition;
     private MapObject bot;
+    private boolean gameOver;
+    private boolean botWin;
 
     //-----------------------------------------------------------------------------------
-    public GameMap(String address) {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
-            int c;
-            int currentX = 0, maxX = 0, maxY = 0;
-            while ((c = bufferedReader.read()) != -1) {
-                switch (c) {
-                    case 'R':
-                        currentX++;
-                        break;
-                    case 'L':
-                        currentX++;
-                        break;
-                    case '#':
-                        currentX++;
-                        break;
-                    case '*':
-                        currentX++;
-                        break;
-                    case '\'':
-                        currentX++;
-                        break;
-                    case '.':
-                        currentX++;
-                        break;
-                    case ' ':
-                        currentX++;
-                        break;
-                    case '\n':
-                        if (currentX > maxX)
-                            maxX = currentX;
-                        currentX = 0;
-                        maxY++;
-                        break;
-                    case 'G':
-                        while (!Character.isDigit(c))
-                            c = bufferedReader.read();
-                        int degree = 1;
-                        while (Character.isDigit(c)) {
-                            growth = growth * degree + Character.getNumericValue(c);
-                            degree *= 10;
-                            c = bufferedReader.read();
-                        }
-                        break;
-                    case 'a':
-                        while (!Character.isDigit(c))
-                            c = bufferedReader.read();
-                        degree = 1;
-                        while (Character.isDigit(c)) {
-                            razors = razors * degree + Character.getNumericValue(c);
-                            degree *= 10;
-                            c = bufferedReader.read();
-                        }
-                        break;
-
-                }
-
-            }
-
-
-            mapObjects = new MapObject[maxX][maxY];
-            this.maxX = maxX;
-            this.maxY = maxY;
-            int botCounter = 0;
-            int currentY = 0;
-            currentX = 0;
-
-            bufferedReader = new BufferedReader(new FileReader(address));
-
-            //Добавляем еще координаты mapObjectов
-            while (currentY < maxY) {
-                c = bufferedReader.read();
-                boolean finded = false;
-                switch (c) {
-                    case 'R':
-                        if (botCounter == 0) {
-                            finded = true;
-                            botCounter++;
-                            bot = new MapObject(Species.BOT, currentX, currentY);
-                            mapObjects[currentX][currentY] = bot;
-
-
-                        }
-                        break;
-                    case 'L':
-                        finded = true;
-                        mapObjects[currentX][currentY] = new MapObject(Species.LIFT, currentX, currentY);
-                        break;
-                    case '#':
-                        finded = true;
-                        mapObjects[currentX][currentY] =
-                                new MapObject(Species.WALL, currentX, currentY);
-                        break;
-                    case '*':
-                        finded = true;
-                        mapObjects[currentX][currentY] =
-                                new MapObject(Species.STONE, currentX, currentY);
-                        break;
-                    case 92:
-                        finded = true;
-                        mapObjects[currentX][currentY] =
-                                new MapObject(Species.LAMBDA, currentX, currentY);
-                        break;
-                    case '.':
-                        finded = true;
-                        mapObjects[currentX][currentY] =
-                                new MapObject(Species.EARTH, currentX, currentY);
-                        break;
-                    case ' ':
-                        finded = true;
-                        mapObjects[currentX][currentY] =
-                                new MapObject(Species.AIR, currentX, currentY);
-                        break;
-                    case 13://CR
-                        while (currentX < maxX) {
-                            mapObjects[currentX][currentY] = new MapObject(Species.AIR, currentX, currentY);
-                            currentX++;
-                        }
-                        bufferedReader.read();
-                        finded = true;
-                        currentX = -1;
-                        currentY++;
-                        break;
-
-                    case '\n':
-                        while (currentX < maxX) {
-                            mapObjects[currentX][currentY] = new MapObject(Species.AIR, currentX, currentY);
-                            currentX++;
-                        }
-                        finded = true;
-                        currentX = -1;
-                        currentY++;
-                        break;
-
-                }
-                if (!finded)
-                    System.out.println("Неизвестный символ = " + (char) c);
-                currentX++;
-            }
-            bufferedReader.close();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public GameMap() {
-    }
-
-
-    //-----------------------------------------------------------------------------------
-    //Революция тестов
-    public static GameMap cutMap(BufferedReader bufferedReader, char start, char end) throws IOException {
+    //Статические методы генерации(вместо конструкторов)
+    private static GameMap init() {
         GameMap gameMap = new GameMap();
         gameMap.maxX = 0;
         gameMap.maxX = 0;
         gameMap.growth = 0;
         gameMap.razors = 0;
-        StringBuilder stringBuilder = new StringBuilder();
+        gameMap.gameOver = false;
+        gameMap.botWin = false;
+        return gameMap;
+    }
 
-        int c;
-        do {
-            c = bufferedReader.read();
-        } while (c != start);
+    private static GameMap cutMapByEnd(BufferedReader bufferedReader, String end) throws IOException {
+        GameMap gameMap = init();
+        StringBuilder currentLine;
+        StringBuilder mapStrBuilder = new StringBuilder();
 
-
-        int currentX = 0;
-
-        while ((c = bufferedReader.read()) != end) {
-            switch (c) {
-                case 'R':
-                    currentX++;
-                    break;
-                case 'L':
-                    currentX++;
-                    break;
-                case '#':
-                    currentX++;
-                    break;
-                case '*':
-                    currentX++;
-                    break;
-                case '\'':
-                    currentX++;
-                    break;
-                case '.':
-                    currentX++;
-                    break;
-                case ' ':
-                    currentX++;
-                    break;
-                case '\n':
-                    if (currentX > gameMap.maxX)
-                        gameMap.maxX = currentX;
-                    currentX = 0;
-                    gameMap.maxY++;
-                    break;
-                case 'G':
-                    while (!Character.isDigit(c))
-                        c = bufferedReader.read();
-                    int degree = 1;
-                    while (Character.isDigit(c)) {
-                        gameMap.growth = gameMap.growth * degree + Character.getNumericValue(c);
-                        degree *= 10;
-                        c = bufferedReader.read();
-                    }
-                    break;
-                case 'a':
-                    while (!Character.isDigit(c))
-                        c = bufferedReader.read();
-                    degree = 1;
-                    while (Character.isDigit(c)) {
-                        gameMap.razors = gameMap.razors * degree + Character.getNumericValue(c);
-                        degree *= 10;
-                        c = bufferedReader.read();
-                    }
-                    break;
-
+        //Считаем размер карты
+        while (!(currentLine = new StringBuilder(bufferedReader.readLine())).toString().equals(end)) {
+            if (currentLine.length() > gameMap.maxX) {
+                gameMap.maxX = currentLine.length();
             }
-            stringBuilder.append((char) c);
+            gameMap.maxY++;
+            mapStrBuilder.append(currentLine).append("\n");
         }
 
-        gameMap.maxY -= 1;
-        stringBuilder = new StringBuilder(stringBuilder.toString().replace("\r", ""));
-        stringBuilder = new StringBuilder(stringBuilder.delete(0, 1));
 
         gameMap.mapObjects = new MapObject[gameMap.maxX][gameMap.maxY];
 
-        int botCounter = 0;
+        int currentX = 0;
         int currentY = 0;
-        currentX = 0;
 
 
-        //Добавляем еще координаты mapObjectов
+        //Заполняем mapObject[][]
         int i = 0;
         while (currentY < gameMap.maxY) {
-            c = stringBuilder.charAt(i);
-            i++;
-            boolean finded = false;
-            switch (c) {
+
+            boolean symbolDefined = false;
+            switch (mapStrBuilder.charAt(i)) {
                 case 'R':
-                    if (botCounter == 0) {
-                        finded = true;
-                        botCounter++;
-                        gameMap.bot = new MapObject(Species.BOT, currentX, currentY);
-                        gameMap.mapObjects[currentX][currentY] = gameMap.bot;
-
-
-                    }
+                    symbolDefined = true;
+                    gameMap.bot = new MapObject(Species.BOT, currentX, currentY);
+                    gameMap.mapObjects[currentX][currentY] = gameMap.bot;
                     break;
                 case 'L':
-                    finded = true;
+                    symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] = new MapObject(Species.LIFT, currentX, currentY);
                     break;
                 case '#':
-                    finded = true;
+                    symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.WALL, currentX, currentY);
                     break;
                 case '*':
-                    finded = true;
+                    symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.STONE, currentX, currentY);
                     break;
-                case 92:
-                    finded = true;
+                case 92:/* \-лямбда */
+                    symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.LAMBDA, currentX, currentY);
                     break;
+                case '@':
+                    symbolDefined = true;
+                    gameMap.mapObjects[currentX][currentY] =
+                            new MapObject(Species.LAMBDA_STONE, currentX, currentY);
+                    break;
                 case '.':
-                    finded = true;
+                    symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.EARTH, currentX, currentY);
                     break;
                 case ' ':
-                    finded = true;
+                    symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.AIR, currentX, currentY);
+                    break;
+                case '!':
+                    symbolDefined = true;
+                    gameMap.mapObjects[currentX][currentY] =
+                            new MapObject(Species.RAZOR, currentX, currentY);
+                    break;
+                case 'W':
+                    symbolDefined = true;
+                    gameMap.mapObjects[currentX][currentY] =
+                            new MapObject(Species.BEARD, currentX, currentY);
                     break;
                 case 13://CR
                     while (currentX < gameMap.maxX) {
                         gameMap.mapObjects[currentX][currentY] = new MapObject(Species.AIR, currentX, currentY);
                         currentX++;
                     }
-                    bufferedReader.read();
-                    finded = true;
+                    i++;
+                    symbolDefined = true;
                     currentX = -1;
                     currentY++;
                     break;
@@ -316,23 +123,75 @@ public class GameMap {
                         gameMap.mapObjects[currentX][currentY] = new MapObject(Species.AIR, currentX, currentY);
                         currentX++;
                     }
-                    finded = true;
+                    symbolDefined = true;
                     currentX = -1;
                     currentY++;
                     break;
 
             }
-            if (!finded)
-                System.out.println("Неизвестный символ = " + (char) c);
+            if (!symbolDefined) {
+                System.out.println("Undefined symbol= " + mapStrBuilder.charAt(i));
+                //System.out.println("File Name = " + bufferedReader.toString());
+            }
             currentX++;
+            i++;
         }
 
-
+        bufferedReader.close();
         return gameMap;
+
     }
 
-    public static Bot.NextStep[] cutSteps(BufferedReader bufferedReader) throws IOException {
+    private static int cutParamAfterWord(String address, String paramName) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+        try {
+            StringBuilder currentLine;
+            do {
+                currentLine = new StringBuilder(bufferedReader.readLine());
+            }
+            while (!currentLine.toString().contains(paramName));
 
+            return Integer.valueOf(currentLine.delete(0, paramName.length()).toString());
+
+        } catch (NullPointerException e) {
+            return 0;
+        }
+    }
+
+
+    public static GameMap cutMapBetweenStartAndEnd(String address, String start, String end) throws IOException {
+        if (start.equals(end)) {
+            System.out.println("start and end can't be equal");
+            throw new UnsupportedOperationException();
+        }
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+        StringBuilder currentLine;
+
+        do {
+            currentLine = new StringBuilder(bufferedReader.readLine());
+        } while (!currentLine.toString().equals(start));
+
+        return cutMapByEnd(bufferedReader, end);
+
+    }
+
+    public static GameMap cutNormalMap(String address) {
+        try {
+
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+            GameMap gameMap = cutMapByEnd(bufferedReader, "");
+            gameMap.growth = cutParamAfterWord(address, "Growth ");
+            gameMap.razors = cutParamAfterWord(address, "Razors ");
+            return gameMap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static NextStep[] cutSteps(String address) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
         int c;
         do {
             c = bufferedReader.read();
