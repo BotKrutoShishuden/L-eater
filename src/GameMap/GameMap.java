@@ -368,7 +368,7 @@ public class GameMap {
                     case STONE:
                         moveStone(x, y);
                         break;
-                    case A_STONE:
+                    case LAMBDA_STONE:
                         moveAStone(x, y);
                         break;
                     default:
