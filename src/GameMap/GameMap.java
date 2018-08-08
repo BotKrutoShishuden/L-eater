@@ -26,6 +26,9 @@ public class GameMap {
     private MapObject bot;
     private GameCondition gameCondition;
     private int amountOfSteps;
+    private int score;
+    private int lamdasNumber;
+    private int maxLambdasNumber;
 
     //-----------------------------------------------------------------------------------
     //Статические методы генерации(вместо конструкторов)
@@ -411,13 +414,22 @@ public class GameMap {
         }
     }
 
-    private void growBeard (int xBeard, int yBeard) {
+    private void growBeard(int xBeard, int yBeard) {
         for (int i = xBeard - 1; i < xBeard + 2; i++)
-            for (int j = yBeard - 1; j < yBeard + 2; j++){
-            MapObject current = mapObjects[i][j];
-            if (current.getSpecies() == Species.AIR)
-                current.setSpecies(Species.BEARD);
+            for (int j = yBeard - 1; j < yBeard + 2; j++) {
+                MapObject current = mapObjects[i][j];
+                if (current.getSpecies() == Species.AIR)
+                    current.setSpecies(Species.BEARD);
             }
+    }
+
+    private void raiseWaterLevel (){
+        if (flooding != 0 && amountOfSteps % flooding == 0)
+            waterLevel++;
+        if (bot.getY() >= getMaxY() - waterLevel)
+            movesUnderWater++;
+        if (movesUnderWater > maxMovesUnderWater)
+            gameCondition = RB_DROWNED;
     }
 
     public void moveAllObjects(NextStep botNextStep) {
@@ -436,7 +448,7 @@ public class GameMap {
                         break;
                     case BEARD:
                         if (amountOfSteps % growth == 0)
-                        growBeard(x, y);
+                            growBeard(x, y);
                         break;
                     default:
                         break;
@@ -444,15 +456,6 @@ public class GameMap {
 
         raiseWaterLevel();
         amountOfSteps++;
-    }
-
-    private void raiseWaterLevel (){
-        if (flooding != 0 && amountOfSteps % flooding == 0)
-            waterLevel++;
-        if (bot.getY() >= getMaxY() - waterLevel)
-            movesUnderWater++;
-        if (movesUnderWater > maxMovesUnderWater)
-            gameCondition = RB_DROWNED;
     }
 
     //-----------------------------------------------------------------------------------
@@ -511,6 +514,30 @@ public class GameMap {
         this.razors = razors;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setAmountOfSteps(int amountOfSteps) {
+        this.amountOfSteps = amountOfSteps;
+    }
+
+    public void setGameCondition(GameCondition gameCondition) {
+        this.gameCondition = gameCondition;
+    }
+
+    public void setLamdasNumber(int lamdasNumber) {
+        this.lamdasNumber = lamdasNumber;
+    }
+
+    public void setMaxLambdasNumber(int maxLambdasNumber) {
+        this.maxLambdasNumber = maxLambdasNumber;
+    }
+
+    public void setFlooding(int flooding) {
+        this.flooding = flooding;
+    }
+
     //-----------------------------------------------------------------------------------
     //GETTERS
     public MapObject[][] getObjects() {
@@ -544,5 +571,38 @@ public class GameMap {
     public GameCondition getGameCondition() {
         return gameCondition;
     }
+
+    public int getWaterLevel() {
+        return waterLevel;
+    }
+
+    public int getFlooding() {
+        return flooding;
+    }
+
+    public int getMovesUnderWater() {
+        return movesUnderWater;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getMaxMovesUnderWater() {
+        return maxMovesUnderWater;
+    }
+
+    public int getAmountOfSteps() {
+        return amountOfSteps;
+    }
+
+    public int getLamdasNumber() {
+        return lamdasNumber;
+    }
+
+    public int getMaxLambdasNumber() {
+        return maxLambdasNumber;
+    }
+
 }
 

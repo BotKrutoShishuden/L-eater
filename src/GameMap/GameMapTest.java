@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.*;
 
+import static GameMap.GameCondition.*;
 import static org.junit.Assert.*;
 
 public class GameMapTest {
@@ -67,6 +68,48 @@ public class GameMapTest {
 
     }
     //-----------------------------------------------------------------------------------
+
+    @Test
+    public void difficultTest() {
+        try {
+            String address = "maps/testsForDifficultIncidents/0_test.map";
+
+            GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
+            inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
+            inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+            inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+
+
+            NextStep nextSteps[] = GameMap.cutSteps(address);
+
+            for (NextStep nextStep : nextSteps)
+                inputMap.moveAllObjects(nextStep);
+
+            GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
+            outputMap.setGrowth(GameMap.cutParamAfterWord(address, "F_Growth "));
+            outputMap.setRazors(GameMap.cutParamAfterWord(address, "F_Razors "));
+            outputMap.setFlooding(GameMap.cutParamAfterWord(address, "F_Flooding "));
+            outputMap.setScore(GameMap.cutParamAfterWord(address, "F_Score "));
+            outputMap.setAmountOfSteps(GameMap.cutParamAfterWord(address, "F_Moves "));
+            outputMap.setLamdasNumber(GameMap.cutParamAfterWord(address, "F_Lambda "));
+            outputMap.setMaxLambdasNumber(GameMap.cutParamAfterWord(address, "F_LambdaMax "));
+            outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
+            outputMap.setGameCondition(RB_DROWNED);
+
+            assertEquals(inputMap.getGrowth(), outputMap.getGrowth());
+            assertEquals(inputMap.getRazors(), outputMap.getRazors());
+            assertEquals(inputMap.getFlooding(), outputMap.getFlooding());
+            assertEquals(inputMap.getScore(), outputMap.getScore());
+            assertEquals(inputMap.getAmountOfSteps(), outputMap.getAmountOfSteps());
+            assertEquals(inputMap.getLamdasNumber(), outputMap.getLamdasNumber());
+            assertEquals(inputMap.getMaxLambdasNumber(), outputMap.getMaxLambdasNumber());
+            assertEquals(inputMap.getWaterLevel(), outputMap.getWaterLevel());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void cutNormalMap() {
