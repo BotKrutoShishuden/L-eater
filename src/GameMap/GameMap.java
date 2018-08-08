@@ -18,11 +18,12 @@ public class GameMap {
     private int maxY;
     private int growth;
     private int razors;
-    private GameMap lastCondition;
-    private GameCondition gameCondition;
+    private int movesUnderWater;
+    private int maxMovesUnderWater;
+    private int waterLevel;
+    private GameMap previousMap;
     private MapObject bot;
-    private boolean gameOver;
-    private boolean botWin;
+    private GameCondition gameCondition;
     private int amountOfSteps;
 
     //-----------------------------------------------------------------------------------
@@ -33,8 +34,7 @@ public class GameMap {
         gameMap.maxY = 0;
         gameMap.growth = 0;
         gameMap.razors = 0;
-        gameMap.gameOver = false;
-        gameMap.botWin = false;
+        gameMap.gameCondition = STILL_MINING;
         return gameMap;
     }
 
@@ -149,7 +149,7 @@ public class GameMap {
 
     }
 
-    private static int cutParamAfterWord(String address, String paramName) throws IOException {
+    public static int cutParamAfterWord(String address, String paramName) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
         try {
             StringBuilder currentLine;
@@ -374,7 +374,7 @@ public class GameMap {
     }
 
     public void moveAllObjects(NextStep botNextStep) {
-        lastCondition = this.copy();
+        previousMap = this.copy();
 
         moveBot(botNextStep);
 
@@ -400,20 +400,20 @@ public class GameMap {
     //-----------------------------------------------------------------------------------
 
     public void backToLastCondition() {
-        this.lastCondition = lastCondition.lastCondition;
-        this.mapObjects = lastCondition.mapObjects.clone();
-        this.maxX = lastCondition.maxX;
-        this.maxY = lastCondition.maxY;
-        this.bot = lastCondition.bot;
-        this.growth = lastCondition.growth;
-        this.razors = lastCondition.razors;
+        this.previousMap = previousMap.previousMap;
+        this.mapObjects = previousMap.mapObjects.clone();
+        this.maxX = previousMap.maxX;
+        this.maxY = previousMap.maxY;
+        this.bot = previousMap.bot;
+        this.growth = previousMap.growth;
+        this.razors = previousMap.razors;
     }
 
     private GameMap copy() {
         GameMap gameMap = new GameMap();
         gameMap.maxX = maxX;
         gameMap.maxY = maxY;
-        gameMap.lastCondition = lastCondition;
+        gameMap.previousMap = previousMap;
         gameMap.bot = bot;
         gameMap.mapObjects = mapObjects.clone();
         gameMap.growth = growth;
@@ -437,6 +437,24 @@ public class GameMap {
         return stringBuilder.toString();
     }
 
+    //-----------------------------------------------------------------------------------
+    //SETTERS
+
+
+    public void setGrowth(int growth) {
+        this.growth = growth;
+    }
+
+    public void setWaterLevel(int waterLevel) {
+        this.waterLevel = waterLevel;
+    }
+
+    public void setRazors(int razors) {
+        this.razors = razors;
+    }
+
+    //-----------------------------------------------------------------------------------
+    //GETTERS
     public MapObject[][] getObjects() {
         return mapObjects;
     }
@@ -457,8 +475,8 @@ public class GameMap {
         return razors;
     }
 
-    public GameMap getLastCondition() {
-        return lastCondition;
+    public GameMap getPreviousMap() {
+        return previousMap;
     }
 
     public MapObject getBot() {
