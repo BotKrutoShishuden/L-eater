@@ -21,6 +21,7 @@ public class GameMap {
     private int movesUnderWater;
     private int maxMovesUnderWater;
     private int waterLevel;
+    private int flooding;
     private GameMap previousMap;
     private MapObject bot;
     private GameCondition gameCondition;
@@ -34,6 +35,10 @@ public class GameMap {
         gameMap.maxY = 0;
         gameMap.growth = 0;
         gameMap.razors = 0;
+        gameMap.amountOfSteps = 0;
+        gameMap.flooding = 10;
+        gameMap.movesUnderWater = 0;
+        gameMap.movesUnderWater = 10;
         gameMap.gameCondition = STILL_MINING;
         return gameMap;
     }
@@ -395,8 +400,19 @@ public class GameMap {
                         break;
                 }
 
-
+        raiseWaterLevel();
+        amountOfSteps++;
     }
+
+    private void raiseWaterLevel (){
+        if (flooding != 0 && amountOfSteps % flooding == 0)
+            waterLevel++;
+        if (bot.getY() >= getMaxY() - waterLevel)
+            movesUnderWater++;
+        if (movesUnderWater > maxMovesUnderWater)
+            gameCondition = RB_DROWNED;
+    }
+
     //-----------------------------------------------------------------------------------
 
     public void backToLastCondition() {
