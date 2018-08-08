@@ -365,7 +365,7 @@ public class GameMap {
     private void moveStone(int x, int y) {
         if (mapObjects[x][y + 1].getSpecies() == Species.AIR) {       // проверяем что снизу ничего нет
             mapObjects[x][y].setSpecies(Species.AIR);
-            mapObjects[x][y].setSpecies(Species.STONE);
+            mapObjects[x][y + 1].setSpecies(Species.STONE);
         } else if (mapObjects[x][y + 1].getSpecies() != Species.AIR) {    // если что-то есть
             if (mapObjects[x][y + 1].getSpecies() == Species.STONE ||
                     mapObjects[x][y + 1].getSpecies() == Species.LAMBDA_STONE) {     // если снизу камень или л-камень
