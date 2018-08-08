@@ -101,11 +101,22 @@ public class GameMapTest {
             assertEquals(inputMap.getGrowth(), outputMap.getGrowth());
             assertEquals(inputMap.getRazors(), outputMap.getRazors());
             assertEquals(inputMap.getFlooding(), outputMap.getFlooding());
-//            assertEquals(inputMap.getScore(), outputMap.getScore());
+            assertEquals(inputMap.getMaxX(), outputMap.getMaxX());
+            assertEquals(inputMap.getMaxY(), outputMap.getMaxY());
+            //            System.out.println("Input\n");
+            //            System.out.println(inputMap.toString());
+            //            System.out.println("Output\n");
+            //            System.out.println(outputMap.toString());
+            //            for (int x = 0; x < inputMap.getMaxX(); x++)
+            //                for (int y = 0; y < inputMap.getMaxY(); y++)
+            //                    assertEquals(inputMap.getMapObjects()[x][y], outputMap.getMapObjects()[x][y]);
+
+
+            //assertEquals(inputMap.getScore(), outputMap.getScore());
             assertEquals(inputMap.getAmountOfSteps(), outputMap.getAmountOfSteps());
-//            assertEquals(inputMap.getLamdasNumber(), outputMap.getLamdasNumber());
-//            assertEquals(inputMap.getMaxLambdasNumber(), outputMap.getMaxLambdasNumber());
-//            assertEquals(inputMap.getWaterLevel(), outputMap.getWaterLevel());
+            //assertEquals(inputMap.getLamdasNumber(), outputMap.getLamdasNumber());
+            //assertEquals(inputMap.getMaxLambdasNumber(), outputMap.getMaxLambdasNumber());
+            //assertEquals(inputMap.getWaterLevel(), outputMap.getWaterLevel());
 
 
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package MapObject;
 
+import java.util.Objects;
+
 public class MapObject {
     private Species species;
     private int x;
@@ -21,6 +23,23 @@ public class MapObject {
     public String toString() {
         return species.name();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MapObject)) return false;
+        MapObject mapObject = (MapObject) o;
+        return x == mapObject.x &&
+                y == mapObject.y &&
+                species == mapObject.species;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(species, x, y);
+    }
+
 
     public Species getSpecies() {
         return species;
@@ -48,7 +67,7 @@ public class MapObject {
                 return 'R';
             case AIR:
                 return ' ';
-            case LIFT:
+            case C_LIFT:
                 return 'L';
             case WALL:
                 return '#';

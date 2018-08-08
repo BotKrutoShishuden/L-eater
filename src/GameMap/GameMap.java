@@ -80,7 +80,7 @@ public class GameMap {
                     break;
                 case 'L':
                     symbolDefined = true;
-                    gameMap.mapObjects[currentX][currentY] = new MapObject(Species.LIFT, currentX, currentY);
+                    gameMap.mapObjects[currentX][currentY] = new MapObject(Species.C_LIFT, currentX, currentY);
                     break;
                 case '#':
                     symbolDefined = true;
@@ -253,35 +253,31 @@ public class GameMap {
                     if (mapObjects[bot.getX() - 2][bot.getY()].getSpecies() == Species.AIR)
                         if (mapObjects[bot.getX() - 2][bot.getY() + 1].getSpecies() == Species.AIR) {
 
-                            mapObjects[bot.getX() - 2][bot.getY() + 1] =
-                                    new MapObject(Species.STONE, bot.getX() - 2, bot.getY() + 1);
+                            mapObjects[bot.getX() - 2][bot.getY() + 1].setSpecies(Species.STONE);
 
-                            mapObjects[bot.getX()][bot.getY()] =
-                                    new MapObject(Species.AIR, bot.getX(), bot.getY());
-
-                            mapObjects[bot.getX() - 1][bot.getY()] = bot;
+                            mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                             bot.setX(bot.getX() - 1);
+
+
+                            mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
 
                         } else {
-                            mapObjects[bot.getX() - 2][bot.getY()] =
-                                    new MapObject(Species.STONE, bot.getX() - 2, bot.getY());
+                            mapObjects[bot.getX() - 2][bot.getY()].setSpecies(Species.STONE);
 
-                            mapObjects[bot.getX()][bot.getY()] =
-                                    new MapObject(Species.AIR, bot.getX(), bot.getY());
-
-                            mapObjects[bot.getX() - 1][bot.getY()] = bot;
+                            mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                             bot.setX(bot.getX() - 1);
+
+                            mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
 
 
                         }
                 } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.AIR) {
 
-                    mapObjects[bot.getX()][bot.getY()] =
-                            new MapObject(Species.AIR, bot.getX(), bot.getY());
-
-
-                    mapObjects[bot.getX() - 1][bot.getY()] = bot;
+                    mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() - 1);
+
+
+                    mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
 
                 }
                 break;
@@ -291,36 +287,31 @@ public class GameMap {
                     if (mapObjects[bot.getX() + 2][bot.getY()].getSpecies() == Species.AIR)
                         if (mapObjects[bot.getX() + 2][bot.getY() + 1].getSpecies() == Species.AIR) {
 
-                            mapObjects[bot.getX() + 2][bot.getY() + 1] =
-                                    new MapObject(Species.STONE, bot.getX() + 2, bot.getY() + 1);
+                            mapObjects[bot.getX() + 2][bot.getY() + 1].setSpecies(Species.STONE);
 
-                            mapObjects[bot.getX()][bot.getY()] =
-                                    new MapObject(Species.AIR, bot.getX(), bot.getY());
-
-                            mapObjects[bot.getX() + 1][bot.getY()] = bot;
+                            mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                             bot.setX(bot.getX() + 1);
+
+                            mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.AIR);
+
 
                         } else {
-                            mapObjects[bot.getX() + 2][bot.getY()] =
-                                    new MapObject(Species.STONE, bot.getX() + 2, bot.getY());
 
-                            mapObjects[bot.getX()][bot.getY()] =
-                                    new MapObject(Species.AIR, bot.getX(), bot.getY());
+                            mapObjects[bot.getX() + 2][bot.getY()].setSpecies(Species.STONE);
 
-                            mapObjects[bot.getX() + 1][bot.getY()] = bot;
+                            mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                             bot.setX(bot.getX() + 1);
+
+                            mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.AIR);
 
 
                         }
                 } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.AIR) {
 
-                    mapObjects[bot.getX()][bot.getY()] =
-                            new MapObject(Species.AIR, bot.getX(), bot.getY());
-
-
-                    mapObjects[bot.getX() + 1][bot.getY()] = bot;
+                    mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() + 1);
 
+                    mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.AIR);
                 }
 
                 break;
@@ -330,11 +321,10 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.STONE
                         && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL) {
 
-                    mapObjects[bot.getX()][bot.getY()] =
-                            new MapObject(Species.AIR, bot.getX(), bot.getY());
-
                     bot.setY(bot.getY() - 1);
-                    mapObjects[bot.getX()][bot.getY()] = bot;
+                    mapObjects[bot.getX()][bot.getY()].setSpecies(Species.BOT);
+
+                    mapObjects[bot.getX()][bot.getY() + 1].setSpecies(Species.AIR);
 
                 }
 
@@ -345,11 +335,11 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.STONE
                         && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
 
-                    mapObjects[bot.getX()][bot.getY()] =
-                            new MapObject(Species.AIR, bot.getX(), bot.getY());
 
                     bot.setY(bot.getY() + 1);
-                    mapObjects[bot.getX()][bot.getY()] = bot;
+                    mapObjects[bot.getX()][bot.getY()].setSpecies(Species.BOT);
+
+                    mapObjects[bot.getX()][bot.getY() - 1].setSpecies(Species.AIR);
 
                 }
 
@@ -400,14 +390,16 @@ public class GameMap {
                 if (mapObjects[x + 1][y].getSpecies() == Species.AIR &&
                         mapObjects[x + 1][y + 1].getSpecies() == Species.AIR) {      // падаем вправо
                     mapObjects[x][y].setSpecies(Species.AIR);
-                   // mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
-                    if (mapObjects[x + 1][y + 2].getSpecies() == Species.AIR) mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                    // mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                    if (mapObjects[x + 1][y + 2].getSpecies() == Species.AIR)
+                        mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
                     else mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA);
                 } else if (mapObjects[x - 1][y].getSpecies() == Species.AIR &&
                         mapObjects[x - 1][y + 1].getSpecies() == Species.AIR) {      // падаем влево
                     mapObjects[x][y].setSpecies(Species.AIR);
-                   // mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
-                    if (mapObjects[x - 1][y + 2].getSpecies() == Species.AIR) mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                    // mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                    if (mapObjects[x - 1][y + 2].getSpecies() == Species.AIR)
+                        mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
                     else mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
                 }
             }
@@ -423,7 +415,7 @@ public class GameMap {
             }
     }
 
-    private void raiseWaterLevel (){
+    private void raiseWaterLevel() {
         if (flooding != 0 && amountOfSteps % flooding == 0)
             waterLevel++;
         if (bot.getY() >= getMaxY() - waterLevel)
@@ -604,5 +596,8 @@ public class GameMap {
         return maxLambdasNumber;
     }
 
+    public MapObject[][] getMapObjects() {
+        return mapObjects;
+    }
 }
 
