@@ -18,19 +18,23 @@ public class GameMap {
     private int maxY;
     private int growth;
     private int razors;
-    private GameMap previousMap;
-    private MapObject bot;
+    private GameMap lastCondition;
     private GameCondition gameCondition;
+    private MapObject bot;
+    private boolean gameOver;
+    private boolean botWin;
+    private int amountOfSteps;
 
     //-----------------------------------------------------------------------------------
     //Статические методы генерации(вместо конструкторов)
     private static GameMap init() {
         GameMap gameMap = new GameMap();
         gameMap.maxX = 0;
-        gameMap.maxX = 0;
+        gameMap.maxY = 0;
         gameMap.growth = 0;
         gameMap.razors = 0;
-        gameMap.gameCondition = STILL_MINING;
+        gameMap.gameOver = false;
+        gameMap.botWin = false;
         return gameMap;
     }
 
@@ -360,8 +364,17 @@ public class GameMap {
 
     }
 
+    private void growBeard (int xBeard, int yBeard) {
+        for (int i = xBeard - 1; i < xBeard + 2; i++)
+            for (int j = yBeard - 1; j < yBeard + 2; j++){
+            MapObject current = mapObjects[i][j];
+            if (current.getSpecies() == Species.AIR)
+                current.setSpecies(Species.BEARD);
+            }
+    }
+
     public void moveAllObjects(NextStep botNextStep) {
-        previousMap = this.copy();
+        lastCondition = this.copy();
 
         moveBot(botNextStep);
 
@@ -374,6 +387,10 @@ public class GameMap {
                     case LAMBDA_STONE:
                         moveAStone(x, y);
                         break;
+                    case BEARD:
+                        if (amountOfSteps % growth == 0)
+                        growBeard(x, y);
+                        break;
                     default:
                         break;
                 }
@@ -383,20 +400,20 @@ public class GameMap {
     //-----------------------------------------------------------------------------------
 
     public void backToLastCondition() {
-        this.previousMap = previousMap.previousMap;
-        this.mapObjects = previousMap.mapObjects.clone();
-        this.maxX = previousMap.maxX;
-        this.maxY = previousMap.maxY;
-        this.bot = previousMap.bot;
-        this.growth = previousMap.growth;
-        this.razors = previousMap.razors;
+        this.lastCondition = lastCondition.lastCondition;
+        this.mapObjects = lastCondition.mapObjects.clone();
+        this.maxX = lastCondition.maxX;
+        this.maxY = lastCondition.maxY;
+        this.bot = lastCondition.bot;
+        this.growth = lastCondition.growth;
+        this.razors = lastCondition.razors;
     }
 
     private GameMap copy() {
         GameMap gameMap = new GameMap();
         gameMap.maxX = maxX;
         gameMap.maxY = maxY;
-        gameMap.previousMap = previousMap;
+        gameMap.lastCondition = lastCondition;
         gameMap.bot = bot;
         gameMap.mapObjects = mapObjects.clone();
         gameMap.growth = growth;
@@ -440,8 +457,8 @@ public class GameMap {
         return razors;
     }
 
-    public GameMap getPreviousMap() {
-        return previousMap;
+    public GameMap getLastCondition() {
+        return lastCondition;
     }
 
     public MapObject getBot() {

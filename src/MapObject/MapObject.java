@@ -58,7 +58,10 @@ public class MapObject {
                 return '\'';
             case EARTH:
                 return '.';
-
+            case BEARD:
+                return 'W';
+            case RAZOR:
+                return '!';
         }
         return 'E';
     }
