@@ -63,4 +63,8 @@ public class MapObject {
         return 'E';
     }
 
+    public void setSpecies (Species species) {
+        this.species = species;
+    }
+
 }
