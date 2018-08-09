@@ -69,6 +69,10 @@ public class MapObject {
                 return ' ';
             case C_LIFT:
                 return 'L';
+            case O_LIFT:
+                return 'O';
+            case LAMBDA_STONE:
+                return '@';
             case WALL:
                 return '#';
             case STONE:
@@ -81,11 +85,13 @@ public class MapObject {
                 return 'W';
             case RAZOR:
                 return '!';
+            default:
+                return 'E';
         }
-        return 'E';
+
     }
 
-    public void setSpecies (Species species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 

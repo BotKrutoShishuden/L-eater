@@ -84,8 +84,12 @@ public class GameMapTest {
 
             NextStep nextSteps[] = GameMap.cutSteps(address);
 
+            //System.out.println(inputMap.toString());
+
             for (NextStep nextStep : nextSteps)
                 inputMap.moveAllObjects(nextStep);
+
+            //System.out.println(inputMap.toString());
 
             GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
             outputMap.setGrowth(GameMap.cutParamAfterWord(address, "F_Growth "));
@@ -103,10 +107,7 @@ public class GameMapTest {
             assertEquals(inputMap.getFlooding(), outputMap.getFlooding());
             assertEquals(inputMap.getMaxX(), outputMap.getMaxX());
             assertEquals(inputMap.getMaxY(), outputMap.getMaxY());
-            //            System.out.println("Input\n");
-            //            System.out.println(inputMap.toString());
-            //            System.out.println("Output\n");
-            //            System.out.println(outputMap.toString());
+
             //            for (int x = 0; x < inputMap.getMaxX(); x++)
             //                for (int y = 0; y < inputMap.getMaxY(); y++)
             //                    assertEquals(inputMap.getMapObjects()[x][y], outputMap.getMapObjects()[x][y]);
