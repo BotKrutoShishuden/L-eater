@@ -367,7 +367,7 @@ public class GameMap {
                     else mapObjects[x + 1][y].setSpecies(Species.LAMBDA_STONE);
                     return true;
                 } else if (mapObjects[x - 1][y].getSpecies() == Species.AIR &&
-                        mapObjects[x - 1][y + 1].getSpecies() == Species.AIR) {      // падаем влево
+                        mapObjects[x - 1][y + 1].getSpecies() == Species.AIR) {      // падаем влево донела лох
                     mapObjects[x][y].setSpecies(Species.AIR);
                     if (mapObjects[x - 1][y + 2].getSpecies() == Species.AIR)
                         mapObjects[x - 1][y].setSpecies(Species.LAMBDA_STONE);
