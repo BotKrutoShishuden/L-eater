@@ -84,12 +84,12 @@ public class GameMapTest {
 
             NextStep nextSteps[] = GameMap.cutSteps(address);
 
-            //System.out.println(inputMap.toString());
+            System.out.println(inputMap.toString());
 
             for (NextStep nextStep : nextSteps)
                 inputMap.moveAllObjects(nextStep);
 
-            //System.out.println(inputMap.toString());
+            System.out.println(inputMap.toString());
 
             GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
             outputMap.setGrowth(GameMap.cutParamAfterWord(address, "F_Growth "));

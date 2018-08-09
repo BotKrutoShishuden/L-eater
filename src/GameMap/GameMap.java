@@ -242,9 +242,14 @@ public class GameMap {
 
             case LEFT:
 
-                if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.STONE) {
+                if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.STONE ||
+                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE) {
                     if (mapObjects[bot.getX() - 2][bot.getY()].getSpecies() == Species.AIR) {
-                        mapObjects[bot.getX() - 2][bot.getY()].setSpecies(Species.STONE);
+
+                        if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.STONE)
+                            mapObjects[bot.getX() - 2][bot.getY()].setSpecies(Species.STONE);
+                        else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE)
+                            mapObjects[bot.getX() - 2][bot.getY()].setSpecies(Species.LAMBDA_STONE);
 
                         mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                         bot.setX(bot.getX() - 1);
@@ -253,7 +258,12 @@ public class GameMap {
 
                     }
                 } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.AIR ||
-                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.EARTH) {
+                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.EARTH ||
+                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA) {
+
+
+                    if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA)
+                        score += 50;
 
                     mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() - 1);
@@ -261,14 +271,20 @@ public class GameMap {
 
                     mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
 
+
                 }
                 break;
 
             case RIGHT:
-                if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.STONE) {
+                if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.STONE ||
+                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE) {
                     if (mapObjects[bot.getX() + 2][bot.getY()].getSpecies() == Species.AIR) {
 
-                        mapObjects[bot.getX() + 2][bot.getY()].setSpecies(Species.STONE);
+                        if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.STONE)
+                            mapObjects[bot.getX() + 2][bot.getY()].setSpecies(Species.STONE);
+                        else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE)
+                            mapObjects[bot.getX() + 2][bot.getY()].setSpecies(Species.LAMBDA_STONE);
+
 
                         mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                         bot.setX(bot.getX() + 1);
@@ -278,12 +294,19 @@ public class GameMap {
 
                     }
                 } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.AIR ||
-                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.EARTH) {
+                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.EARTH ||
+                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA) {
+
+
+                    if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA)
+                        score += 50;
 
                     mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() + 1);
 
                     mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.AIR);
+
+
                 }
 
                 break;
@@ -292,6 +315,9 @@ public class GameMap {
 
                 if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.STONE
                         && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL) {
+
+                    if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA)
+                        score += 50;
 
                     bot.setY(bot.getY() - 1);
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.BOT);
@@ -306,6 +332,9 @@ public class GameMap {
 
                 if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.STONE
                         && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
+
+                    if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.LAMBDA)
+                        score += 50;
 
 
                     bot.setY(bot.getY() + 1);
