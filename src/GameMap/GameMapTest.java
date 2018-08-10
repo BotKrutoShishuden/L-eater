@@ -102,22 +102,22 @@ public class GameMapTest {
             outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
             outputMap.setGameCondition(RB_DROWNED);
 
-            assertEquals(inputMap.getGrowth(), outputMap.getGrowth());
-            assertEquals(inputMap.getRazors(), outputMap.getRazors());
-            assertEquals(inputMap.getFlooding(), outputMap.getFlooding());
-            assertEquals(inputMap.getMaxX(), outputMap.getMaxX());
-            assertEquals(inputMap.getMaxY(), outputMap.getMaxY());
+            assertEquals(outputMap.getGrowth(), inputMap.getGrowth());
+            assertEquals(outputMap.getRazors(), inputMap.getRazors());
+            assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
+            assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
+            assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
 
             //            for (int x = 0; x < inputMap.getMaxX(); x++)
             //                for (int y = 0; y < inputMap.getMaxY(); y++)
             //                    assertEquals(inputMap.getMapObjects()[x][y], outputMap.getMapObjects()[x][y]);
 
 
-            //assertEquals(inputMap.getScore(), outputMap.getScore());
-            assertEquals(inputMap.getAmountOfSteps(), outputMap.getAmountOfSteps());
-            //assertEquals(inputMap.getLamdasNumber(), outputMap.getLamdasNumber());
-            //assertEquals(inputMap.getMaxLambdasNumber(), outputMap.getMaxLambdasNumber());
-            //assertEquals(inputMap.getWaterLevel(), outputMap.getWaterLevel());
+            //assertEquals(outputMap.getScore(), inputMap.getScore());
+            assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
+            //assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
+            //assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
+            assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
 
 
         } catch (IOException e) {
