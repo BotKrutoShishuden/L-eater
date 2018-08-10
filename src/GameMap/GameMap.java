@@ -224,8 +224,10 @@ public class GameMap {
                 case 'R':
                     nextSteps[i] = NextStep.RIGHT;
                     break;
+                case 'W':
+                    nextSteps[i] = NextStep.WAIT;
                 case 'S':
-                    nextSteps[i] = NextStep.STAY;
+                    nextSteps[i] = NextStep.USE_RAZOR;
             }
 
         }
@@ -345,7 +347,36 @@ public class GameMap {
                 }
 
                 break;
-            case STAY:
+
+            case USE_RAZOR:
+
+                if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX() - 1][bot.getY() - 1].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX() - 1][bot.getY() - 1].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX()][bot.getY() - 1].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX() + 1][bot.getY() - 1].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX() + 1][bot.getY() - 1].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX() + 1][bot.getY() + 1].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX() + 1][bot.getY() + 1].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX()][bot.getY() + 1].setSpecies(Species.AIR);
+
+                if (mapObjects[bot.getX() - 1][bot.getY() + 1].getSpecies() == Species.BEARD)
+                    mapObjects[bot.getX() - 1][bot.getY() + 1].setSpecies(Species.AIR);
+
+                break;
+
+            case WAIT:
                 break;
 
 
