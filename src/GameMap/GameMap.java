@@ -370,8 +370,7 @@ public class GameMap {
                 } else if (mapObjects[x - 1][y].getSpecies() == Species.AIR &&
                         mapObjects[x - 1][y + 1].getSpecies() == Species.AIR) {      // падаем влево
                     mapObjects[x][y].setSpecies(Species.AIR);
-                    mapObjects[x - 1][y].setSpecies(Species.STONE);
-                    return true;
+                    mapObjects[x - 1][y + 1].setSpecies(Species.STONE);
                 }
             }
         }
@@ -399,9 +398,8 @@ public class GameMap {
                         mapObjects[x - 1][y + 1].getSpecies() == Species.AIR) {      // падаем влево донела лох
                     mapObjects[x][y].setSpecies(Species.AIR);
                     if (mapObjects[x - 1][y + 2].getSpecies() == Species.AIR)
-                        mapObjects[x - 1][y].setSpecies(Species.LAMBDA_STONE);
-                    else mapObjects[x - 1][y].setSpecies(Species.LAMBDA_STONE);
-                    return true;
+                        mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                    else mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
                 }
             }
         }
