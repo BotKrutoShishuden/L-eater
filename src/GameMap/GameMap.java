@@ -381,7 +381,7 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.STONE
                         && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
 
-                    if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.LAMBDA) {
+                    if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
                         score += 50;
                         lamdasNumber++;
                     }
@@ -521,7 +521,10 @@ public class GameMap {
         lamdasNumber = previousMap.lamdasNumber;
         maxLambdasNumber = previousMap.maxLambdasNumber;
 
-        bot = previousMap.bot;
+        bot.setSpecies(Species.BOT);
+        bot.setX(previousMap.bot.getX());
+        bot.setY(previousMap.bot.getY());
+
         previousMap = previousMap.previousMap;
     }
 
@@ -551,14 +554,16 @@ public class GameMap {
         gameMap.lamdasNumber = lamdasNumber;
         gameMap.maxLambdasNumber = maxLambdasNumber;
 
-        gameMap.bot = bot;
+        gameMap.bot = new MapObject(Species.BOT, bot.getX(), bot.getY());
+
         gameMap.previousMap = previousMap;
         return gameMap;
     }
 
     public void moveAllObjects(NextStep botNextStep) {
         if (botNextStep == NextStep.BACK) {
-            backToLastCondition();
+            if (previousMap != null)
+                backToLastCondition();
         } else {
             previousMap = this.copy();
             amountOfSteps++;
