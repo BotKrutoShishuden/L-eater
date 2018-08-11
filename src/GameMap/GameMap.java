@@ -495,7 +495,7 @@ public class GameMap {
 
     }
 
-    private void moveLStone(int x, int y) {
+    private void moveLambdaStone(int x, int y) {
         if (mapObjects[x][y + 1].getSpecies() == Species.AIR) {     // проверяем что снизу ничего нет
             mapObjects[x][y].setSpecies(Species.AIR);
             if (mapObjects[x][y + 2].getSpecies() == Species.AIR) mapObjects[x][y + 1].setSpecies(Species.LAMBDA_STONE);
@@ -521,7 +521,7 @@ public class GameMap {
         }
     }
 
-    private void moveLStoneSim(int x, int y) {
+    private void moveLambdaStoneSim(int x, int y) {
         if (mapObjects[x][y + 1].getSpecies() == Species.AIR) {     // проверяем что снизу ничего нет
             mapObjects[x][y].setSpecies(Species.AIR);
             if (mapObjects[x][y + 2].getSpecies() == Species.AIR ||
@@ -658,7 +658,7 @@ public class GameMap {
                             moveStoneSim(x, y);
                             break;
                         case LAMBDA_STONE:
-                            moveLStoneSim(x, y);
+                            moveLambdaStoneSim(x, y);
                             break;
                         case BEARD:
                             if (amountOfSteps % growth == 0)
