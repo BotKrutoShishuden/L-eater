@@ -542,8 +542,8 @@ public class GameMap {
                     if (mapObjects[x + 1][y + 2].getSpecies() == Species.AIR ||
                             mapObjects[x + 1][y + 2].getSpecies() == Species.MOVED_STONE ||
                             mapObjects[x + 1][y + 2].getSpecies() == Species.MOVED_STONE_L)
-                        mapObjects[x + 1][y].setSpecies(Species.MOVED_STONE_L);
-                    else mapObjects[x + 1][y].setSpecies(Species.LAMBDA);
+                        mapObjects[x + 1][y + 1].setSpecies(Species.MOVED_STONE_L);
+                    else mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA);
                 } else if ((mapObjects[x - 1][y].getSpecies() == Species.AIR ||
                         mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE ||
                         mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE_L) &&
