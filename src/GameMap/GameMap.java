@@ -301,13 +301,16 @@ public class GameMap {
                     }
                 } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.AIR ||
                         mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.EARTH ||
-                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA) {
+                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA ||
+                        mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.RAZOR) {
 
 
                     if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA) {
                         score += 50;
                         lamdasNumber++;
-                    }
+                    } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.RAZOR)
+                        razors++;
+
 
                     mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() - 1);
@@ -339,13 +342,15 @@ public class GameMap {
                     }
                 } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.AIR ||
                         mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.EARTH ||
-                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA) {
+                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA ||
+                        mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.RAZOR) {
 
 
                     if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA) {
                         score += 50;
                         lamdasNumber++;
-                    }
+                    } else if ((mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.RAZOR))
+                        razors++;
 
                     mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() + 1);
@@ -365,7 +370,8 @@ public class GameMap {
                     if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA) {
                         score += 50;
                         lamdasNumber++;
-                    }
+                    } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.RAZOR)
+                        razors++;
 
                     bot.setY(bot.getY() - 1);
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.BOT);
@@ -384,7 +390,8 @@ public class GameMap {
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
                         score += 50;
                         lamdasNumber++;
-                    }
+                    } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR)
+                        razors++;
 
 
                     bot.setY(bot.getY() + 1);
@@ -524,6 +531,9 @@ public class GameMap {
             waterLevel++;
         if (bot.getY() >= getMaxY() - waterLevel)
             movesUnderWater++;
+        else
+            movesUnderWater = 0;
+
         if (movesUnderWater > maxMovesUnderWater)
             gameCondition = RB_DROWNED;
     }
@@ -634,7 +644,11 @@ public class GameMap {
                     }
                 }
 
+
         }
+        if (gameCondition == RB_DROWNED)
+            score -= 1550;
+
 
     }
 

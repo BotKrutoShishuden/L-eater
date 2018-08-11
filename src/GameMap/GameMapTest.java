@@ -81,6 +81,10 @@ public class GameMapTest {
             inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
             inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
 
+            NextStep nextSteps[] = GameMap.cutSteps(address);
+
+            for (NextStep nextStep : nextSteps)
+                inputMap.moveAllObjects(nextStep);
 
 
             GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
@@ -99,18 +103,12 @@ public class GameMapTest {
             assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
             assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
             assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
-
-            //            for (int x = 0; x < inputMap.getMaxX(); x++)
-            //                for (int y = 0; y < inputMap.getMaxY(); y++)
-            //                    assertEquals(inputMap.getMapObjects()[x][y], outputMap.getMapObjects()[x][y]);
-
-
-            //assertEquals(outputMap.getScore(), inputMap.getScore());
+            assertEquals(outputMap.getScore(), inputMap.getScore());
             assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
-            //assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
-            //assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
+            assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
+            assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
             assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
-
+            assertEquals(outputMap.toString(), inputMap.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
