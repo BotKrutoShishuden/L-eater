@@ -473,16 +473,20 @@ public class GameMap {
                     mapObjects[x][y + 1].getSpecies() == Species.LAMBDA_STONE ||
                     mapObjects[x][y + 1].getSpecies() == Species.LAMBDA) {     // если снизу камень или л-камень
                 if ((mapObjects[x + 1][y].getSpecies() == Species.AIR ||
-                        mapObjects[x + 1][y].getSpecies() == Species.MOVED_STONE) &&
+                        mapObjects[x + 1][y].getSpecies() == Species.MOVED_STONE ||
+                        mapObjects[x + 1][y].getSpecies() == Species.MOVED_STONE_L) &&
                         (mapObjects[x + 1][y + 1].getSpecies() == Species.AIR ||
-                                mapObjects[x + 1][y + 1].getSpecies() == Species.MOVED_STONE)) {      // падаем вправо
+                                mapObjects[x + 1][y + 1].getSpecies() == Species.MOVED_STONE ||
+                                mapObjects[x + 1][y + 1].getSpecies() == Species.MOVED_STONE_L)) {      // падаем вправо
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x + 1][y + 1].setSpecies(Species.MOVED_STONE);
 
                 } else if ((mapObjects[x - 1][y].getSpecies() == Species.AIR ||
-                        mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE) &&
+                        mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE ||
+                        mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE_L) &&
                         (mapObjects[x - 1][y + 1].getSpecies() == Species.AIR ||
-                                mapObjects[x - 1][y + 1].getSpecies() == Species.MOVED_STONE)) {      // падаем влево
+                                mapObjects[x - 1][y + 1].getSpecies() == Species.MOVED_STONE ||
+                                mapObjects[x - 1][y + 1].getSpecies() == Species.MOVED_STONE_L)) {      // падаем влево
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x - 1][y + 1].setSpecies(Species.MOVED_STONE);
                 }
@@ -491,7 +495,7 @@ public class GameMap {
 
     }
 
-    private void moveAStone(int x, int y) {
+    private void moveLStone(int x, int y) {
         if (mapObjects[x][y + 1].getSpecies() == Species.AIR) {     // проверяем что снизу ничего нет
             mapObjects[x][y].setSpecies(Species.AIR);
             if (mapObjects[x][y + 2].getSpecies() == Species.AIR) mapObjects[x][y + 1].setSpecies(Species.LAMBDA_STONE);
@@ -511,6 +515,46 @@ public class GameMap {
                     mapObjects[x][y].setSpecies(Species.AIR);
                     if (mapObjects[x - 1][y + 2].getSpecies() == Species.AIR)
                         mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                    else mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
+                }
+            }
+        }
+    }
+
+    private void moveLStoneSim(int x, int y) {
+        if (mapObjects[x][y + 1].getSpecies() == Species.AIR) {     // проверяем что снизу ничего нет
+            mapObjects[x][y].setSpecies(Species.AIR);
+            if (mapObjects[x][y + 2].getSpecies() == Species.AIR ||
+                    mapObjects[x][y + 2].getSpecies() == Species.MOVED_STONE ||
+                    mapObjects[x][y + 2].getSpecies() == Species.MOVED_STONE_L) mapObjects[x][y + 1].setSpecies(Species.MOVED_STONE_L);
+            else mapObjects[x][y + 1].setSpecies(Species.LAMBDA);
+        } else if (mapObjects[x][y + 1].getSpecies() != Species.AIR) {    // если что-то есть
+            if (mapObjects[x][y + 1].getSpecies() == Species.STONE ||
+                    mapObjects[x][y + 1].getSpecies() == Species.LAMBDA_STONE ||
+                    mapObjects[x][y + 1].getSpecies() == Species.LAMBDA) {     // если снизу камень или л-камень или лямбда (для лямбды падаем только вправо
+                if ((mapObjects[x + 1][y].getSpecies() == Species.AIR ||
+                        mapObjects[x + 1][y].getSpecies() == Species.MOVED_STONE ||
+                        mapObjects[x + 1][y].getSpecies() == Species.MOVED_STONE_L) &&
+                        (mapObjects[x + 1][y + 1].getSpecies() == Species.AIR ||
+                                mapObjects[x + 1][y + 1].getSpecies() == Species.MOVED_STONE ||
+                                mapObjects[x + 1][y + 1].getSpecies() == Species.MOVED_STONE_L)) {      // падаем вправо
+                    mapObjects[x][y].setSpecies(Species.AIR);
+                    if (mapObjects[x + 1][y + 2].getSpecies() == Species.AIR ||
+                            mapObjects[x + 1][y + 2].getSpecies() == Species.MOVED_STONE ||
+                            mapObjects[x + 1][y + 2].getSpecies() == Species.MOVED_STONE_L)
+                        mapObjects[x + 1][y].setSpecies(Species.MOVED_STONE_L);
+                    else mapObjects[x + 1][y].setSpecies(Species.LAMBDA);
+                } else if ((mapObjects[x - 1][y].getSpecies() == Species.AIR ||
+                        mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE ||
+                        mapObjects[x - 1][y].getSpecies() == Species.MOVED_STONE_L) &&
+                        (mapObjects[x - 1][y + 1].getSpecies() == Species.AIR ||
+                                mapObjects[x - 1][y + 1].getSpecies() == Species.MOVED_STONE ||
+                                mapObjects[x - 1][y + 1].getSpecies() == Species.MOVED_STONE_L)) {      // падаем влево донела снова лох
+                    mapObjects[x][y].setSpecies(Species.AIR);
+                    if (mapObjects[x - 1][y + 2].getSpecies() == Species.AIR ||
+                            mapObjects[x - 1][y + 2].getSpecies() == Species.MOVED_STONE ||
+                            mapObjects[x - 1][y + 2].getSpecies() == Species.MOVED_STONE_L)
+                        mapObjects[x - 1][y + 1].setSpecies(Species.MOVED_STONE_L);
                     else mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
                 }
             }
@@ -614,7 +658,7 @@ public class GameMap {
                             moveStoneSim(x, y);
                             break;
                         case LAMBDA_STONE:
-                            moveAStone(x, y);
+                            moveLStoneSim(x, y);
                             break;
                         case BEARD:
                             if (amountOfSteps % growth == 0)
@@ -636,8 +680,11 @@ public class GameMap {
                         case MOVED_STONE:
                             mapObjects[x][y].setSpecies(Species.STONE);
                             break;
+                        case MOVED_STONE_L:
+                            mapObjects[x][y].setSpecies(Species.LAMBDA_STONE);
+                            break;
                         case GROWN_BEARD:
-                            mapObjects[x][y].setSpecies(Species.BEARD);
+                            mapObjects[x][y].setSpecies(Species.BEARD);    // Мыша, закинь свои бороды сюда
                             break;
                         default:
                             break;
