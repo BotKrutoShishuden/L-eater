@@ -5,6 +5,7 @@ import MapObject.MapObject;
 import MapObject.Species;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ public class GameMap {
 
     private MapObject bot;
     private GameMap previousMap;
+    private PortalSystem portalSystem;
 
     //-----------------------------------------------------------------------------------
     //Статические методы генерации(вместо конструкторов)
@@ -56,7 +58,8 @@ public class GameMap {
         int currentX = 0;
         int currentY = 0;
 
-
+        ArrayList<Portal> inPortals = new ArrayList<>();
+        ArrayList<Portal> outPortals = new ArrayList<>();
         //Заполняем mapObject[][]
         int i = 0;
         while (currentY < gameMap.maxY) {
@@ -97,7 +100,6 @@ public class GameMap {
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.LAMBDA_STONE, currentX, currentY);
-                    gameMap.lamdasNumber++;
                     gameMap.maxLambdasNumber++;
                     break;
                 case '.':
@@ -140,6 +142,25 @@ public class GameMap {
                     currentX = -1;
                     currentY++;
                     break;
+
+            }
+
+            if (Character.isDigit(currentSymbol)) {
+
+                outPortals.add(new Portal(currentSymbol, currentX, currentY));
+
+                gameMap.mapObjects[currentX][currentY] =
+                        new MapObject(Species.PORTAL_OUT, currentX, currentY, currentSymbol);
+
+                symbolDefined = true;
+
+            } else if (characterIsAcceptableFigure(currentSymbol)) {
+                inPortals.add(new Portal(currentSymbol, currentX, currentY));
+
+                gameMap.mapObjects[currentX][currentY] =
+                        new MapObject(Species.PORTAL_IN, currentX, currentY, currentSymbol);
+
+                symbolDefined = true;
             }
 
             if (!symbolDefined)
@@ -149,10 +170,17 @@ public class GameMap {
             i++;
 
         }
+        gameMap.portalSystem = new PortalSystem(inPortals, outPortals);
+
 
         bufferedReader.close();
         return gameMap;
 
+
+    }
+
+    private static boolean characterIsAcceptableFigure(Character symbol) {
+        return symbol == 'A' || symbol == 'B' || symbol == 'C' || symbol == 'D' || symbol == 'E' || symbol == 'F' || symbol == 'G';
     }
     //-----------------------------------------------------------------------------------
 
@@ -287,12 +315,23 @@ public class GameMap {
         switch (botNextStep) {
 
             case LEFT:
-                if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {
-                    char portalInSymbol = mapObjects[bot.getX() - 1][bot.getY()].getSymbol();
-                    char portalOutSymbol;
+                if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.O_LIFT) {
+                    mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
+                    gameCondition = WIN;
+                    score += 275;
+                } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
+                    int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
+                    int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
+                    int oldX = bot.getX();
+                    int oldY = bot.getY();
+                    bot.setX(newX);
+                    bot.setY(newY);
+                    mapObjects[newX][newY].setSpecies(Species.BOT);
 
+                    mapObjects[oldX][oldY].setSpecies(Species.AIR);
+                    mapObjects[oldX - 1][oldY].setSpecies(Species.AIR);
 
-                } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.STONE ||
+                } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.STONE ||//Двигаем камни
                         mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE) {
                     if (mapObjects[bot.getX() - 2][bot.getY()].getSpecies() == Species.AIR) {
 
@@ -307,7 +346,7 @@ public class GameMap {
                         mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
 
                     }
-                } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.AIR ||
+                } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.AIR ||//Просто идем
                         mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.EARTH ||
                         mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA ||
                         mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.RAZOR) {
@@ -328,10 +367,29 @@ public class GameMap {
 
 
                 }
+
+
                 break;
 
             case RIGHT:
-                if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.STONE ||
+                if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.O_LIFT) {
+                    mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
+                    gameCondition = WIN;
+                    score += 275;
+                } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
+                    int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
+                    int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
+                    int oldX = bot.getX();
+                    int oldY = bot.getY();
+                    bot.setX(newX);
+                    bot.setY(newY);
+                    mapObjects[newX][newY].setSpecies(Species.BOT);
+
+                    mapObjects[oldX + 1][oldY].setSpecies(Species.AIR);
+                    mapObjects[oldX][oldY].setSpecies(Species.AIR);
+
+
+                } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.STONE ||//Двигаем камни
                         mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE) {
                     if (mapObjects[bot.getX() + 2][bot.getY()].getSpecies() == Species.AIR) {
 
@@ -348,7 +406,7 @@ public class GameMap {
 
 
                     }
-                } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.AIR ||
+                } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.AIR ||//Просто идем
                         mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.EARTH ||
                         mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA ||
                         mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.RAZOR) {
@@ -368,11 +426,27 @@ public class GameMap {
 
                 }
 
+
                 break;
 
             case UP:
+                if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.O_LIFT) {
+                    mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
+                    gameCondition = WIN;
+                    score += 275;
+                } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
+                    int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
+                    int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
+                    int oldX = bot.getX();
+                    int oldY = bot.getY();
+                    bot.setX(newX);
+                    bot.setY(newY);
+                    mapObjects[newX][newY].setSpecies(Species.BOT);
 
-                if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.STONE
+                    mapObjects[oldX][oldY].setSpecies(Species.AIR);
+                    mapObjects[oldX][oldY - 1].setSpecies(Species.AIR);
+
+                } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.STONE//Просто идем
                         && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL) {
 
                     if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA) {
@@ -388,11 +462,28 @@ public class GameMap {
 
                 }
 
+
                 break;
 
             case DOWN:
 
-                if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.STONE
+                if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.O_LIFT) {
+                    mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
+                    gameCondition = WIN;
+                    score += 275;
+                } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
+                    int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
+                    int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
+                    int oldX = bot.getX();
+                    int oldY = bot.getY();
+                    bot.setX(newX);
+                    bot.setY(newY);
+                    mapObjects[newX][newY].setSpecies(Species.BOT);
+
+                    mapObjects[oldX][oldY].setSpecies(Species.AIR);
+                    mapObjects[oldX][oldY + 1].setSpecies(Species.AIR);
+
+                } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.STONE//Просто идем
                         && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
 
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
@@ -408,6 +499,7 @@ public class GameMap {
                     mapObjects[bot.getX()][bot.getY() - 1].setSpecies(Species.AIR);
 
                 }
+
 
                 break;
 
@@ -485,32 +577,32 @@ public class GameMap {
                 mapObjects[x][y + 1].setSpecies(Species.LAMBDA);
             }
 
-        } else if (workMap.getMapObjects()[x][y + 1].getSpecies() != Species.AIR) {    // если что-то есть
-            if (workMap.getMapObjects()[x][y + 1].getSpecies() == Species.STONE ||
-                    workMap.getMapObjects()[x][y + 1].getSpecies() == Species.LAMBDA_STONE ||
-                    workMap.getMapObjects()[x][y + 1].getSpecies() == Species.LAMBDA) {//Скатывается
+        } else if (workMap.getMapObjects()[x][y + 1].getSpecies() == Species.STONE ||// если что-то есть
+                workMap.getMapObjects()[x][y + 1].getSpecies() == Species.LAMBDA_STONE ||
+                workMap.getMapObjects()[x][y + 1].getSpecies() == Species.LAMBDA) {//Скатывается
 
-                if (workMap.getMapObjects()[x + 1][y + 1].getSpecies() == Species.AIR) {//Вправо
-                    if (workMap.getMapObjects()[x + 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
-                        mapObjects[x][y].setSpecies(Species.AIR);
-                        mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
-                    } else {//TODO добавить падение на бота
-                        mapObjects[x][y].setSpecies(Species.AIR);
-                        mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA);
-                    }
-                } else if (workMap.getMapObjects()[x - 1][y + 1].getSpecies() == Species.AIR) {//Влево
-                    if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
-                        mapObjects[x][y].setSpecies(Species.AIR);
-                        mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
-                    } else {//TODO добавить падение на бота
-                        mapObjects[x][y].setSpecies(Species.AIR);
-                        mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
-                    }
+            if (workMap.getMapObjects()[x + 1][y].getSpecies() == Species.AIR &&
+                    workMap.getMapObjects()[x + 1][y + 1].getSpecies() == Species.AIR) {//Вправо
+                if (workMap.getMapObjects()[x + 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
+                    mapObjects[x][y].setSpecies(Species.AIR);
+                    mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                } else {//TODO добавить падение на бота
+                    mapObjects[x][y].setSpecies(Species.AIR);
+                    mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA);
+                }
+            } else if (workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR) {//Влево
+                if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
+                    mapObjects[x][y].setSpecies(Species.AIR);
+                    mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
+                } else {//TODO добавить падение на бота
+                    mapObjects[x][y].setSpecies(Species.AIR);
+                    mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
                 }
             }
-
         }
+
     }
+
 
     private void growBeard(GameMap workMap, int xBeard, int yBeard) {
         for (int i = xBeard - 1; i < xBeard + 2; i++)
@@ -563,9 +655,14 @@ public class GameMap {
 
         gameMap.mapObjects = new MapObject[maxX][maxY];
 
+
         for (int x = 0; x < maxX; x++)
             for (int y = 0; y < maxY; y++)
-                gameMap.mapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y);
+                try {
+                    gameMap.mapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y, mapObjects[x][y].getSymbol());
+                } catch (NullPointerException e) {
+                    gameMap.mapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y);
+                }
 
 
         gameMap.maxX = maxX;
@@ -616,8 +713,9 @@ public class GameMap {
                             moveLambdaStoneSim(workMap, x, y);
                             break;
                         case BEARD:
-                            if (amountOfSteps % growth == 0)
-                                growBeard(workMap, x, y);
+                            if (growth != 0)
+                                if (amountOfSteps % growth == 0)
+                                    growBeard(workMap, x, y);
                             break;
                         case C_LIFT:
                             if (lamdasNumber == maxLambdasNumber)

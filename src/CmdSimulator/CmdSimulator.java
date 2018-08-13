@@ -12,7 +12,7 @@ public class CmdSimulator {
 
     public static void main(String[] args) {
         try {
-            String address = "maps/testsForDifficultIncidents/0_test.map";
+            String address = "maps/testsForDifficultIncidents/1_test.map";
 
 
 

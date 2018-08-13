@@ -6,6 +6,7 @@ public class MapObject {
     private Species species;
     private int x;
     private int y;
+    private Character symbol;
 
     //плюс координаты
     public MapObject(Species species, int x, int y) {
@@ -14,6 +15,12 @@ public class MapObject {
         this.y = y;
     }
 
+    public MapObject(Species species, int x, int y, Character symbol) {
+        this.species = species;
+        this.x = x;
+        this.y = y;
+        this.symbol = symbol;
+    }
 
     protected MapObject() {
     }
@@ -85,6 +92,10 @@ public class MapObject {
                 return 'W';
             case RAZOR:
                 return '!';
+            case PORTAL_IN:
+                return symbol;
+            case PORTAL_OUT:
+                return symbol;
             default:
                 return 'E';
         }
