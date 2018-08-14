@@ -54,3 +54,4 @@ F_Moves 143
 F_Lambda 62
 F_LambdaMax 62
 F_WaterLevel 7
+F_GameCondition RB_DROWNED

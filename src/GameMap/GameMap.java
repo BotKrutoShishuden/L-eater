@@ -216,19 +216,19 @@ public class GameMap {
             switch (currentLine.toString()) {
                 case "STILL_MINING":
                     return STILL_MINING;
-                    break;
+
                 case "RB_DROWNED":
                     return RB_DROWNED;
-                    break;
+
                 case "WIN":
                     return WIN;
-                    break;
+
                 case "RB_CRUSHED":
                     return RB_CRUSHED;
-                    break;
+
                 default:
                     return NULL_CONDITION;
-                    break;
+
             }
 
         } catch (NullPointerException e) {

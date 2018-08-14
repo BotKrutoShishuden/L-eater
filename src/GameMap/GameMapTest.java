@@ -122,7 +122,7 @@ public class GameMapTest {
                 outputMap.setLamdasNumber(GameMap.cutParamAfterWord(address, "F_Lambda "));
                 outputMap.setMaxLambdasNumber(GameMap.cutParamAfterWord(address, "F_LambdaMax "));
                 outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
-                outputMap.setGameCondition(RB_DROWNED);
+                outputMap.setGameCondition(GameMap.cutConditionAfterWord(address, "F_GameCondition "));
 
                 assertEquals(outputMap.getGrowth(), inputMap.getGrowth());
                 assertEquals(outputMap.getRazors(), inputMap.getRazors());
