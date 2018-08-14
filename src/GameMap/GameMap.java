@@ -352,7 +352,7 @@ public class GameMap {
                 if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 275;
+                    score += 175;
                 } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
@@ -409,7 +409,7 @@ public class GameMap {
                 if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 275;
+                    score += 175;
                 } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
@@ -467,7 +467,7 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 275;
+                    score += 175;
                 } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
@@ -504,7 +504,7 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 275;
+                    score += 175;
                 } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
@@ -766,7 +766,6 @@ public class GameMap {
             score -= 1550;
         if (gameCondition == RB_CRUSHED)
             score -= 175;
-
 
     }
     //-----------------------------------------------------------------------------------

@@ -91,7 +91,7 @@ public class GameMapTest {
         try {
 
             String address = "maps/testsForDifficultIncidents/0_test.map";
-            int testNumber = 4;
+            int testNumber = 5;
             for (int i = 0; i < testNumber; ) {
 
                 GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
