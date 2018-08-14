@@ -16,7 +16,7 @@ public class GameMap {
     private MapObject mapObjects[][];
     private int maxX;
     private int maxY;
-    private int growth;
+    private int growth = 3;
     private int razors;
 
     private int movesUnderWater;
@@ -500,34 +500,16 @@ public class GameMap {
 
                 }
 
-
                 break;
 
             case USE_RAZOR:
 
-                if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX() - 1][bot.getY() - 1].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX() - 1][bot.getY() - 1].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX()][bot.getY() - 1].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX() + 1][bot.getY() - 1].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX() + 1][bot.getY() - 1].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX() + 1][bot.getY() + 1].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX() + 1][bot.getY() + 1].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX()][bot.getY() + 1].setSpecies(Species.AIR);
-
-                if (mapObjects[bot.getX() - 1][bot.getY() + 1].getSpecies() == Species.BEARD)
-                    mapObjects[bot.getX() - 1][bot.getY() + 1].setSpecies(Species.AIR);
+                for (int i = bot.getX() - 1; i < bot.getX() + 2; i++)
+                    for (int j = bot.getY() - 1; j < bot.getY() + 2; j++) {
+                        MapObject current = mapObjects[i][j];
+                        if (current.getSpecies() == Species.BEARD)
+                            current.setSpecies(Species.AIR);
+                    }
 
                 break;
 
@@ -607,9 +589,9 @@ public class GameMap {
     private void growBeard(GameMap workMap, int xBeard, int yBeard) {
         for (int i = xBeard - 1; i < xBeard + 2; i++)
             for (int j = yBeard - 1; j < yBeard + 2; j++) {
-                MapObject current = mapObjects[i][j];
+                MapObject current = workMap.getMapObjects()[i][j];
                 if (current.getSpecies() == Species.AIR)
-                    current.setSpecies(Species.BEARD);
+                    mapObjects[i][j].setSpecies(Species.BEARD);
             }
     }
 

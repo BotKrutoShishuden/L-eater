@@ -19,6 +19,10 @@ public class GameMapTest {
 
         NextStep nextSteps[] = GameMap.cutSteps(address);
 
+        inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
+        inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+        inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+
         for (NextStep nextStep : nextSteps)
             inputMap.moveAllObjects(nextStep);
 
@@ -77,6 +81,7 @@ public class GameMapTest {
 
     @Test
     public void growBeard() {
+        makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "maps/growBeardTests/0_test.map");
     }
 
     //-----------------------------------------------------------------------------------
