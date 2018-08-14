@@ -16,13 +16,13 @@ public class GameMap {
     private MapObject mapObjects[][];
     private int maxX;
     private int maxY;
-    private int growth = 3;
-    private int razors;
+    private int growth = 25;
+    private int razors = 0;
 
     private int movesUnderWater;
     private int maxMovesUnderWater = 10;
-    private int waterLevel;
-    private int flooding;
+    private int waterLevel = 0;
+    private int flooding = 0;
 
 
     private GameCondition gameCondition = STILL_MINING;
