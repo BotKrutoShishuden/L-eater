@@ -90,8 +90,8 @@ public class GameMapTest {
     public void moveAllObjects() {
         try {
 
-            String address = "maps/testsForDifficultIncidents/0_test.map";
-            int testNumber = 5;
+            String address = "maps/conditionTests/0_test.map";
+            int testNumber = 3;
             for (int i = 0; i < testNumber; ) {
 
                 GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
