@@ -764,6 +764,8 @@ public class GameMap {
         }
         if (gameCondition == RB_DROWNED)
             score -= 1550;
+        if (gameCondition == RB_CRUSHED)
+            score -= 175;
 
 
     }
