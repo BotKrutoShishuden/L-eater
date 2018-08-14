@@ -527,6 +527,9 @@ public class GameMap {
 
             mapObjects[x][y].setSpecies(Species.AIR);
             mapObjects[x][y + 1].setSpecies(Species.STONE);
+            if (workMap.getMapObjects()[x][y + 2].getSpecies() == Species.BOT) {// если падает на бота
+                gameCondition = RB_CRUSHED;
+            }
 
         } else if (workMap.getMapObjects()[x][y + 1].getSpecies() != Species.AIR) {    // если что-то есть
             if (workMap.getMapObjects()[x][y + 1].getSpecies() == Species.STONE ||
@@ -537,13 +540,18 @@ public class GameMap {
                         workMap.getMapObjects()[x + 1][y].getSpecies() == Species.AIR) {//Вправо
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x + 1][y + 1].setSpecies(Species.STONE);
+                    if (workMap.getMapObjects()[x + 1][y + 2].getSpecies() == Species.BOT) {// если падает на бота
+                        gameCondition = RB_CRUSHED;
+                    }
                 } else if (workMap.getMapObjects()[x - 1][y + 1].getSpecies() == Species.AIR &&
                         workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR) {//Влево
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x - 1][y + 1].setSpecies(Species.STONE);
+                    if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.BOT) {// если падает на бота
+                        gameCondition = RB_CRUSHED;
+                    }
                 }
             }
-
         }
     }
 
@@ -554,9 +562,12 @@ public class GameMap {
             if (workMap.getMapObjects()[x][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
                 mapObjects[x][y].setSpecies(Species.AIR);
                 mapObjects[x][y + 1].setSpecies(Species.LAMBDA_STONE);
-            } else {//TODO добавить падение на бота
+            } else {
                 mapObjects[x][y].setSpecies(Species.AIR);
                 mapObjects[x][y + 1].setSpecies(Species.LAMBDA);
+                if (workMap.getMapObjects()[x][y + 2].getSpecies() == Species.BOT) { // если падает на бота
+                    gameCondition = RB_CRUSHED;
+                }
             }
 
         } else if (workMap.getMapObjects()[x][y + 1].getSpecies() == Species.STONE ||// если что-то есть
@@ -568,17 +579,23 @@ public class GameMap {
                 if (workMap.getMapObjects()[x + 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA_STONE);
-                } else {//TODO добавить падение на бота
+                } else {
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x + 1][y + 1].setSpecies(Species.LAMBDA);
+                    if (workMap.getMapObjects()[x + 1][y + 2].getSpecies() == Species.BOT) {// если падает на бота
+                        gameCondition = RB_CRUSHED;
+                    }
                 }
             } else if (workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR) {//Влево
                 if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
-                } else {//TODO добавить падение на бота
+                } else {
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA);
+                    if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.BOT) {// если падает на бота
+                        gameCondition = RB_CRUSHED;
+                    }
                 }
             }
         }
