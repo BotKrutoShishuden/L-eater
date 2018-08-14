@@ -25,7 +25,7 @@ public class GameMap {
     private int flooding;
 
 
-    private GameCondition gameCondition;
+    private GameCondition gameCondition = STILL_MINING;
     private int amountOfSteps;
     private int score;
     private int lamdasNumber;
@@ -201,6 +201,40 @@ public class GameMap {
             return 0;
         }
     }
+
+    //TODO - почему оно не работает, в конце еще return требует
+//    public static GameCondition cutConditionAfterWord(String address, String paramName) throws IOException {
+//        BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+//        try {
+//            StringBuilder currentLine;
+//            do {
+//                currentLine = new StringBuilder(bufferedReader.readLine());
+//            }
+//            while (!currentLine.toString().contains(paramName));
+//
+//            currentLine.delete(0, paramName.length());
+//
+//            switch (currentLine.toString()) {
+//                case "STILL_MINING":
+//                    return STILL_MINING;
+//                break;
+//                case "RB_DROWNED":
+//                    return RB_DROWNED;
+//                break;
+//                case "WIN":
+//                    return WIN;
+//                break;
+//                case "RB_CRUSHED":
+//                    return RB_CRUSHED;
+//                break;
+//                default:
+//                    break;
+//            }
+//
+//        } catch (NullPointerException e) {
+//            return NULL_CONDITION;
+//        }
+//    }
 
 
     public static GameMap cutMapBetweenStartAndEnd(String address, String start, String end)
