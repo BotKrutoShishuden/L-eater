@@ -1,16 +1,28 @@
 package GameMap;
 
+
 public class Portal {
+    private PortalCondition condition;
     private int x;
     private int y;
-    private char symbol;
+    private char name;
+    private char exitName;
 
-    public Portal(char symbol, int x, int y) {
+
+    public Portal(PortalCondition condition, int x, int y, char name) {
+        this.condition = condition;
         this.x = x;
         this.y = y;
-        this.symbol = symbol;
+        this.name = name;
     }
 
+    public Portal(PortalCondition condition, int x, int y, char name, char exitName) {
+        this.condition = condition;
+        this.x = x;
+        this.y = y;
+        this.name = name;
+        this.exitName = exitName;
+    }
 
     public int getX() {
         return x;
@@ -20,7 +32,15 @@ public class Portal {
         return y;
     }
 
-    public char getSymbol() {
-        return symbol;
+    public char getName() {
+        return name;
+    }
+
+    public PortalCondition getCondition() {
+        return condition;
+    }
+
+    public char getExitName() {
+        return exitName;
     }
 }

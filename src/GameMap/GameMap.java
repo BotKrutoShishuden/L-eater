@@ -1,12 +1,17 @@
 package GameMap;
 
 import Bot.*;
+
+import static GameMap.PortalCondition.*;
+
+
 import MapObject.MapObject;
 import MapObject.Species;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 import static GameMap.GameCondition.*;
@@ -51,8 +56,24 @@ public class GameMap {
             gameMap.maxY++;
             mapStrBuilder.append(currentLine).append("\n");
         }
+        bufferedReader.readLine();
 
+        HashMap<Character, Character> compliance = new HashMap<>();
+        try {
+            //Собираем информацию для о порталах
+            StringBuilder trampolineInf;
+            trampolineInf = new StringBuilder(bufferedReader.readLine());
+            while (trampolineInf.toString().contains("Trampoline") &&
+                    trampolineInf.toString().contains("targets")) {
+                Character in = trampolineInf.charAt(11);
+                Character out = trampolineInf.charAt(21);
+                compliance.put(in, out);
+                trampolineInf = new StringBuilder(bufferedReader.readLine());
 
+            }
+        } catch (NullPointerException n) {
+
+        }
         gameMap.mapObjects = new MapObject[gameMap.maxX][gameMap.maxY];
 
         int currentX = 0;
@@ -145,17 +166,18 @@ public class GameMap {
 
             }
 
-            if (Character.isDigit(currentSymbol)) {
+            if (compliance.containsValue(currentSymbol)) {
 
-                outPortals.add(new Portal(currentSymbol, currentX, currentY));
+                outPortals.add(new Portal(OUT, currentX, currentY, currentSymbol));
 
                 gameMap.mapObjects[currentX][currentY] =
                         new MapObject(Species.PORTAL_OUT, currentX, currentY, currentSymbol);
 
                 symbolDefined = true;
 
-            } else if (characterIsAcceptableFigure(currentSymbol)) {
-                inPortals.add(new Portal(currentSymbol, currentX, currentY));
+            } else if (compliance.containsKey(currentSymbol)) {
+                inPortals.add(
+                        new Portal(IN, currentX, currentY, currentSymbol, compliance.get(currentSymbol)));
 
                 gameMap.mapObjects[currentX][currentY] =
                         new MapObject(Species.PORTAL_IN, currentX, currentY, currentSymbol);
@@ -182,6 +204,7 @@ public class GameMap {
     private static boolean characterIsAcceptableFigure(Character symbol) {
         return symbol == 'A' || symbol == 'B' || symbol == 'C' || symbol == 'D' || symbol == 'E' || symbol == 'F' || symbol == 'G';
     }
+
     //-----------------------------------------------------------------------------------
 
     //Методы для тестов
@@ -297,8 +320,10 @@ public class GameMap {
                     break;
                 case 'W':
                     nextSteps[i] = NextStep.WAIT;
+                    break;
                 case 'S':
                     nextSteps[i] = NextStep.USE_RAZOR;
+                    break;
             }
 
         }
@@ -356,6 +381,16 @@ public class GameMap {
                 } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
+
+                    //Закрываем входы связанные с выходом
+                    ArrayList<Integer> xCoordinateThatMustBeClosed =
+                            portalSystem.getXCoordinateThatMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    ArrayList<Integer> yCoordinateThatMustBeClosed =
+                            portalSystem.getYCoordinateThatWeMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    for (int i = 0; i < xCoordinateThatMustBeClosed.size(); i++)
+                        mapObjects[xCoordinateThatMustBeClosed.get(i)][yCoordinateThatMustBeClosed.get(i)].
+                                setSpecies(Species.AIR);
+
                     int oldX = bot.getX();
                     int oldY = bot.getY();
                     bot.setX(newX);
@@ -413,6 +448,16 @@ public class GameMap {
                 } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
+
+                    //Закрываем входы связанные с выходом
+                    ArrayList<Integer> xCoordinateThatMustBeClosed =
+                            portalSystem.getXCoordinateThatMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    ArrayList<Integer> yCoordinateThatMustBeClosed =
+                            portalSystem.getYCoordinateThatWeMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    for (int i = 0; i < xCoordinateThatMustBeClosed.size(); i++)
+                        mapObjects[xCoordinateThatMustBeClosed.get(i)][yCoordinateThatMustBeClosed.get(i)].
+                                setSpecies(Species.AIR);
+
                     int oldX = bot.getX();
                     int oldY = bot.getY();
                     bot.setX(newX);
@@ -471,6 +516,16 @@ public class GameMap {
                 } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
+
+                    //Закрываем входы связанные с выходом
+                    ArrayList<Integer> xCoordinateThatMustBeClosed =
+                            portalSystem.getXCoordinateThatMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    ArrayList<Integer> yCoordinateThatMustBeClosed =
+                            portalSystem.getYCoordinateThatWeMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    for (int i = 0; i < xCoordinateThatMustBeClosed.size(); i++)
+                        mapObjects[xCoordinateThatMustBeClosed.get(i)][yCoordinateThatMustBeClosed.get(i)].
+                                setSpecies(Species.AIR);
+
                     int oldX = bot.getX();
                     int oldY = bot.getY();
                     bot.setX(newX);
@@ -508,6 +563,16 @@ public class GameMap {
                 } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
+
+                    //Закрываем входы связанные с выходом
+                    ArrayList<Integer> xCoordinateThatMustBeClosed =
+                            portalSystem.getXCoordinateThatMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    ArrayList<Integer> yCoordinateThatMustBeClosed =
+                            portalSystem.getYCoordinateThatWeMustBeClosed(mapObjects[newX][newY].getSymbol());
+                    for (int i = 0; i < xCoordinateThatMustBeClosed.size(); i++)
+                        mapObjects[xCoordinateThatMustBeClosed.get(i)][yCoordinateThatMustBeClosed.get(i)].
+                                setSpecies(Species.AIR);
+
                     int oldX = bot.getX();
                     int oldY = bot.getY();
                     bot.setX(newX);
@@ -537,16 +602,17 @@ public class GameMap {
                 break;
 
             case USE_RAZOR:
+                if (razors != 0) {
+                    razors--;
+                    for (int i = bot.getX() - 1; i < bot.getX() + 2; i++)
+                        for (int j = bot.getY() - 1; j < bot.getY() + 2; j++) {
+                            MapObject current = mapObjects[i][j];
+                            if (current.getSpecies() == Species.BEARD)
+                                current.setSpecies(Species.AIR);
+                        }
 
-                for (int i = bot.getX() - 1; i < bot.getX() + 2; i++)
-                    for (int j = bot.getY() - 1; j < bot.getY() + 2; j++) {
-                        MapObject current = mapObjects[i][j];
-                        if (current.getSpecies() == Species.BEARD)
-                            current.setSpecies(Species.AIR);
-                    }
-
+                }
                 break;
-
             case WAIT:
                 break;
 
