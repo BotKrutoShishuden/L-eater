@@ -706,9 +706,14 @@ public class GameMap {
     private void growBeard(GameMap workMap, int xBeard, int yBeard) {
         for (int i = xBeard - 1; i < xBeard + 2; i++)
             for (int j = yBeard - 1; j < yBeard + 2; j++) {
+            try {
                 MapObject current = workMap.getMapObjects()[i][j];
                 if (current.getSpecies() == Species.AIR)
                     mapObjects[i][j].setSpecies(Species.BEARD);
+            }
+            catch(ArrayIndexOutOfBoundsException e){
+                continue;
+            }
             }
     }
 

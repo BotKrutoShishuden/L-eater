@@ -105,7 +105,7 @@ public class GameMapTest {
                 assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
                 assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
                 assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
-                //assertEquals(outputMap.toString(), inputMap.toString());
+                assertEquals(outputMap.toString(), inputMap.toString());
 
 
                 i++;
@@ -162,6 +162,7 @@ public class GameMapTest {
     @Test
     public void difficultTest() {
         makeDifficultTestFromFormattedDirectory(3, "difficult test", "maps/testsForDifficultIncidents/0_test.map");
+
     }
 
     @Test
