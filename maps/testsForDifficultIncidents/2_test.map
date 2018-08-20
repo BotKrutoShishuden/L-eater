@@ -1,0 +1,67 @@
+is
+           ##########
+        ####..******####
+      ###..  3ABCDEF...##
+      ##                 ##
+     ###                  ##
+    ###.....\\\...\\\.....###
+    #..     \\\ * \\\      ##
+    ##          *          ##
+     ###       ***        ##
+       #*****************##
+       ###..............##
+         ###...........##
+           ####WR..W####
+              ##L####
+               .....
+           ######  ######
+          ##1\! G##2 !\H##
+           ######  ######
+ie
+
+Trampoline A targets 1
+Trampoline B targets 1
+Trampoline C targets 1
+Trampoline D targets 1
+Trampoline E targets 1
+Trampoline F targets 1
+Trampoline G targets 2
+Trampoline H targets 3
+Flooding 10
+Growth 5
+Razors 10
+
+c
+RRLRURRRRULWRUUUULLULDLULLLLDLULDRUURUURRRRRRRRRRRRRDSRSRDSDSDSDSSRDSDSDLSLSLWWWLD
+RRLRURRRRULSRUUUULLULDLULLLLDLULDRUURUURRRRRRRRRRRRRDSRSRDSDSDSDSSRDSDSDLSLSLSSSLD
+c
+os
+           ########## WWWWWWW
+        ####..WWWWWW####WWWWW
+      ###..WWWWWWWWW...##WWWW
+      ## WWWWWWWWWWWWWWWW##WW
+     ### WWWWWWWW**WWWWWWW##W
+    ###.....WWWWWWWWW.....###
+    #..  WWWWWWW*WWWWWWWWWW##
+    ##   WWWWWW**WWWWWWWWWW##
+     ### WWWWW***  WWWWWWW##
+       #********* *WWWW**##
+       ###.......*** WW.##
+         ###.....RW****##
+           ####WWWWW####
+              ##O####
+               .....
+           ######  ######
+          ##     ##     ##
+           ######  ######
+oe
+
+F_Growth 5
+F_Razors 1
+F_Flooding 10
+F_Score 268
+F_Moves 82
+F_Lambda 14
+F_LambdaMax 14
+F_WaterLevel 8
+F_GameCondition RB_CRUSHED

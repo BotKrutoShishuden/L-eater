@@ -1,9 +1,12 @@
 package MapObject;
 
+import java.util.Objects;
+
 public class MapObject {
     private Species species;
     private int x;
     private int y;
+    private Character symbol;
 
     //плюс координаты
     public MapObject(Species species, int x, int y) {
@@ -12,6 +15,12 @@ public class MapObject {
         this.y = y;
     }
 
+    public MapObject(Species species, int x, int y, Character symbol) {
+        this.species = species;
+        this.x = x;
+        this.y = y;
+        this.symbol = symbol;
+    }
 
     protected MapObject() {
     }
@@ -21,6 +30,23 @@ public class MapObject {
     public String toString() {
         return species.name();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MapObject)) return false;
+        MapObject mapObject = (MapObject) o;
+        return x == mapObject.x &&
+                y == mapObject.y &&
+                species == mapObject.species;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(species, x, y);
+    }
+
 
     public Species getSpecies() {
         return species;
@@ -48,8 +74,12 @@ public class MapObject {
                 return 'R';
             case AIR:
                 return ' ';
-            case LIFT:
+            case C_LIFT:
                 return 'L';
+            case O_LIFT:
+                return 'O';
+            case LAMBDA_STONE:
+                return '@';
             case WALL:
                 return '#';
             case STONE:
@@ -58,9 +88,22 @@ public class MapObject {
                 return '\'';
             case EARTH:
                 return '.';
-
+            case BEARD:
+                return 'W';
+            case RAZOR:
+                return '!';
+            case PORTAL_IN:
+                return symbol;
+            case PORTAL_OUT:
+                return symbol;
+            default:
+                return 'E';
         }
-        return 'E';
+
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
     }
 
 }

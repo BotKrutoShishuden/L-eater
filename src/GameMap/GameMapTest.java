@@ -1,226 +1,178 @@
 package GameMap;
 
-import org.junit.Before;
+import Bot.NextStep;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
 
-import static Bot.NextStep.LEFT;
-import static Bot.NextStep.RIGHT;
+import java.io.*;
+
 import static org.junit.Assert.*;
 
 public class GameMapTest {
-    private final int mapsDigit = 5;
-    private GameMap gameMaps[] = new GameMap[mapsDigit];
+
+    //Методы для автоматизации и облегчения тестирования
+    private void makeTestFromFormattedFile(String address) throws IOException, NullPointerException {
 
 
-    @Before
-    public void buildMaps() {
-        String address = "..\\L-eater\\maps\\0_test.map";
-        gameMaps[0] = new GameMap(address);
-        for (int i = 1; i < mapsDigit; i++) {
-            address = address.replace(i - 1 + "", i + "");
-            gameMaps[i] = new GameMap(address);
-        }
+        GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
+
+        NextStep nextSteps[] = GameMap.cutSteps(address);
+
+        inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
+        inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+        inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+
+        for (NextStep nextStep : nextSteps)
+            inputMap.moveAllObjects(nextStep);
+
+        GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
+
+        assertEquals(outputMap.toString(), inputMap.toString());
+
 
     }
 
 
-    @Test
-    public void constructor() {
-        assertEquals(true, gameMaps[0].getMaxX() == 7);
-        assertEquals(true, gameMaps[0].getMaxY() == 4);
-
-    }
-
-    private void leftStep() {
+    private void makeTestFromFormattedDirectory(int testNumber, String testName, String address) {
         int numberOfErrorTest = 0;
+
+
         try {
 
-            //0----------------------------------------------------------------------------------
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#     #\n" +
-                            "#######\n", gameMaps[0].toString());
-
-            gameMaps[0].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#######\n" +
-                            "# R * #\n" +
-                            "#*    #\n" +
-                            "#######\n", gameMaps[0].toString());
-
-            numberOfErrorTest++;
-
-            //1----------------------------------------------------------------------------------
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-            gameMaps[1].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#######\n" +
-                            "#*R * #\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-
-            numberOfErrorTest++;
-            //2----------------------------------------------------------------------------------
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####\n", gameMaps[2].toString());
-
-            gameMaps[2].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####\n", gameMaps[2].toString());
-
-            numberOfErrorTest++;
-
-            //3----------------------------------------------------------------------------------
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-            gameMaps[3].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-
-            numberOfErrorTest++;
-
-            //4----------------------------------------------------------------------------------
-            assertEquals(
-                    "#########\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#   R   #\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#########\n", gameMaps[4].toString());
-
-
-            gameMaps[4].moveAllObjects(LEFT);
-
-
-            assertEquals(
-                    "#########\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#  R    #\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#########\n", gameMaps[4].toString());
-
-            gameMaps[4].moveAllObjects(LEFT);
-            gameMaps[4].moveAllObjects(LEFT);
-
-            assertEquals(
-                    "#########\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#R      #\n" +
-                            "#       #\n" +
-                            "#       #\n" +
-                            "#########\n", gameMaps[4].toString());
-
+            for (int i = 0; i < testNumber; ) {
+                makeTestFromFormattedFile(address);
+                numberOfErrorTest++;
+                i++;
+                address = address.replace("" + (i - 1), "" + i);
+            }
 
         } catch (ComparisonFailure e) {
-            System.out.println("Error in left step\nTest number = " + numberOfErrorTest);
+            System.out.println("Error in " + testName + "\nTest number = " + numberOfErrorTest);
             throw e;
+        } catch (IOException e) {
+            System.out.println("Error in Path " + testName + "\nTest number = " + numberOfErrorTest);
+        } catch (NullPointerException n) {
+            System.out.println("Error in Formatting " + testName + "\nTest number = " + numberOfErrorTest);
+            throw new ComparisonFailure
+                    ("PROBLEMS WITH FORMATTING", "FORMATTING TEST", "NOT FORMATTING TEST");
         }
     }
 
-    private void rightStep() {
+
+    private void makeDifficultTestFromFormattedDirectory(int testNumber, String testName, String address) {
+        int i = 0;
         try {
 
+            for (i = 0; i < testNumber; ) {
 
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#     #\n" +
-                            "#######\n", gameMaps[0].toString());
+                GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
+                inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
+                inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+                inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
 
-            gameMaps[0].moveAllObjects(RIGHT);
+                NextStep nextSteps[] = GameMap.cutSteps(address);
 
-            assertEquals(
-                    "#######\n" +
-                            "# * R #\n" +
-                            "#    *#\n" +
-                            "#######\n", gameMaps[0].toString());
+                //TestingOf GameMap.moveToLastCondition()
+                for (NextStep nextStep : nextSteps)
+                    inputMap.moveAllObjects(nextStep);
 
+                for (NextStep nextStep : nextSteps)
+                    inputMap.moveAllObjects(NextStep.BACK);
 
-            assertEquals(
-                    "#######\n" +
-                            "# *R* #\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
-
-            gameMaps[1].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "#######\n" +
-                            "# * R*#\n" +
-                            "#.   ##\n" +
-                            "#######\n", gameMaps[1].toString());
+                for (NextStep nextStep : nextSteps)
+                    inputMap.moveAllObjects(nextStep);
+                //TestingOf GameMap.moveToLastCondition()
 
 
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####", gameMaps[2].toString());
+                GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
+                outputMap.setGrowth(GameMap.cutParamAfterWord(address, "F_Growth "));
+                outputMap.setRazors(GameMap.cutParamAfterWord(address, "F_Razors "));
+                outputMap.setFlooding(GameMap.cutParamAfterWord(address, "F_Flooding "));
+                outputMap.setScore(GameMap.cutParamAfterWord(address, "F_Score "));
+                outputMap.setAmountOfSteps(GameMap.cutParamAfterWord(address, "F_Moves "));
+                outputMap.setLamdasNumber(GameMap.cutParamAfterWord(address, "F_Lambda "));
+                outputMap.setMaxLambdasNumber(GameMap.cutParamAfterWord(address, "F_LambdaMax "));
+                outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
+                outputMap.setGameCondition(GameMap.cutConditionAfterWord(address, "F_GameCondition "));
 
-            gameMaps[2].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "#####\n" +
-                            "#*R*#\n" +
-                            "#   #\n" +
-                            "#####", gameMaps[2].toString());
-
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
-
-            gameMaps[2].moveAllObjects(RIGHT);
-
-            assertEquals(
-                    "###\n" +
-                            "#R#\n" +
-                            "# #\n" +
-                            "###\n", gameMaps[3].toString());
+                assertEquals(outputMap.getGrowth(), inputMap.getGrowth());
+                assertEquals(outputMap.getRazors(), inputMap.getRazors());
+                assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
+                assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
+                assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
+                //assertEquals(outputMap.getScore(), inputMap.getScore());
+                assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
+                assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
+                assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
+                assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
+                assertEquals(outputMap.toString(), inputMap.toString());
 
 
-        } catch (ComparisonFailure e) {
-            System.out.println("Error in left step");
+                i++;
+                address = address.replace((i - 1) + "", i + "");
+                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AssertionError e) {
+            System.out.println("Comparison failure in " + testName);
+            System.out.println("Test number = " + (i));
             throw e;
+        } catch (NullPointerException n) {
+            System.out.println("Null pointer exception in " + testName);
+            System.out.println("Test number = " + (i));
+            throw n;
         }
+
+    }
+    //-----------------------------------------------------------------------------------
+
+    @Test
+    public void moveBot() {
+        makeTestFromFormattedDirectory(5, "left step tests", "maps/A_moveBotTests/Left/0_test.map");
+
+        makeTestFromFormattedDirectory(5, "right step tests", "maps/A_moveBotTests/Right/0_test.map");
+
+        makeTestFromFormattedDirectory(5, "down step tests", "maps/A_moveBotTests/Down/0_test.map");
+
+        makeTestFromFormattedDirectory(5, "up step tests", "maps/A_moveBotTests/Up/0_test.map");
+
 
     }
 
     @Test
-    public void moveAllObjects() {
-        leftStep();
+    public void moveStones() {
 
+        makeTestFromFormattedDirectory(5, "stay step & stones tests", "maps/B_moveStoneTests/0_test.map");
+
+    }
+
+    @Test
+    public void growBeard() {
+        makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "maps/growBeardTests/0_test.map");
+    }
+
+    //-----------------------------------------------------------------------------------
+
+    @Test
+    public void conditionTest() {
+        makeDifficultTestFromFormattedDirectory
+                (3, "condtition test", "maps/conditionTests/0_test.map");
+    }
+
+    @Test
+    public void difficultTest() {
+        makeDifficultTestFromFormattedDirectory(3, "difficult test", "maps/testsForDifficultIncidents/0_test.map");
+
+    }
+
+    @Test
+    public void cutNormalMap() {
+        GameMap gameMap = GameMap.cutNormalMap("maps/beard1.map");
+
+        assertEquals(10, gameMap.getMaxX());
+        assertEquals(10, gameMap.getMaxY());
+        assertEquals(15, gameMap.getGrowth());
+        assertEquals(0, gameMap.getRazors());
 
     }
 }

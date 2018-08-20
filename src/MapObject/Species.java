@@ -2,6 +2,10 @@ package MapObject;
 
 public enum Species {
 
-    STONE, WALL, LIFT, LAMBDA, EARTH, AIR, BOT;
+    BOT,
+    STONE, WALL, EARTH, AIR,
+    C_LIFT, O_LIFT,
+    LAMBDA, LAMBDA_STONE, BEARD, RAZOR,
+    PORTAL_IN, PORTAL_OUT
 
 }

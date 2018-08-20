@@ -1,0 +1,48 @@
+is
+#####L######
+#....R....A#
+#..........#
+#\.  #@\ ..#
+#\...#*  ###
+#\.........#
+#\..*.@....#
+####@@.  ..#
+#....#.. ###
+#....#..**.#
+#.1..#  .\\#
+############
+ie
+
+Trampoline A targets 1
+Growth 0
+Razors 0
+Flooding 0
+
+
+c
+LLLLDDDDDRRURRRRDRDDLLURULDDDDRRRRULLLLUUUUUURUURRRRRUULDDWRLUURURRDDDUUUUUUUUULU
+c
+
+os
+#####O######
+#          #
+# ....  ...#
+# .  #   ..#
+# ...#   ###
+# .     ...#
+#    .   ..#
+####     ..#
+#..  #   ###
+#..  #     #
+#.  *# *** #
+############
+oe
+
+F_Growth 0
+F_Razors 0
+F_Flooding 0
+F_Score 644
+F_Moves 81
+F_Lambda 11
+F_LambdaMax 11
+F_WaterLevel 0
