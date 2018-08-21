@@ -377,7 +377,6 @@ public class GameMap {
                 if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 175;
                 } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() - 1][bot.getY()].getSymbol());
@@ -512,7 +511,6 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 175;
                 } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() - 1].getSymbol());
@@ -559,7 +557,6 @@ public class GameMap {
                 if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 175;
                 } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX()][bot.getY() + 1].getSymbol());
@@ -791,9 +788,13 @@ public class GameMap {
     }
 
     public void moveAllObjects(NextStep botNextStep) {
-        if (botNextStep == NextStep.BACK) {
+        if (gameCondition != GameCondition.STILL_MINING)
+            return;
+        else if (botNextStep == NextStep.BACK) {
             if (previousMap != null)
                 backToLastCondition();
+        } else if (botNextStep == NextStep.ABORT) {
+            gameCondition = GameCondition.ABORTED;
         } else {
             previousMap = this.copy();
 
@@ -802,7 +803,6 @@ public class GameMap {
             GameMap workMap = this.copy();
 
             amountOfSteps++;
-            score--;
 
 
             for (int x = 0; x < maxX; x++)
@@ -832,10 +832,25 @@ public class GameMap {
 
 
         }
-        if (gameCondition == RB_DROWNED)
-            score -= 1550;
-        if (gameCondition == RB_CRUSHED)
-            score -= 175;
+        switch (gameCondition) {
+            case RB_DROWNED:
+                score -= 1550;
+            case RB_CRUSHED:
+                score -= 175;
+                break;
+            case ABORTED:
+                score += 0;
+                break;
+            case WIN:
+                score += 175;
+                break;
+            case STILL_MINING:
+                score--;
+                break;
+            case NULL_CONDITION:
+                break;
+        }
+
 
     }
     //-----------------------------------------------------------------------------------

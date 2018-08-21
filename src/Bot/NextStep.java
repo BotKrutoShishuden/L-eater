@@ -1,7 +1,7 @@
 package Bot;
 
 public enum NextStep {
-    UP, DOWN, LEFT, RIGHT, WAIT, USE_RAZOR, BACK;
+    UP, DOWN, LEFT, RIGHT, WAIT, USE_RAZOR, BACK, ABORT;
 
     public char getSymbol() {
         switch (this) {
@@ -20,6 +20,8 @@ public enum NextStep {
                 return 'U';
             case BACK:
                 return 'B';
+            case ABORT:
+                return 'A';
 
         }
         return 'E';
