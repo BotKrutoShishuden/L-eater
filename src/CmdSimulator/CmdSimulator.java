@@ -12,14 +12,10 @@ public class CmdSimulator {
 
     public static void main(String[] args) {
         try {
-            String address = "maps/testsForDifficultIncidents/1_test.map";
+            String address = "maps/beard0.map";
 
 
-
-            GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
-            inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
-            inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
-            inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+            GameMap inputMap = GameMap.cutNormalMap(address);
 
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));

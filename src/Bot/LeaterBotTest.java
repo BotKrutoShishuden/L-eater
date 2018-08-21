@@ -3,20 +3,34 @@ package Bot;
 import GameMap.GameMap;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class LeaterBotTest {
+    private GameMap gameMap;
+    private LeaterBot leaterBot;
+    private List<NextStep> nextSteps;
 
-    @Test
-    public void calculateBestSteps() {
+
+    private List<NextStep> calculateBestSteps(String address) {
+        gameMap = GameMap.cutNormalMap(address);
+        leaterBot = new LeaterBot(gameMap);
+        return leaterBot.calculateBestSteps();
+
     }
 
     @Test
     public void beard0() {
-        GameMap gameMap = GameMap.cutNormalMap("maps/beard0.map");
-        LeaterBot leaterBot = new LeaterBot(gameMap);
-        for (NextStep nextStep : leaterBot.calculateBestSteps())
+        nextSteps = calculateBestSteps("maps/beard0.map");
+        for (NextStep nextStep : nextSteps) {
             System.out.print(nextStep.getSymbol());
+            gameMap.moveAllObjects(nextStep);
+        }
+
+        assertEquals(nextSteps.size(), gameMap.getAmountOfSteps());
+        assertEquals(true, gameMap.getScore() > 0);
+
 
     }
 }
