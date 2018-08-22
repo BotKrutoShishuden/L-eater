@@ -1,5 +1,6 @@
 package Bot;
 /*TODO добавить коэфициент выживаемости SmallBot,уваеличивающийся, при ислледовании новых клеток*/
+
 import GameMap.*;
 import MapObject.*;
 
@@ -7,93 +8,17 @@ import java.util.*;
 
 
 public class LeaterBot extends MapObject {
-    private GameMap gameMap;
+    private GameMap mainGameMap;
     private List<SmallBot> smallBots;
-    private int maxSmallBotSize = 1000;
-    private SmallBot bestSmallBotEver;
 
-    private class SmallBot implements Comparable<SmallBot> {
-        private GameMap gameMap;
-        private ArrayList<NextStep> steps;
-
-        SmallBot(GameMap oldMap, List<NextStep> oldSteps, NextStep nextStep) {
-            steps = new ArrayList<>();
-            steps.addAll(oldSteps);
-            steps.add(nextStep);
-
-            gameMap = oldMap.copy();
-            gameMap.moveAllObjects(nextStep);
-        }
-
-        private void setCondtitions(SmallBot smallBot) {
-            gameMap = smallBot.gameMap.copy();
-
-            steps.clear();
-            steps.addAll(smallBot.getSteps());
-        }
-
-        private GameMap getGameMap() {
-            return gameMap;
-        }
-
-        private List<NextStep> getSteps() {
-            return steps;
-        }
-
-        private int getScore() {
-            return gameMap.getScore();
-        }
-
-        private GameCondition getGameCondition() {
-            return gameMap.getGameCondition();
-        }
-
-        private int getX() {
-            return gameMap.getBot().getX();
-        }
-
-        private int getY() {
-            return gameMap.getBot().getY();
-        }
-
-        private List<NextStep> getStepsOfRange(int from, int to) {
-            List<NextStep> result = new ArrayList<>();
-            for (int i = from; i < to; i++)
-                result.add(steps.get(i));
-            return result;
-
-        }
-
-        @Override
-        public String toString() {
-            return "Score " + getScore() + ", Steps " + getSteps().size() + "\n"
-                    + toStringStepsSequence();
-        }
-
-        public String toStringStepsSequence() {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (NextStep step : steps)
-                stringBuilder.append(step.getSymbol());
-
-            return stringBuilder.toString();
-        }
+    static final int MAX_GENERATION_DIGIT = 200;
+    static final int START_BONUS_OF_RESEARCH = 10;
+    static final int BONUS_OF_RESEARCH_DIVIDER = 2;
+    private static final int MAX_SMALL_BOT_SIZE = 1000;
 
 
-        @Override
-        public int compareTo(SmallBot o) {
-            if (getScore() > o.getScore())
-                return 1;
-            else if (getScore() < o.getScore())
-                return -1;
-            else
-                return Integer.compare(o.getSteps().size(), getSteps().size());
-
-        }
-    }
-
-    LeaterBot(GameMap gameMap) {
-        this.gameMap = gameMap;
+    LeaterBot(GameMap mainGameMap) {
+        this.mainGameMap = mainGameMap;
         smallBots = new ArrayList<>();
     }
 
@@ -116,47 +41,53 @@ public class LeaterBot extends MapObject {
 
     }
 
-    private boolean smartAdd(List<SmallBot> smallBots,
-                             GameMap gameMap, List<NextStep> oldSteps, NextStep nextStep) {
-        if (gameMap.getGameCondition() == GameCondition.ABORTED)
+    private boolean smartAdd(List<SmallBot> smallBots, SmallBot oldBot, NextStep nextStep) {
+        if (oldBot.getGameMap().getGameCondition() == GameCondition.ABORTED)
             return false;
-        int oldListSize = smallBots.size();
-        int botX = gameMap.getBot().getX(),
-                botY = gameMap.getBot().getY();
 
+        int botX = oldBot.getGameMap().getBot().getX();
+        int botY = oldBot.getGameMap().getBot().getY();
+
+        GameMap oldMap = oldBot.getGameMap();
+        List<NextStep> oldSteps = oldBot.getSteps();
+        int oldRate = oldBot.getSurvivalRate();
+        int oldBonusOfResearch[][] = oldBot.getBonusOfResearch();
+
+        int oldListSize = smallBots.size();
 
         switch (nextStep) {
             case UP:
-                if (SpeciesIsAcceptable(gameMap.getMapObjects()[botX][botY - 1].getSpecies()))
-                    smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX][botY - 1].getSpecies()))
+                    smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
             case DOWN:
-                if (SpeciesIsAcceptable(gameMap.getMapObjects()[botX][botY + 1].getSpecies()))
-                    smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX][botY + 1].getSpecies()))
+                    smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
             case LEFT:
-                if (SpeciesIsAcceptable(gameMap.getMapObjects()[botX - 1][botY].getSpecies()))
-                    smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX - 1][botY].getSpecies()))
+                    smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
             case RIGHT:
-                if (SpeciesIsAcceptable(gameMap.getMapObjects()[botX + 1][botY].getSpecies()))
-                    smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX + 1][botY].getSpecies()))
+                    smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
             case WAIT:
-                smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
             case USE_RAZOR:
-                if (UsingOfRazorIsAcceptable(gameMap, botX, botY))
-                    smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                if (UsingOfRazorIsAcceptable(oldMap, botX, botY))
+                    smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
             case ABORT:
-                smallBots.add(new SmallBot(gameMap, oldSteps, nextStep));
+                smallBots.add(new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch));
                 break;
 
         }
         return oldListSize != smallBots.size();
 
     }
+
     //-----------------------------------------------------------------------------------
 
     //Контроль похожих ботов
@@ -199,8 +130,8 @@ public class LeaterBot extends MapObject {
     private int calculateAmountsOfBotsByStep(List<NextStep> stepSequence) {
         int digit = 0;
         for (SmallBot smallBot : smallBots)
-            if (smallBot.steps.size() >= stepSequence.size())
-                if (smallBot.getStepsOfRange(0, stepSequence.size()).equals(stepSequence))
+            if (smallBot.getSteps().size() >= stepSequence.size())
+                if (smallBot.copyListStepsOfRange(0, stepSequence.size()).equals(stepSequence))
                     digit++;
 
         return digit;
@@ -242,8 +173,8 @@ public class LeaterBot extends MapObject {
     private int calculateOldestBot() {
         int maxStepsLength = 0;
         for (SmallBot smallBot : smallBots)
-            if (maxStepsLength < smallBot.steps.size())
-                maxStepsLength = smallBot.steps.size();
+            if (maxStepsLength < smallBot.getSteps().size())
+                maxStepsLength = smallBot.getSteps().size();
 
         return maxStepsLength;
     }
@@ -260,13 +191,17 @@ public class LeaterBot extends MapObject {
     //Главный метод
     //-----------------------------------------------------------------------------------
     public List<NextStep> calculateBestSteps() {
-        bestSmallBotEver = new SmallBot(gameMap, new ArrayList<>(), NextStep.ABORT);
-        smartAdd(smallBots, gameMap, new ArrayList<>(), NextStep.LEFT);
-        smartAdd(smallBots, gameMap, new ArrayList<>(), NextStep.RIGHT);
-        smartAdd(smallBots, gameMap, new ArrayList<>(), NextStep.UP);
-        smartAdd(smallBots, gameMap, new ArrayList<>(), NextStep.DOWN);
-        smartAdd(smallBots, gameMap, new ArrayList<>(), NextStep.WAIT);
-        smartAdd(smallBots, gameMap, new ArrayList<>(), NextStep.USE_RAZOR);
+        SmallBot initBot = new SmallBot(mainGameMap);
+
+        SmallBot bestSmallBotEver = new SmallBot(mainGameMap, initBot.getSteps(), NextStep.ABORT,
+                initBot.getSurvivalRate(), initBot.getBonusOfResearch());
+
+        smartAdd(smallBots, initBot, NextStep.LEFT);
+        smartAdd(smallBots, initBot, NextStep.RIGHT);
+        smartAdd(smallBots, initBot, NextStep.UP);
+        smartAdd(smallBots, initBot, NextStep.DOWN);
+        smartAdd(smallBots, initBot, NextStep.WAIT);
+        smartAdd(smallBots, initBot, NextStep.USE_RAZOR);
 
         for (SmallBot smallBot : smallBots)
             if (smallBot.getGameCondition() == GameCondition.RB_DROWNED ||
@@ -274,23 +209,22 @@ public class LeaterBot extends MapObject {
                 smallBots.remove(smallBot);
 
         int generationDigit = 1;
-        SmallBot bestBotInGeneration=null;
-        while (generationDigit < 1000) {
+
+        while (generationDigit < MAX_GENERATION_DIGIT) {
             List<SmallBot> newSmallBots = new ArrayList<>();
             for (SmallBot smallBot : smallBots) {
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.ABORT);
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.LEFT);
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.RIGHT);
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.UP);
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.DOWN);
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.WAIT);
-                smartAdd(newSmallBots, smallBot.getGameMap(), smallBot.getSteps(), NextStep.USE_RAZOR);
+                smartAdd(newSmallBots, smallBot, NextStep.ABORT);
+                smartAdd(newSmallBots, smallBot, NextStep.LEFT);
+                smartAdd(newSmallBots, smallBot, NextStep.RIGHT);
+                smartAdd(newSmallBots, smallBot, NextStep.UP);
+                smartAdd(newSmallBots, smallBot, NextStep.DOWN);
+                smartAdd(newSmallBots, smallBot, NextStep.WAIT);
+                smartAdd(newSmallBots, smallBot, NextStep.USE_RAZOR);
             }
+
             for (SmallBot newSmallBot : newSmallBots)
                 if (!(newSmallBot.getGameCondition() == GameCondition.RB_CRUSHED || newSmallBot.getGameCondition() == GameCondition.RB_DROWNED))
                     smallBots.add(newSmallBot);
-                else if (newSmallBot.getGameCondition() == GameCondition.WIN)
-                    return newSmallBot.getSteps();
 
 
             //Проблемы с compareTo у SmartBota
@@ -316,18 +250,12 @@ public class LeaterBot extends MapObject {
                 controlOfSimilarSmallBots(10);
 
 
-//            if (smallBots.size() > maxSmallBotSize) {
-//                int deletedBotsDigit = smallBots.size() - maxSmallBotSize;
-//                for (int i = 0; i < deletedBotsDigit; i++)
-//                    smallBots.remove(smallBots.size() - 1);
-//            }
-
             generationDigit++;
 
-            //Ищем лучшего бота
-            bestBotInGeneration = smallBots.get(0);
-            if (bestSmallBotEver.compareTo(bestBotInGeneration) < 0)
-                bestSmallBotEver.setCondtitions(bestBotInGeneration);
+            //Ищем лучшего бота по очкам
+            for (SmallBot smallBot : smallBots)
+                if (smallBot.getScore() > bestSmallBotEver.getScore())
+                    bestSmallBotEver.setConditions(smallBot);
 
 
             //Удаляем старое поколение
@@ -337,11 +265,16 @@ public class LeaterBot extends MapObject {
                 if (copyBot.getSteps().size() >= generationDigit)
                     smallBots.add(copyBot);
 
+            if (smallBots.size() > MAX_SMALL_BOT_SIZE) {
+                int deletedBotsDigit = smallBots.size() - MAX_SMALL_BOT_SIZE;
+                for (int i = 0; i < deletedBotsDigit; i++)
+                    smallBots.remove(smallBots.size() - 1);
+            }
+
 
         }
-        System.out.println(bestSmallBotEver.toStringStepsSequence());
-        System.out.println(bestBotInGeneration.toStringStepsSequence());
         return bestSmallBotEver.getSteps();
     }
+
 
 }

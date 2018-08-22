@@ -1,5 +1,6 @@
 package Bot;
 
+import GameMap.GameCondition;
 import GameMap.GameMap;
 import org.junit.Test;
 
@@ -8,29 +9,32 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LeaterBotTest {
-    private GameMap gameMap;
-    private LeaterBot leaterBot;
-    private List<NextStep> nextSteps;
 
 
-    private List<NextStep> calculateBestSteps(String address) {
-        gameMap = GameMap.cutNormalMap(address);
-        leaterBot = new LeaterBot(gameMap);
-        return leaterBot.calculateBestSteps();
+    private void testBotOnMap(String address) {
+        GameMap gameMap = GameMap.cutNormalMap(address);
+        LeaterBot leaterBot = new LeaterBot(gameMap);
+        List<NextStep> bestWay = leaterBot.calculateBestSteps();
+
+        for (NextStep nextStep : bestWay) {
+            System.out.print(nextStep.getSymbol());
+            gameMap.moveAllObjects(nextStep);
+
+
+        }
+        assertEquals(bestWay.size(), gameMap.getAmountOfSteps());
+        assertEquals(true, gameMap.getScore() > 0);
+        assertEquals(GameCondition.WIN, gameMap.getGameCondition());
 
     }
 
     @Test
     public void beard0() {
-        nextSteps = calculateBestSteps("maps/beard0.map");
-        for (NextStep nextStep : nextSteps) {
-            System.out.print(nextStep.getSymbol());
-            gameMap.moveAllObjects(nextStep);
-        }
+        testBotOnMap("maps/beard0.map");
+    }
 
-        assertEquals(nextSteps.size(), gameMap.getAmountOfSteps());
-        assertEquals(true, gameMap.getScore() > 0);
-
-
+    @Test
+    public void beard1() {
+        testBotOnMap("maps/beard1.map");
     }
 }
