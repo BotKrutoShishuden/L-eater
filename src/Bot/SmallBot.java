@@ -9,6 +9,7 @@ import GameMap.GameCondition;
 
 import static Bot.LeaterBot.BONUS_OF_RESEARCH_DIVIDER;
 import static Bot.LeaterBot.START_BONUS_OF_RESEARCH;
+import static Bot.LeaterBot.getStartBonusOfResearch;
 
 class SmallBot implements Comparable<SmallBot> {
     private GameMap gameMap;
@@ -22,7 +23,7 @@ class SmallBot implements Comparable<SmallBot> {
         bonusOfResearch = new int[this.gameMap.getMaxX()][this.gameMap.getMaxY()];
         for (int i = 0; i < this.gameMap.getMaxX(); i++)
             for (int j = 0; j < this.gameMap.getMaxY(); j++)
-                bonusOfResearch[i][j] = START_BONUS_OF_RESEARCH;
+                bonusOfResearch[i][j] = getStartBonusOfResearch(gameMap);
 
         steps = new ArrayList<>();
 
@@ -40,7 +41,7 @@ class SmallBot implements Comparable<SmallBot> {
         if (oldBonusOfResearch == null)
             for (int x = 0; x < oldMap.getMaxX(); x++)
                 for (int y = 0; y < oldMap.getMaxY(); y++)
-                    bonusOfResearch[x][y] = START_BONUS_OF_RESEARCH;
+                    bonusOfResearch[x][y] = getStartBonusOfResearch(oldMap);
         else
             for (int x = 0; x < oldMap.getMaxX(); x++)
                 for (int y = 0; y < oldMap.getMaxY(); y++)

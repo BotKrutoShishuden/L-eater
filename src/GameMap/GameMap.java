@@ -35,6 +35,7 @@ public class GameMap {
     private int score;
     private int lamdasNumber;
     private int maxLambdasNumber;
+    private int earthNumber;
 
     private MapObject bot;
     private GameMap previousMap;
@@ -127,6 +128,7 @@ public class GameMap {
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.EARTH, currentX, currentY);
+                    gameMap.earthNumber++;
                     break;
                 case ' ':
                     symbolDefined = true;
@@ -1015,4 +1017,7 @@ public class GameMap {
     }
 
 
+    public int getEarthNumber() {
+        return earthNumber;
+    }
 }

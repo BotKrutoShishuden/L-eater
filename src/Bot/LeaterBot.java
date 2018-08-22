@@ -12,7 +12,7 @@ public class LeaterBot extends MapObject {
     private List<SmallBot> smallBots;
 
     static final int MAX_GENERATION_DIGIT = 200;
-    static final int START_BONUS_OF_RESEARCH = 10;
+    static int START_BONUS_OF_RESEARCH;
     static final int BONUS_OF_RESEARCH_DIVIDER = 2;
     private static final int MAX_SMALL_BOT_SIZE = 1000;
 
@@ -20,6 +20,12 @@ public class LeaterBot extends MapObject {
     LeaterBot(GameMap mainGameMap) {
         this.mainGameMap = mainGameMap;
         smallBots = new ArrayList<>();
+        START_BONUS_OF_RESEARCH = getStartBonusOfResearch(mainGameMap);
+    }
+
+    //Начальный бонус за исследование карты (пока результат не меняется)
+    static int getStartBonusOfResearch(GameMap gameMap) {
+        return (gameMap.getEarthNumber() + gameMap.getMaxLambdasNumber()) ;
     }
 
     //Контроль ненужных добавлений (типо ботов идущих в стену)
@@ -28,16 +34,15 @@ public class LeaterBot extends MapObject {
         return species != Species.PORTAL_OUT && species != Species.WALL && species != Species.BEARD;
     }
 
+    //Возвращает true, если в радиусе 1 клетки есть хотя бы одна борода
     private static boolean UsingOfRazorIsAcceptable(GameMap gameMap, int botX, int botY) {
 
-        return gameMap.getMapObjects()[botX - 1][botY].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX - 1][botY - 1].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX][botY - 1].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX + 1][botY - 1].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX + 1][botY].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX + 1][botY + 1].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX][botY + 1].getSpecies() == Species.BEARD ||
-                gameMap.getMapObjects()[botX - 1][botY + 1].getSpecies() == Species.BEARD;
+        for (int i = botX - 1; i < botX + 2; i++) {
+            for (int j = botY - 1; j < botY + 2; j++) {
+                if (gameMap.getMapObjects()[i][j].getSpecies() == Species.BEARD) return true;
+            }
+        }
+        return false;
 
     }
 
@@ -93,6 +98,8 @@ public class LeaterBot extends MapObject {
     //Контроль похожих ботов
     //List<SmallBot> должен быть предварительно отсоритрован
     //-----------------------------------------------------------------------------------
+
+    //Возвращает количество разных ботов в smallBots
     private int calculateAmountsOfSimilarBots() {
         int differentBotDigit = 1;
         SmallBot diffBot = smallBots.get(0);
@@ -104,6 +111,7 @@ public class LeaterBot extends MapObject {
         return differentBotDigit;
 
     }
+
 
 
     private void controlOfSimilarSmallBots(int maxSimilarBots) {
@@ -123,10 +131,11 @@ public class LeaterBot extends MapObject {
 
         }
         smallBots = reducedListOfSmallBots;
-
     }
+
     //-----------------------------------------------------------------------------------
 
+    //Возвращает количество ботов с указанной последовательностью шагов
     private int calculateAmountsOfBotsByStep(List<NextStep> stepSequence) {
         int digit = 0;
         for (SmallBot smallBot : smallBots)
@@ -137,6 +146,7 @@ public class LeaterBot extends MapObject {
         return digit;
     }
 
+    //Перевод строки с шагами в ArrayList этих шагов
     private List<NextStep> stringToListOfSteps(String string) {
         StringBuilder stringBuilder = new StringBuilder(string);
         List<NextStep> steps = new ArrayList<>();
@@ -170,6 +180,7 @@ public class LeaterBot extends MapObject {
 
     }
 
+    //Выводит максимальное количество совершенных шагов среди всех ботов
     private int calculateOldestBot() {
         int maxStepsLength = 0;
         for (SmallBot smallBot : smallBots)
@@ -179,6 +190,7 @@ public class LeaterBot extends MapObject {
         return maxStepsLength;
     }
 
+    //Находит бота с указанным количеством совершенных шагов
     private int calculateBotWithGenerationNumber(int number) {
         int result = 0;
         for (SmallBot smallBot : smallBots)

@@ -37,4 +37,22 @@ public class LeaterBotTest {
     public void beard1() {
         testBotOnMap("maps/beard1.map");
     }
+
+
+    @Test
+    //Кайфовый exception вылетает, слов нет
+    public void ems1 () {
+        testBotOnMap("maps/ems1.map");
+    }
+
+    @Test
+    public void contest3 (){
+        testBotOnMap("maps/contest3.map");
+    }
+
+    @Test
+    //Не ест дальнюю лямбду, а надо бы
+    public void contest6 (){
+        testBotOnMap("maps/contest6.map");
+    }
 }
