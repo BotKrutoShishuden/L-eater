@@ -25,7 +25,7 @@ public class LeaterBot extends MapObject {
 
     //Начальный бонус за исследование карты (пока результат не меняется)
     static int getStartBonusOfResearch(GameMap gameMap) {
-        return (gameMap.getEarthNumber() + gameMap.getMaxLambdasNumber()) ;
+        return (gameMap.getEarthNumber() + gameMap.getMaxLambdasNumber());
     }
 
     //Контроль ненужных добавлений (типо ботов идущих в стену)
@@ -111,7 +111,6 @@ public class LeaterBot extends MapObject {
         return differentBotDigit;
 
     }
-
 
 
     private void controlOfSimilarSmallBots(int maxSimilarBots) {
@@ -215,10 +214,12 @@ public class LeaterBot extends MapObject {
         smartAdd(smallBots, initBot, NextStep.WAIT);
         smartAdd(smallBots, initBot, NextStep.USE_RAZOR);
 
-        for (SmallBot smallBot : smallBots)
-            if (smallBot.getGameCondition() == GameCondition.RB_DROWNED ||
-                    smallBot.getGameCondition() == GameCondition.RB_CRUSHED)
-                smallBots.remove(smallBot);
+        List<SmallBot> copySmallBots = new ArrayList<>(smallBots);
+        smallBots.clear();
+        for (SmallBot smallBot : copySmallBots)
+            if (!(smallBot.getGameCondition() == GameCondition.RB_DROWNED ||
+                    smallBot.getGameCondition() == GameCondition.RB_CRUSHED))
+                smallBots.add(smallBot);
 
         int generationDigit = 1;
 
