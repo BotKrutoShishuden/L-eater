@@ -23,6 +23,8 @@ public class GameMap {
     private int maxY;
     private int growth = 25;
     private int razors = 0;
+    private int threwedRazors = 0;
+    private int beards = 0;
 
     private int movesUnderWater;
     private int maxMovesUnderWater = 10;
@@ -139,11 +141,13 @@ public class GameMap {
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.RAZOR, currentX, currentY);
+                    gameMap.threwedRazors++;
                     break;
                 case 'W':
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.BEARD, currentX, currentY);
+                    gameMap.beards++;
                     break;
                 case 13://CR
                     while (currentX < gameMap.maxX) {
@@ -1018,5 +1022,13 @@ public class GameMap {
 
     public int getEarthNumber() {
         return earthNumber;
+    }
+
+    public int getThrewedRazors() {
+        return threwedRazors;
+    }
+
+    public int getBeards() {
+        return beards;
     }
 }

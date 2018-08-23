@@ -46,6 +46,16 @@ public class LeaterBotTest {
         testBotOnMap("maps/beard1.map", "beard1", 0, 891);
     }
 
+    @Test
+    public void beard2() {
+        testBotOnMap("maps/beard2.map", "beard2", 0, 0);
+    }
+
+    @Test
+    //Чето с порталами, NullPointer
+    public void beard3() {
+        testBotOnMap("maps/beard3.map", "beard3", 0, 0);
+    }
 
     @Test
     public void ems1() {
@@ -60,11 +70,11 @@ public class LeaterBotTest {
     @Test
     //Не ест дальнюю лямбду, а надо бы
     public void contest6() {
-        testBotOnMap("maps/contest6.map", "contest6", 0, 707);
+        testBotOnMap("maps/contest6.map", "contest6", 0, 712);
     }
 
 
-    //TODO в нормально симуляторе при текузей выходной последовательности бот ломается под камнем
+    //TODO в нормально симуляторе при текущей выходной последовательности бот ломается под камнем
     @Test
     public void horock3() {
         testBotOnMap("maps/horock3.map", "horock3", 0, 1203);
