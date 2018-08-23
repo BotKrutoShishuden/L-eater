@@ -9,10 +9,7 @@ import MapObject.MapObject;
 import MapObject.Species;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 import static GameMap.GameCondition.*;
 
@@ -22,9 +19,9 @@ public class GameMap {
     private int maxX;
     private int maxY;
     private int growth = 25;
-    private int razors = 0;
+    private int razorsNumber = 0;
     private int threwedRazors = 0;
-    private int beards = 0;
+    private int beardsNumber = 0;
 
     private int movesUnderWater;
     private int maxMovesUnderWater = 10;
@@ -40,7 +37,9 @@ public class GameMap {
     private int earthNumber;
 
     private MapObject bot;
+    private List<MapObject> collectedLambdas;
     private GameMap previousMap;
+    public static final boolean STORAGE_PREVIOUS_MAP = false;
     private PortalSystem portalSystem;
 
     //-----------------------------------------------------------------------------------
@@ -61,16 +60,18 @@ public class GameMap {
         }
         bufferedReader.readLine();
 
-        HashMap<Character, Character> compliance = new HashMap<>();
+        //Собираем информацию для о порталах
+        HashMap<Character, Character> portalCompliance = new HashMap<>();
         try {
-            //Собираем информацию для о порталах
+
+
             StringBuilder trampolineInf;
             trampolineInf = new StringBuilder(bufferedReader.readLine());
             while (trampolineInf.toString().contains("Trampoline") &&
                     trampolineInf.toString().contains("targets")) {
                 Character in = trampolineInf.charAt(11);
                 Character out = trampolineInf.charAt(21);
-                compliance.put(in, out);
+                portalCompliance.put(in, out);
                 trampolineInf = new StringBuilder(bufferedReader.readLine());
 
             }
@@ -84,6 +85,7 @@ public class GameMap {
 
         ArrayList<Portal> inPortals = new ArrayList<>();
         ArrayList<Portal> outPortals = new ArrayList<>();
+
         //Заполняем mapObject[][]
         int i = 0;
         while (currentY < gameMap.maxY) {
@@ -147,7 +149,7 @@ public class GameMap {
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.BEARD, currentX, currentY);
-                    gameMap.beards++;
+                    gameMap.beardsNumber++;
                     break;
                 case 13://CR
                     while (currentX < gameMap.maxX) {
@@ -172,7 +174,7 @@ public class GameMap {
 
             }
 
-            if (compliance.containsValue(currentSymbol)) {
+            if (portalCompliance.containsValue(currentSymbol)) {
 
                 outPortals.add(new Portal(OUT, currentX, currentY, currentSymbol));
 
@@ -181,9 +183,9 @@ public class GameMap {
 
                 symbolDefined = true;
 
-            } else if (compliance.containsKey(currentSymbol)) {
+            } else if (portalCompliance.containsKey(currentSymbol)) {
                 inPortals.add(
-                        new Portal(IN, currentX, currentY, currentSymbol, compliance.get(currentSymbol)));
+                        new Portal(IN, currentX, currentY, currentSymbol, portalCompliance.get(currentSymbol)));
 
                 gameMap.mapObjects[currentX][currentY] =
                         new MapObject(Species.PORTAL_IN, currentX, currentY, currentSymbol);
@@ -198,8 +200,10 @@ public class GameMap {
             i++;
 
         }
+
         gameMap.portalSystem = new PortalSystem(inPortals, outPortals);
 
+        gameMap.collectedLambdas = new ArrayList<>();
 
         bufferedReader.close();
         return gameMap;
@@ -289,7 +293,7 @@ public class GameMap {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
             GameMap gameMap = cutMapByEnd(bufferedReader, "");
             gameMap.growth = cutParamAfterWord(address, "Growth ");
-            gameMap.razors = cutParamAfterWord(address, "Razors ");
+            gameMap.razorsNumber = cutParamAfterWord(address, "Razors ");
             return gameMap;
         } catch (IOException e) {
             e.printStackTrace();
@@ -427,10 +431,11 @@ public class GameMap {
 
 
                     if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA) {
+                        collectedLambdas.add(MapObject.CopyMapObject(mapObjects[bot.getX() - 1][bot.getY()]));
                         score += 50;
                         lamdasNumber++;
                     } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.RAZOR)
-                        razors++;
+                        razorsNumber++;
 
 
                     mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
@@ -497,10 +502,11 @@ public class GameMap {
 
 
                     if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA) {
+                        collectedLambdas.add(MapObject.CopyMapObject(mapObjects[bot.getX() + 1][bot.getY()]));
                         score += 50;
                         lamdasNumber++;
                     } else if ((mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.RAZOR))
-                        razors++;
+                        razorsNumber++;
 
                     mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
                     bot.setX(bot.getX() + 1);
@@ -543,10 +549,11 @@ public class GameMap {
                         && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL) {
 
                     if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA) {
+                        collectedLambdas.add(MapObject.CopyMapObject(mapObjects[bot.getX()][bot.getY() - 1]));
                         score += 50;
                         lamdasNumber++;
                     } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.RAZOR)
-                        razors++;
+                        razorsNumber++;
 
                     bot.setY(bot.getY() - 1);
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.BOT);
@@ -589,10 +596,11 @@ public class GameMap {
                         && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
 
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
+                        collectedLambdas.add(MapObject.CopyMapObject(mapObjects[bot.getX()][bot.getY() + 1]));
                         score += 50;
                         lamdasNumber++;
                     } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR)
-                        razors++;
+                        razorsNumber++;
 
 
                     bot.setY(bot.getY() + 1);
@@ -605,8 +613,8 @@ public class GameMap {
                 break;
 
             case USE_RAZOR:
-                if (razors != 0) {
-                    razors--;
+                if (razorsNumber != 0) {
+                    razorsNumber--;
                     for (int i = bot.getX() - 1; i < bot.getX() + 2; i++)
                         for (int j = bot.getY() - 1; j < bot.getY() + 2; j++) {
                             MapObject current = mapObjects[i][j];
@@ -736,7 +744,7 @@ public class GameMap {
         maxX = previousMap.maxX;
         maxY = previousMap.maxY;
         growth = previousMap.growth;
-        razors = previousMap.razors;
+        razorsNumber = previousMap.razorsNumber;
 
         movesUnderWater = previousMap.movesUnderWater;
         waterLevel = previousMap.waterLevel;
@@ -774,7 +782,7 @@ public class GameMap {
         gameMap.maxX = maxX;
         gameMap.maxY = maxY;
         gameMap.growth = growth;
-        gameMap.razors = razors;
+        gameMap.razorsNumber = razorsNumber;
 
         gameMap.movesUnderWater = movesUnderWater;
         gameMap.waterLevel = waterLevel;
@@ -797,13 +805,17 @@ public class GameMap {
         amountOfSteps++;
         if (gameCondition != GameCondition.STILL_MINING)
             return;
-        else if (botNextStep == NextStep.BACK) {
+
+        else if (botNextStep == NextStep.BACK && STORAGE_PREVIOUS_MAP) {
             if (previousMap != null)
                 backToLastCondition();
+
         } else if (botNextStep == NextStep.ABORT) {
             gameCondition = GameCondition.ABORTED;
+
         } else {
-            previousMap = this.copy();
+            if (STORAGE_PREVIOUS_MAP)
+                previousMap = this.copy();
 
             moveBot(botNextStep);
 
@@ -837,20 +849,21 @@ public class GameMap {
 
 
         }
+        score--;
         switch (gameCondition) {
             case RB_DROWNED:
                 score -= 1550;
+                break;
             case RB_CRUSHED:
                 score -= 175;
                 break;
             case ABORTED:
-                score += 0;
+                score += 1;
                 break;
             case WIN:
                 score += 175;
                 break;
             case STILL_MINING:
-                score--;
                 break;
             case NULL_CONDITION:
                 break;
@@ -885,7 +898,7 @@ public class GameMap {
         return maxX == gameMap.maxX &&
                 maxY == gameMap.maxY &&
                 growth == gameMap.growth &&
-                razors == gameMap.razors &&
+                razorsNumber == gameMap.razorsNumber &&
                 movesUnderWater == gameMap.movesUnderWater &&
                 maxMovesUnderWater == gameMap.maxMovesUnderWater &&
                 waterLevel == gameMap.waterLevel &&
@@ -903,7 +916,7 @@ public class GameMap {
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(maxX, maxY, growth, razors, movesUnderWater, maxMovesUnderWater, waterLevel, flooding, gameCondition, amountOfSteps, score, lamdasNumber, maxLambdasNumber, bot, previousMap);
+        int result = Objects.hash(maxX, maxY, growth, razorsNumber, movesUnderWater, maxMovesUnderWater, waterLevel, flooding, gameCondition, amountOfSteps, score, lamdasNumber, maxLambdasNumber, bot, previousMap);
         result = 31 * result + Arrays.hashCode(mapObjects);
         return result;
     }
@@ -920,8 +933,8 @@ public class GameMap {
         this.waterLevel = waterLevel;
     }
 
-    public void setRazors(int razors) {
-        this.razors = razors;
+    public void setRazorsNumber(int razorsNumber) {
+        this.razorsNumber = razorsNumber;
     }
 
     public void setScore(int score) {
@@ -967,8 +980,8 @@ public class GameMap {
         return growth;
     }
 
-    public int getRazors() {
-        return razors;
+    public int getRazorsNumber() {
+        return razorsNumber;
     }
 
     public GameMap getPreviousMap() {
@@ -1028,7 +1041,18 @@ public class GameMap {
         return threwedRazors;
     }
 
-    public int getBeards() {
-        return beards;
+    public int getBeardsNumber() {
+        return beardsNumber;
+    }
+
+    public List<MapObject> getCollectedLambdas() {
+        return collectedLambdas;
+    }
+
+    public boolean setOfCollectedLamdasIsEqual(List<MapObject> lambdas) {
+        for (MapObject lambda : lambdas)
+            if (!collectedLambdas.contains(lambda))
+                return false;
+        return true;
     }
 }

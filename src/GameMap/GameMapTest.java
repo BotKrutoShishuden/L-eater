@@ -19,7 +19,7 @@ public class GameMapTest {
         NextStep nextSteps[] = GameMap.cutSteps(address);
 
         inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
-        inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+        inputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "Razors "));
         inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
 
         for (NextStep nextStep : nextSteps)
@@ -59,7 +59,8 @@ public class GameMapTest {
     }
 
 
-    private void makeDifficultTestFromFormattedDirectory(int testNumber, String testName, String address) {
+    private void makeDifficultTestFromFormattedDirectory(int testNumber, String testName,
+                                                         String address) {
         int i = 0;
         try {
 
@@ -67,26 +68,33 @@ public class GameMapTest {
 
                 GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
                 inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
-                inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+                inputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "Razors "));
                 inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
 
                 NextStep nextSteps[] = GameMap.cutSteps(address);
 
-                //TestingOf GameMap.moveToLastCondition()
-                for (NextStep nextStep : nextSteps)
+                int j = 0;
+                for (NextStep nextStep : nextSteps) {
+                    j++;
                     inputMap.moveAllObjects(nextStep);
-
-                for (NextStep nextStep : nextSteps)
-                    inputMap.moveAllObjects(NextStep.BACK);
-
-                for (NextStep nextStep : nextSteps)
-                    inputMap.moveAllObjects(nextStep);
-                //TestingOf GameMap.moveToLastCondition()
+                }
 
 
+                //TestingOf GameMap.back()
+                if (GameMap.STORAGE_PREVIOUS_MAP) {
+                    for (NextStep nextStep : nextSteps)
+                        inputMap.moveAllObjects(NextStep.BACK);
+
+                    for (NextStep nextStep : nextSteps)
+                        inputMap.moveAllObjects(nextStep);
+                }
+                //
+
+
+                //Эталонная карта
                 GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
                 outputMap.setGrowth(GameMap.cutParamAfterWord(address, "F_Growth "));
-                outputMap.setRazors(GameMap.cutParamAfterWord(address, "F_Razors "));
+                outputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "F_Razors "));
                 outputMap.setFlooding(GameMap.cutParamAfterWord(address, "F_Flooding "));
                 outputMap.setScore(GameMap.cutParamAfterWord(address, "F_Score "));
                 outputMap.setAmountOfSteps(GameMap.cutParamAfterWord(address, "F_Moves "));
@@ -95,12 +103,14 @@ public class GameMapTest {
                 outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
                 outputMap.setGameCondition(GameMap.cutConditionAfterWord(address, "F_GameCondition "));
 
+                //Сравнение
                 assertEquals(outputMap.getGrowth(), inputMap.getGrowth());
-                assertEquals(outputMap.getRazors(), inputMap.getRazors());
+                assertEquals(outputMap.getRazorsNumber(), inputMap.getRazorsNumber());
                 assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
                 assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
                 assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
-                //assertEquals(outputMap.getScore(), inputMap.getScore());
+                assertEquals(inputMap.getLamdasNumber(), inputMap.getCollectedLambdas().size());
+                assertEquals(outputMap.getScore(), inputMap.getScore());//TODO Какого
                 assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
                 assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
                 assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
@@ -110,7 +120,7 @@ public class GameMapTest {
 
                 i++;
                 address = address.replace((i - 1) + "", i + "");
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AssertionError e) {
@@ -172,7 +182,7 @@ public class GameMapTest {
         assertEquals(10, gameMap.getMaxX());
         assertEquals(10, gameMap.getMaxY());
         assertEquals(15, gameMap.getGrowth());
-        assertEquals(0, gameMap.getRazors());
+        assertEquals(0, gameMap.getRazorsNumber());
 
     }
 }

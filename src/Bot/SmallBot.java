@@ -32,12 +32,8 @@ class SmallBot implements Comparable<SmallBot> {
 
     //TODO Скорее всего надо подправить, пока непонятно как он себя ведет
     private int calculateBonusForFoundedRazor(GameMap gameMap) {
-        if (gameMap.getBeards() == 0) return 0;
-        if (gameMap.getRazors() == 0 && gameMap.getBeards() > 0) return gameMap.getBeards() * 10 / gameMap.getGrowth();
-        if (gameMap.getRazors() > 1 && gameMap.getBeards() < 5)
-            return (gameMap.getBeards() - gameMap.getRazors()) * 10 / gameMap.getGrowth();
-        if (gameMap.getBeards() > 5) return gameMap.getBeards();
-        return 1;
+        return 10 * getGameMap().getGrowth() * gameMap.getBeardsNumber() /
+                (gameMap.getRazorsNumber() + 1);
     }
 
     SmallBot(GameMap oldMap, List<NextStep> oldSteps, NextStep nextStep,
@@ -76,9 +72,9 @@ class SmallBot implements Comparable<SmallBot> {
         //Бонусы за бритвы
         int foundedRazorNumber;
         int bonusForFoundedRazor;
-        int oldRazorNumber = oldMap.getRazors();
+        int oldRazorNumber = oldMap.getRazorsNumber();
         gameMap.moveAllObjects(nextStep);
-        foundedRazorNumber = gameMap.getRazors() - oldMap.getRazors();
+        foundedRazorNumber = gameMap.getRazorsNumber() - oldMap.getRazorsNumber();
         if (foundedRazorNumber < 0)
             foundedRazorNumber = 0;
         bonusForFoundedRazor = calculateBonusForFoundedRazor(oldMap.copy()) * foundedRazorNumber;
