@@ -790,6 +790,7 @@ public class GameMap {
     }
 
     public void moveAllObjects(NextStep botNextStep) {
+        amountOfSteps++;
         if (gameCondition != GameCondition.STILL_MINING)
             return;
         else if (botNextStep == NextStep.BACK) {
@@ -803,8 +804,6 @@ public class GameMap {
             moveBot(botNextStep);
 
             GameMap workMap = this.copy();
-
-            amountOfSteps++;
 
 
             for (int x = 0; x < maxX; x++)

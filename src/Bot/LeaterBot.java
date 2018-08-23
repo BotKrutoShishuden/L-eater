@@ -1,5 +1,5 @@
 package Bot;
-/*TODO добавить коэфициент выживаемости SmallBot,уваеличивающийся, при ислледовании новых клеток*/
+
 
 import GameMap.*;
 import MapObject.*;
@@ -10,22 +10,48 @@ import java.util.*;
 public class LeaterBot extends MapObject {
     private GameMap mainGameMap;
     private List<SmallBot> smallBots;
+    static int nobodyNotVisitedWays[][];
 
-    static final int MAX_GENERATION_DIGIT = 200;
-    static int START_BONUS_OF_RESEARCH;
-    static final int BONUS_OF_RESEARCH_DIVIDER = 2;
-    private static final int MAX_SMALL_BOT_SIZE = 1000;
+    //Управление отбором
+    static final int MAX_GENERATION_DIGIT = 100;//TODO высчитывать относительно карты
+    private final int MAX_SMALL_BOT_SIZE = 1000;
+    private final int MAX_SIMILAR_BOTS = 10;
+    private final int MIN_REDUCED_GENERATION = 0;
+
+    //Математика бонусов
+    static final int LOCAL_START_BONUS_OF_RESEARCH = 30;
+    static final int BONUS_OF_RESEARCH_DIVIDER = 5;
+    static final int GLOBAL_BONUS_OF_RESEARCH = 100;
+
+    //Для анализа игры
+    private List<List<NextStep>> observedBotsList;
+    private final boolean OBSERVING_BOTS_MODE = true;
 
 
     LeaterBot(GameMap mainGameMap) {
         this.mainGameMap = mainGameMap;
         smallBots = new ArrayList<>();
-        START_BONUS_OF_RESEARCH = getStartBonusOfResearch(mainGameMap);
+        if (OBSERVING_BOTS_MODE)
+            initSurvivedStepsSequnces();
+
+        nobodyNotVisitedWays = new int[mainGameMap.getMaxX()][mainGameMap.getMaxY()];
+        for (int x = 0; x < mainGameMap.getMaxX(); x++)
+            for (int y = 0; y < mainGameMap.getMaxY(); y++)
+                nobodyNotVisitedWays[x][y] = GLOBAL_BONUS_OF_RESEARCH;
+
+
     }
 
+    private void initSurvivedStepsSequnces() {
+        observedBotsList = new ArrayList<>();
+        observedBotsList.add(stringToListOfSteps("WRRULUUWDWULUUUUUUUUUUURRDDDDDDDDDDLULDDDDDLA"));
+        observedBotsList.add(stringToListOfSteps("DDLWWWWWWWWWWRUUURRDDDRLUUUUUUUUUUUUUULLL"));
+    }
+
+    //TODO
     //Начальный бонус за исследование карты (пока результат не меняется)
     static int getStartBonusOfResearch(GameMap gameMap) {
-        return (gameMap.getEarthNumber() + gameMap.getMaxLambdasNumber());
+        return LOCAL_START_BONUS_OF_RESEARCH;
     }
 
     //Контроль ненужных добавлений (типо ботов идущих в стену)
@@ -34,7 +60,8 @@ public class LeaterBot extends MapObject {
         return species != Species.PORTAL_OUT && species != Species.WALL && species != Species.BEARD;
     }
 
-    //Возвращает true, если в радиусе 1 клетки есть хотя бы одна борода
+    //Возвращает true, есл
+    // и в радиусе 1 клетки есть хотя бы одна борода
     private static boolean UsingOfRazorIsAcceptable(GameMap gameMap, int botX, int botY) {
 
         for (int i = botX - 1; i < botX + 2; i++) {
@@ -47,7 +74,8 @@ public class LeaterBot extends MapObject {
     }
 
     private boolean smartAdd(List<SmallBot> smallBots, SmallBot oldBot, NextStep nextStep) {
-        if (oldBot.getGameMap().getGameCondition() == GameCondition.ABORTED)
+        if (oldBot.getGameMap().getGameCondition() == GameCondition.ABORTED ||
+                oldBot.getGameMap().getGameCondition() == GameCondition.WIN)
             return false;
 
         int botX = oldBot.getGameMap().getBot().getX();
@@ -56,7 +84,7 @@ public class LeaterBot extends MapObject {
         GameMap oldMap = oldBot.getGameMap();
         List<NextStep> oldSteps = oldBot.getSteps();
         int oldRate = oldBot.getSurvivalRate();
-        int oldBonusOfResearch[][] = oldBot.getBonusOfResearch();
+        int oldBonusOfResearch[][] = oldBot.getBonusOfLocalResearch();
 
         int oldListSize = smallBots.size();
 
@@ -112,28 +140,30 @@ public class LeaterBot extends MapObject {
 
     }
 
+    //TODO очень опасное дерьмо в данный момент, надо попробовать это нормально реализовать
+    private void controlOfSimilarSmallBots() {
+        ArrayList<SmallBot> copySmallBots = new ArrayList<>(smallBots);
+        smallBots.clear();
 
-    private void controlOfSimilarSmallBots(int maxSimilarBots) {
-        ArrayList<SmallBot> reducedListOfSmallBots = new ArrayList<>();
-        SmallBot indexBot = smallBots.get(0);
+        SmallBot indexBot = copySmallBots.get(0);
         int numberOfSavedSimilarBots = 0;
-        for (SmallBot smallBot : smallBots) {
-            if (indexBot.compareTo(smallBot) == 0) {
-                if (numberOfSavedSimilarBots < maxSimilarBots) {
-                    reducedListOfSmallBots.add(smallBot);
+        for (int i = 0; i < copySmallBots.size(); i++)
+            if (indexBot.compareTo(copySmallBots.get(i)) == 0) {
+                if (numberOfSavedSimilarBots < MAX_SIMILAR_BOTS) {
+                    smallBots.add(copySmallBots.get(i));
                     numberOfSavedSimilarBots++;
                 }
             } else {
-                indexBot = smallBot;
+                indexBot = copySmallBots.get(i);
                 numberOfSavedSimilarBots = 0;
+                i--;
             }
 
-        }
-        smallBots = reducedListOfSmallBots;
+
     }
 
     //-----------------------------------------------------------------------------------
-
+    //Методы для анализирования в процесса отладки
     //Возвращает количество ботов с указанной последовательностью шагов
     private int calculateAmountsOfBotsByStep(List<NextStep> stepSequence) {
         int digit = 0;
@@ -169,8 +199,11 @@ public class LeaterBot extends MapObject {
                 case 'S':
                     steps.add(NextStep.USE_RAZOR);
                     break;
+                case 'A':
+                    steps.add(NextStep.ABORT);
+                    break;
                 default:
-                    System.out.println("Case undefined");
+                    System.out.println("Case undefined in stringToListOfSteps");
                     break;
             }
 
@@ -189,7 +222,7 @@ public class LeaterBot extends MapObject {
         return maxStepsLength;
     }
 
-    //Находит бота с указанным количеством совершенных шагов
+    //Считает количество ботов с указанным кол-вом совершенных шагов
     private int calculateBotWithGenerationNumber(int number) {
         int result = 0;
         for (SmallBot smallBot : smallBots)
@@ -199,13 +232,63 @@ public class LeaterBot extends MapObject {
         return result;
     }
 
+
+    private SmallBot foundbotWithSteps(List<NextStep> steps, int generation) {
+        steps = headList(steps, generation);
+
+        for (SmallBot smallBot : smallBots) {
+            if (smallBot.getSteps().equals(steps))
+                return smallBot;
+
+        }
+        return null;
+    }
+
+    private int botWithStepsIndex(List<NextStep> steps, int generation) {
+        steps = headList(steps, generation);
+        int i = 0;
+        for (SmallBot smallBot : smallBots) {
+            if (smallBot.getSteps().equals(steps))
+                return i;
+            i++;
+        }
+        return -1;
+
+    }
+
+    private int amountOfBotsBySteps(List<NextStep> steps, int generation) {
+        steps = headList(steps, generation);
+        int number = 0;
+        for (SmallBot smallBot : smallBots)
+            if (smallBot.getSteps().equals(steps))
+                number++;
+
+        return number;
+
+    }
+
+    private List<NextStep> headList(List<NextStep> list, int to) {
+        List<NextStep> copyList = new ArrayList<>(list);
+        List<NextStep> result = new ArrayList<>();
+        int i = 0;
+        for (NextStep nextStep : copyList) {
+            result.add(nextStep);
+            i++;
+            if (i == to)
+                return result;
+
+        }
+        return result;
+
+    }
+
     //Главный метод
     //-----------------------------------------------------------------------------------
     public List<NextStep> calculateBestSteps() {
         SmallBot initBot = new SmallBot(mainGameMap);
 
         SmallBot bestSmallBotEver = new SmallBot(mainGameMap, initBot.getSteps(), NextStep.ABORT,
-                initBot.getSurvivalRate(), initBot.getBonusOfResearch());
+                initBot.getSurvivalRate(), initBot.getBonusOfLocalResearch());
 
         smartAdd(smallBots, initBot, NextStep.LEFT);
         smartAdd(smallBots, initBot, NextStep.RIGHT);
@@ -235,12 +318,13 @@ public class LeaterBot extends MapObject {
                 smartAdd(newSmallBots, smallBot, NextStep.USE_RAZOR);
             }
 
+            //Добавляем новое поколение без умерших и утоновшух
             for (SmallBot newSmallBot : newSmallBots)
                 if (!(newSmallBot.getGameCondition() == GameCondition.RB_CRUSHED || newSmallBot.getGameCondition() == GameCondition.RB_DROWNED))
                     smallBots.add(newSmallBot);
 
 
-            //Проблемы с compareTo у SmartBota
+            //Сортируем ботов,чтобы в начале листа лежали лучшие
             try {
                 Collections.sort(smallBots);
                 Collections.reverse(smallBots);
@@ -258,17 +342,19 @@ public class LeaterBot extends MapObject {
 
             }
 
-            //Контроль похожих ботов
-            if (generationDigit > 4)
-                controlOfSimilarSmallBots(10);
-
-
             generationDigit++;
 
-            //Ищем лучшего бота по очкам
+            //Ищем лучшего бота по очкам среди всех ботов
             for (SmallBot smallBot : smallBots)
-                if (smallBot.getScore() > bestSmallBotEver.getScore())
+                if (smallBot.getScore() >= bestSmallBotEver.getScore())
                     bestSmallBotEver.setConditions(smallBot);
+
+            //Удаляем ботов закончивших игру, чтобы они не мешали естественному отбору
+            List<SmallBot> copyBots = new ArrayList<>(smallBots);
+            smallBots.clear();
+            for (SmallBot smallBot : copyBots)
+                if (smallBot.getLastStep() != NextStep.ABORT)
+                    smallBots.add(smallBot);
 
 
             //Удаляем старое поколение
@@ -278,6 +364,13 @@ public class LeaterBot extends MapObject {
                 if (copyBot.getSteps().size() >= generationDigit)
                     smallBots.add(copyBot);
 
+
+            //Удаляем похожих ботов
+            //if (generationDigit > MIN_REDUCED_GENERATION)
+            //    controlOfSimilarSmallBots();
+
+
+            //Удаляем худших ботов, если лист больше максимального допустимого размер
             if (smallBots.size() > MAX_SMALL_BOT_SIZE) {
                 int deletedBotsDigit = smallBots.size() - MAX_SMALL_BOT_SIZE;
                 for (int i = 0; i < deletedBotsDigit; i++)

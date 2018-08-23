@@ -8,22 +8,21 @@ import GameMap.GameMap;
 import GameMap.GameCondition;
 
 import static Bot.LeaterBot.BONUS_OF_RESEARCH_DIVIDER;
-import static Bot.LeaterBot.START_BONUS_OF_RESEARCH;
 import static Bot.LeaterBot.getStartBonusOfResearch;
 
 class SmallBot implements Comparable<SmallBot> {
     private GameMap gameMap;
     private List<NextStep> steps;
-    private int bonusOfResearch[][];
+    private int bonusOfLocalResearch[][];
     private int survivalRate = 0;
 
     SmallBot(GameMap gameMap) {
         this.gameMap = gameMap;
 
-        bonusOfResearch = new int[this.gameMap.getMaxX()][this.gameMap.getMaxY()];
+        bonusOfLocalResearch = new int[this.gameMap.getMaxX()][this.gameMap.getMaxY()];
         for (int i = 0; i < this.gameMap.getMaxX(); i++)
             for (int j = 0; j < this.gameMap.getMaxY(); j++)
-                bonusOfResearch[i][j] = getStartBonusOfResearch(gameMap);
+                bonusOfLocalResearch[i][j] = getStartBonusOfResearch(gameMap);
 
         steps = new ArrayList<>();
 
@@ -36,39 +35,57 @@ class SmallBot implements Comparable<SmallBot> {
         return 1;
     }
 
-    SmallBot(GameMap oldMap, List<NextStep> oldSteps, NextStep nextStep, int oldSurvivalRate, int oldBonusOfResearch[][]) {
-        bonusOfResearch = new int[oldMap.getMaxX()][oldMap.getMaxY()];
-        if (oldBonusOfResearch == null)
-            for (int x = 0; x < oldMap.getMaxX(); x++)
-                for (int y = 0; y < oldMap.getMaxY(); y++)
-                    bonusOfResearch[x][y] = getStartBonusOfResearch(oldMap);
-        else
-            for (int x = 0; x < oldMap.getMaxX(); x++)
-                for (int y = 0; y < oldMap.getMaxY(); y++)
-                    bonusOfResearch[x][y] = oldBonusOfResearch[x][y];
+    SmallBot(GameMap oldMap, List<NextStep> oldSteps, NextStep nextStep,
+             int oldSurvivalRate, int oldBonusOfResearch[][]) {
 
+        gameMap = oldMap.copy();
 
         steps = new ArrayList<>();
         steps.addAll(oldSteps);
         steps.add(nextStep);
 
-        int oldRazorDigit = oldMap.getRazors();
-        gameMap = oldMap.copy();
-        gameMap.moveAllObjects(nextStep);
+        if (nextStep == NextStep.ABORT)
+            return;
 
-        int bonusForFoundedRazor = calculateBonusForFoundedRazor(oldMap.copy());
-        int foundedRazorNumber = gameMap.getRazors() - oldMap.getRazors();
+
+        //Инициализация локальных бонусов
+        bonusOfLocalResearch = new int[oldMap.getMaxX()][oldMap.getMaxY()];
+        if (oldBonusOfResearch == null)
+            for (int x = 0; x < oldMap.getMaxX(); x++)
+                for (int y = 0; y < oldMap.getMaxY(); y++)
+                    bonusOfLocalResearch[x][y] = getStartBonusOfResearch(oldMap);
+        else
+            for (int x = 0; x < oldMap.getMaxX(); x++)
+                for (int y = 0; y < oldMap.getMaxY(); y++)
+                    bonusOfLocalResearch[x][y] = oldBonusOfResearch[x][y];
+
+
+        //Бонус за глобальное исследование карты
+        int bonusForGlobalResearch = LeaterBot.nobodyNotVisitedWays[getX()][getY()];
+        LeaterBot.nobodyNotVisitedWays[getX()][getY()] = 0;
+
+        //Бонус за локальное исследование карты
+        int bonusForLocalResearch = bonusOfLocalResearch[getX()][getY()];
+        bonusOfLocalResearch[getX()][getY()] /= BONUS_OF_RESEARCH_DIVIDER;
+
+        //Бонусы за бритвы
+        int foundedRazorNumber;
+        int bonusForFoundedRazor;
+        int oldRazorNumber = oldMap.getRazors();
+        gameMap.moveAllObjects(nextStep);
+        foundedRazorNumber = gameMap.getRazors() - oldMap.getRazors();
         if (foundedRazorNumber < 0)
             foundedRazorNumber = 0;
+        bonusForFoundedRazor = calculateBonusForFoundedRazor(oldMap.copy()) * foundedRazorNumber;
 
-        survivalRate = foundedRazorNumber * bonusForFoundedRazor +
-                (oldSurvivalRate + 1) +
-                gameMap.getScore() +
-                bonusOfResearch[getX()][getY()];
 
-        bonusOfResearch[getX()][getY()] /= BONUS_OF_RESEARCH_DIVIDER;
+        survivalRate = bonusForGlobalResearch +
+                bonusForLocalResearch +
+                bonusForFoundedRazor +
+                (oldSurvivalRate + 1) + gameMap.getScore();
 
     }
+
 
     //GETTERS,SETTERS--------------------------------------------------------------------
     void setConditions(SmallBot smallBot) {
@@ -83,8 +100,8 @@ class SmallBot implements Comparable<SmallBot> {
         return gameMap;
     }
 
-    int[][] getBonusOfResearch() {
-        return bonusOfResearch;
+    int[][] getBonusOfLocalResearch() {
+        return bonusOfLocalResearch;
     }
 
     GameCondition getGameCondition() {
@@ -117,6 +134,10 @@ class SmallBot implements Comparable<SmallBot> {
 
     int getScore() {
         return gameMap.getScore();
+    }
+
+    NextStep getLastStep() {
+        return getSteps().get(getSteps().size() - 1);
     }
 
 
