@@ -32,9 +32,30 @@ public class LeaterBotTest {
         System.out.println("Current = " + gameMap.getScore() +
                 "| Humans = " + humansScore +
                 "| BotBest = " + bestBotScore + "|");
+        System.out.println(gameMap.getGameCondition());
         System.out.println("------------------------------------");
 
+
     }
+
+    private String gameCondtionToString(GameCondition gameCondition) {
+        switch (gameCondition) {
+            case WIN:
+                return "WIN";
+            case NULL_CONDITION:
+                return "NULL_CONDITION";
+            case STILL_MINING:
+                return "STILL_MINING";
+            case ABORTED:
+                return "ABORTED";
+            case RB_CRUSHED:
+                return "RB_CRUSHED";
+            case RB_DROWNED:
+                return "RB_DROWNED";
+        }
+        return null;
+    }
+
 
     @Test
     public void beard0() {
@@ -54,7 +75,7 @@ public class LeaterBotTest {
     @Test
     //Чето с порталами, NullPointer
     public void beard3() {
-        testBotOnMap("maps/beard3.map", "beard3", 0, 0);
+        testBotOnMap("maps/beard3.map", "beard3", 0, 954);
     }
 
     @Test

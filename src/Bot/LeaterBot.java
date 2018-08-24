@@ -370,7 +370,7 @@ public class LeaterBot extends MapObject {
         }
 
         List<NextStep> bestSteps = new ArrayList<>(bestSmallBotEver.getSteps());
-        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT)
+        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT && bestSmallBotEver.getGameCondition() != GameCondition.WIN)
             bestSteps.add(NextStep.ABORT);
 
         return bestSteps;
