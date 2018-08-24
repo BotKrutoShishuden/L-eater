@@ -48,7 +48,7 @@ public class LeaterBotTest {
 
     @Test
     public void beard2() {
-        testBotOnMap("maps/beard2.map", "beard2", 0, 0);
+        testBotOnMap("maps/beard2.map", "beard2", 0, 2812);
     }
 
     @Test

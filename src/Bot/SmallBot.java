@@ -6,9 +6,10 @@ import java.util.List;
 
 import GameMap.GameMap;
 import GameMap.GameCondition;
+import MapObject.MapObject;
 
-import static Bot.LeaterBot.BONUS_OF_RESEARCH_DIVIDER;
-import static Bot.LeaterBot.getStartBonusOfResearch;
+import static Bot.LeaterBot.BONUS_OF_LOCAL_RESEARCH_DIVIDER;
+import static Bot.LeaterBot.LOCAL_START_BONUS_OF_RESEARCH;
 
 class SmallBot implements Comparable<SmallBot> {
     private GameMap gameMap;
@@ -22,7 +23,7 @@ class SmallBot implements Comparable<SmallBot> {
         bonusOfLocalResearch = new int[this.gameMap.getMaxX()][this.gameMap.getMaxY()];
         for (int i = 0; i < this.gameMap.getMaxX(); i++)
             for (int j = 0; j < this.gameMap.getMaxY(); j++)
-                bonusOfLocalResearch[i][j] = getStartBonusOfResearch(gameMap);
+                bonusOfLocalResearch[i][j] = LOCAL_START_BONUS_OF_RESEARCH;
 
         steps = new ArrayList<>();
 
@@ -54,7 +55,7 @@ class SmallBot implements Comparable<SmallBot> {
         if (oldBonusOfResearch == null)
             for (int x = 0; x < oldMap.getMaxX(); x++)
                 for (int y = 0; y < oldMap.getMaxY(); y++)
-                    bonusOfLocalResearch[x][y] = getStartBonusOfResearch(oldMap);
+                    bonusOfLocalResearch[x][y] = LOCAL_START_BONUS_OF_RESEARCH;
         else
             for (int x = 0; x < oldMap.getMaxX(); x++)
                 for (int y = 0; y < oldMap.getMaxY(); y++)
@@ -67,7 +68,7 @@ class SmallBot implements Comparable<SmallBot> {
 
         //Бонус за локальное исследование карты
         int bonusForLocalResearch = bonusOfLocalResearch[getX()][getY()];
-        bonusOfLocalResearch[getX()][getY()] /= BONUS_OF_RESEARCH_DIVIDER;
+        bonusOfLocalResearch[getX()][getY()] /= BONUS_OF_LOCAL_RESEARCH_DIVIDER;
 
         //Бонусы за бритвы
         int foundedRazorNumber;
@@ -135,6 +136,10 @@ class SmallBot implements Comparable<SmallBot> {
 
     int getScore() {
         return gameMap.getScore();
+    }
+
+    List<MapObject> getCollectedLamdasList() {
+        return gameMap.getCollectedLambdas();
     }
 
     NextStep getLastStep() {

@@ -797,6 +797,9 @@ public class GameMap {
 
         gameMap.bot = new MapObject(Species.BOT, bot.getX(), bot.getY());
 
+        gameMap.collectedLambdas = new ArrayList<>(collectedLambdas);
+
+        gameMap.portalSystem = new PortalSystem(portalSystem);
         gameMap.previousMap = previousMap;
         return gameMap;
     }
