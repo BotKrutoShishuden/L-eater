@@ -275,18 +275,25 @@ public class LeaterBot extends MapObject {
     //TODO но и от их редкости (при хорошей реализации бот должен пройти contest 6)
     public void calculateBonusForRareLamdasFounder(List<SmallBot> smallBots) {
         int[] bonusForLambdas = new int[mainGameMap.getLambdas().size()];
+        int[] numberOfPickups = new int[mainGameMap.getLambdas().size()];
         for (SmallBot smallBot: smallBots) {
             int i = 0;
             for (boolean lambda : smallBot.getCollectedLambdasList()){
-                if (!lambda)
+                if (lambda) numberOfPickups[i]++;
+                else
                     bonusForLambdas[i] += BONUS_FOR_RARE_LAMBDA;
                 i++;
             }
         }
+
         for (SmallBot smallBot: smallBots) {
             int i = 0;
             for (boolean lambda : smallBot.getCollectedLambdasList()){
-                if (lambda)
+                if (lambda && numberOfPickups[i] < smallBots.size() / 100)
+                    smallBot.addSurvivalRate(bonusForLambdas[i] * 50);
+                else if (lambda && numberOfPickups[i] > smallBots.size() * 0.75)
+                    smallBot.addSurvivalRate(bonusForLambdas[i] / 2);
+                else
                     smallBot.addSurvivalRate(bonusForLambdas[i]);
                 i++;
             }
