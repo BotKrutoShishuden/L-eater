@@ -34,6 +34,7 @@ public class CmdSimulator {
                 System.out.println(inputMap.toString() + "\n");
                 System.out.println("Score = " + inputMap.getScore());
                 System.out.println("Lambdas " + inputMap.getLamdasNumber() + "/" + inputMap.getMaxLambdasNumber());
+                System.out.println("Lambda list " + inputMap.getLambdas());
             }
         } catch (IOException e) {
             e.printStackTrace();

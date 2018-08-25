@@ -42,7 +42,7 @@ public class GameMap {
     private List<MapObject> lambdas;
 
     private GameMap previousMap;
-    public static final boolean STORAGE_PREVIOUS_MAP = false;
+    public static final boolean STORAGE_PREVIOUS_MAP = true;
 
     private PortalSystem portalSystem;
 
@@ -564,7 +564,8 @@ public class GameMap {
                     mapObjects[oldX][oldY - 1].setSpecies(Species.AIR);
 
                 } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.STONE//Просто идем
-                        && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL) {
+                        && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL
+                        && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.LAMBDA_STONE) {
 
                     if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA) {
                         collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() - 1)] = true;
