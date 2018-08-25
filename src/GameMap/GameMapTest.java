@@ -157,6 +157,13 @@ public class GameMapTest {
     }
 
     @Test
+    public void moveLambdaStones() {
+
+        makeTestFromFormattedDirectory(2, "lambdas collapse", "maps/С_lambdaStoneTests/0_test.map");
+
+    }
+
+    @Test
     public void growBeard() {
         makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "maps/growBeardTests/0_test.map");
     }

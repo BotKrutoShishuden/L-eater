@@ -884,6 +884,19 @@ public class GameMap {
 
             raiseWaterLevel();
 
+            for (int i = 0; i < lambdas.size(); i++) {
+                for (int j = 0; j < lambdas.size(); j++) {
+                    if (i != j)
+                        if (lambdas.get(i).getX() == lambdas.get(j).getX() &&
+                                lambdas.get(i).getY() == lambdas.get(j).getY()) {
+                            lambdas.remove(j);
+                            maxLambdasNumber--;
+                            break;
+                        }
+                }
+
+            }
+
 
         }
         score--;
