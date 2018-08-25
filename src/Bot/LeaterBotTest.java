@@ -96,7 +96,7 @@ public class LeaterBotTest {
 
     //TODO в нормально симуляторе при текущей выходной последовательности бот ломается под камнем
     //TODO Проверить этот тест после отладки лямбда камней
-    //@Test
+    @Test
     public void horock3() {
         testBotOnMap("maps/horock3.map", "horock3", 0, 1203);
     }

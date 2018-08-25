@@ -22,7 +22,7 @@ public class GameMap {
     private int maxY;
     private int growth = 25;
     private int razorsNumber = 0;
-    private int threwedRazors = 0;
+    private int thrownRazors = 0;
     private int beardsNumber = 0;
 
     private int movesUnderWater;
@@ -151,7 +151,7 @@ public class GameMap {
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.RAZOR, currentX, currentY);
-                    gameMap.threwedRazors++;
+                    gameMap.thrownRazors++;
                     break;
                 case 'W':
                     symbolDefined = true;
@@ -673,7 +673,8 @@ public class GameMap {
                         gameCondition = RB_CRUSHED;
                     }
                 } else if (workMap.getMapObjects()[x - 1][y + 1].getSpecies() == Species.AIR &&
-                        workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR) {//Влево
+                        workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR &&
+                        workMap.getMapObjects()[x][y + 1].getSpecies() != Species.LAMBDA) {//Влево
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x - 1][y + 1].setSpecies(Species.STONE);
                     if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.BOT) {// если падает на бота
@@ -725,7 +726,9 @@ public class GameMap {
                         gameCondition = RB_CRUSHED;
                     }
                 }
-            } else if (workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR) {//Влево
+            } else if (workMap.getMapObjects()[x - 1][y].getSpecies() == Species.AIR &&
+                    workMap.getMapObjects()[x - 1][y + 1].getSpecies() == Species.AIR &&
+                    workMap.getMapObjects()[x][y + 1].getSpecies() != Species.LAMBDA) {//Влево
                 if (workMap.getMapObjects()[x - 1][y + 2].getSpecies() == Species.AIR) {//Если не разбивается
                     mapObjects[x][y].setSpecies(Species.AIR);
                     mapObjects[x - 1][y + 1].setSpecies(Species.LAMBDA_STONE);
@@ -1076,8 +1079,8 @@ public class GameMap {
         return earthNumber;
     }
 
-    public int getThrewedRazors() {
-        return threwedRazors;
+    public int getThrownRazors() {
+        return thrownRazors;
     }
 
     public int getBeardsNumber() {

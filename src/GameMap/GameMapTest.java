@@ -152,7 +152,7 @@ public class GameMapTest {
     @Test
     public void moveStones() {
 
-        makeTestFromFormattedDirectory(7, "stay step & stones tests", "maps/B_moveStoneTests/0_test.map");
+        makeTestFromFormattedDirectory(8, "stay step & stones tests", "maps/B_moveStoneTests/0_test.map");
 
     }
 
