@@ -36,7 +36,7 @@ public class MapObject {
 
     @Override
     public String toString() {
-        return species.name();
+        return species.name() + " " + getX() + " " + getY();
     }
 
     @Override
@@ -113,6 +113,11 @@ public class MapObject {
 
     public void setSpecies(Species species) {
         this.species = species;
+    }
+
+    public void setCoordinates (int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
 }

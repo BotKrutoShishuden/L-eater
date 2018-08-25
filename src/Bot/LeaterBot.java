@@ -22,6 +22,7 @@ public class LeaterBot extends MapObject {
     static final int LOCAL_START_BONUS_OF_RESEARCH = 30;
     static final int BONUS_OF_LOCAL_RESEARCH_DIVIDER = 5;
     static final int GLOBAL_BONUS_OF_RESEARCH = 100;
+    static final int BONUS_FOR_RARE_LAMBDA = 10;
 
     //Для анализа игры
     private List<List<NextStep>> observedBotsList;
@@ -273,7 +274,23 @@ public class LeaterBot extends MapObject {
     //TODO выживаемость бота должна зависеть не только от количества лямбд
     //TODO но и от их редкости (при хорошей реализации бот должен пройти contest 6)
     public void calculateBonusForRareLamdasFounder(List<SmallBot> smallBots) {
-
+        int[] bonusForLambdas = new int[mainGameMap.getLambdas().size()];
+        for (SmallBot smallBot: smallBots) {
+            int i = 0;
+            for (boolean lambda : smallBot.getCollectedLambdasList()){
+                if (!lambda)
+                    bonusForLambdas[i] += BONUS_FOR_RARE_LAMBDA;
+                i++;
+            }
+        }
+        for (SmallBot smallBot: smallBots) {
+            int i = 0;
+            for (boolean lambda : smallBot.getCollectedLambdasList()){
+                if (lambda)
+                    smallBot.addSurvivalRate(bonusForLambdas[i]);
+                i++;
+            }
+        }
     }
 
 
@@ -317,7 +334,6 @@ public class LeaterBot extends MapObject {
                 if (!(newSmallBot.getGameCondition() == GameCondition.RB_CRUSHED || newSmallBot.getGameCondition() == GameCondition.RB_DROWNED))
                     smallBots.add(newSmallBot);
 
-            //TODO
             calculateBonusForRareLamdasFounder(smallBots);
 
 

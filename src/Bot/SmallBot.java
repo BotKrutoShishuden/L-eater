@@ -138,12 +138,16 @@ class SmallBot implements Comparable<SmallBot> {
         return gameMap.getScore();
     }
 
-    List<MapObject> getCollectedLamdasList() {
+    boolean[] getCollectedLambdasList() {
         return gameMap.getCollectedLambdas();
     }
 
     NextStep getLastStep() {
         return getSteps().get(getSteps().size() - 1);
+    }
+
+    public void addSurvivalRate (int rate) {
+        survivalRate += rate;
     }
 
 

@@ -109,7 +109,7 @@ public class GameMapTest {
                 assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
                 assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
                 assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
-                assertEquals(inputMap.getLamdasNumber(), inputMap.getCollectedLambdas().size());
+                assertEquals(inputMap.getLamdasNumber(), inputMap.getCollectedLambdas().length);
                 assertEquals(outputMap.getScore(), inputMap.getScore());//TODO Какого
                 assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
                 assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
