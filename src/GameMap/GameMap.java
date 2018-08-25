@@ -40,8 +40,10 @@ public class GameMap {
     private MapObject bot;
     private boolean[] collectedLambdas;
     private List<MapObject> lambdas;
+
     private GameMap previousMap;
     public static final boolean STORAGE_PREVIOUS_MAP = false;
+
     private PortalSystem portalSystem;
 
     //-----------------------------------------------------------------------------------
@@ -386,7 +388,7 @@ public class GameMap {
 
     //Методы для изменения карты
     //-----------------------------------------------------------------------------------
-    private int getLambdaIndexFromCoordinates(int x, int y) {
+    public int getLambdaIndexFromCoordinates(int x, int y) {
         int i = 0;
         for (MapObject lambda : lambdas) {
             if (lambda.getX() == x && lambda.getY() == y)
@@ -447,17 +449,9 @@ public class GameMap {
 
 
                     if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA) {
-                        try {
-                            if (bot.getX() == 6 && bot.getY() == 11 && amountOfSteps == 9)
-                                collectedLambdas[getLambdaIndexFromCoordinates(bot.getX() - 1, bot.getY())] = true;
-                            score += 50;
-                            lamdasNumber++;
-                        } catch (IndexOutOfBoundsException e) {
-                            System.out.println(bot.getX() + " " + bot.getY());
-                            System.out.println(amountOfSteps);
-                            System.out.println(botNextStep.getSymbol());
-                            System.out.println(toString());
-                        }
+                        collectedLambdas[getLambdaIndexFromCoordinates(bot.getX() - 1, bot.getY())] = true;
+                        score += 50;
+                        lamdasNumber++;
                     } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.RAZOR)
                         razorsNumber++;
 
@@ -849,7 +843,7 @@ public class GameMap {
             if (previousMap != null)
                 backToLastCondition();
 
-        }else if (gameCondition != GameCondition.STILL_MINING)
+        } else if (gameCondition != GameCondition.STILL_MINING)
             return;
 
         else if (botNextStep == NextStep.ABORT) {
@@ -863,12 +857,10 @@ public class GameMap {
 
             GameMap workMap = this.copy();
 
-
             for (int x = 0; x < maxX; x++)
                 for (int y = 0; y < maxY; y++)
                     switch (workMap.getMapObjects()[x][y].getSpecies()) {
                         case STONE:
-                            // moveStone(x, y);
                             moveStoneSim(workMap, x, y);
                             break;
                         case LAMBDA_STONE:
@@ -1094,5 +1086,15 @@ public class GameMap {
 
     public boolean[] getCollectedLambdas() {
         return collectedLambdas;
+    }
+
+    public int getCollectedLamdasNumber() {
+        int number = 0;
+        for (boolean lamda : getCollectedLambdas())
+            if (lamda)
+                number++;
+
+        return number;
+
     }
 }

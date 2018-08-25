@@ -152,7 +152,7 @@ public class GameMapTest {
     @Test
     public void moveStones() {
 
-        makeTestFromFormattedDirectory(5, "stay step & stones tests", "maps/B_moveStoneTests/0_test.map");
+        makeTestFromFormattedDirectory(7, "stay step & stones tests", "maps/B_moveStoneTests/0_test.map");
 
     }
 
@@ -160,7 +160,6 @@ public class GameMapTest {
     public void growBeard() {
         makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "maps/growBeardTests/0_test.map");
     }
-
     //-----------------------------------------------------------------------------------
 
     @Test
