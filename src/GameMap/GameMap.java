@@ -46,8 +46,8 @@ public class GameMap {
 
     private PortalSystem portalSystem;
 
-    //-----------------------------------------------------------------------------------
     //Статические методы генерации(вместо конструкторов)
+    //-----------------------------------------------------------------------------------
     private static GameMap cutMapByEnd(BufferedReader bufferedReader, String end) throws IOException {
         GameMap gameMap = new GameMap();
 
@@ -62,15 +62,15 @@ public class GameMap {
             gameMap.maxY++;
             mapStrBuilder.append(currentLine).append("\n");
         }
-        bufferedReader.readLine();
 
         //Собираем информацию для о порталах
         HashMap<Character, Character> portalCompliance = new HashMap<>();
         try {
 
 
-            StringBuilder trampolineInf;
-            trampolineInf = new StringBuilder(bufferedReader.readLine());
+            StringBuilder trampolineInf = new StringBuilder(bufferedReader.readLine());
+            while (!trampolineInf.toString().contains("Trampoline"))
+                trampolineInf = new StringBuilder(bufferedReader.readLine());
             while (trampolineInf.toString().contains("Trampoline") &&
                     trampolineInf.toString().contains("targets")) {
                 Character in = trampolineInf.charAt(11);
@@ -80,8 +80,10 @@ public class GameMap {
 
             }
         } catch (NullPointerException n) {
-
+            //Порталов нет
         }
+
+
         gameMap.mapObjects = new MapObject[gameMap.maxX][gameMap.maxY];
 
         int currentX = 0;
@@ -219,11 +221,6 @@ public class GameMap {
 
     }
 
-    private static boolean characterIsAcceptableFigure(Character symbol) {
-        return symbol == 'A' || symbol == 'B' || symbol == 'C' || symbol == 'D' || symbol == 'E' || symbol == 'F' || symbol == 'G';
-    }
-
-    //-----------------------------------------------------------------------------------
 
     //Методы для тестов
     //-----------------------------------------------------------------------------------
@@ -376,6 +373,9 @@ public class GameMap {
                 case 'B':
                     nextSteps[i] = (NextStep.BACK);
                     break;
+                default:
+                    nextSteps[i]=(NextStep.WAIT);
+                    break;
 
             }
 
@@ -383,7 +383,6 @@ public class GameMap {
         }
         return nextSteps;
     }
-    //-----------------------------------------------------------------------------------
 
 
     //Методы для изменения карты
@@ -433,8 +432,10 @@ public class GameMap {
 
                         if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.STONE)
                             mapObjects[bot.getX() - 2][bot.getY()].setSpecies(Species.STONE);
-                        else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE)
+                        else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE) {
                             mapObjects[bot.getX() - 2][bot.getY()].setSpecies(Species.LAMBDA_STONE);
+                            moveLambdaList(bot.getX() - 1, bot.getY(), bot.getX() - 2, bot.getY());
+                        }
 
                         mapObjects[bot.getX() - 1][bot.getY()].setSpecies(Species.BOT);
                         bot.setX(bot.getX() - 1);
@@ -501,8 +502,10 @@ public class GameMap {
 
                         if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.STONE)
                             mapObjects[bot.getX() + 2][bot.getY()].setSpecies(Species.STONE);
-                        else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE)
+                        else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA_STONE) {
                             mapObjects[bot.getX() + 2][bot.getY()].setSpecies(Species.LAMBDA_STONE);
+                            moveLambdaList(bot.getX() + 1, bot.getY(), bot.getX() + 2, bot.getY());
+                        }
 
 
                         mapObjects[bot.getX() + 1][bot.getY()].setSpecies(Species.BOT);
@@ -616,7 +619,15 @@ public class GameMap {
                         && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
 
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
-                        collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() + 1)] = true;
+                        try {
+                            collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() + 1)] = true;
+                        } catch (IndexOutOfBoundsException e) {
+                            System.out.println(botNextStep);
+                            System.out.println(toString());
+                            for (MapObject mapObject : lambdas) {
+                                System.out.println(mapObject.toString());
+                            }
+                        }
                         score += 50;
                         lambdasNumber++;
                     } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR)
@@ -835,7 +846,7 @@ public class GameMap {
     public GameMap copy() {
         GameMap copyMap = new GameMap();
 
-        copyMap.mapObjects=copyMapObjects();
+        copyMap.mapObjects = copyMapObjects();
 
         copyMap.mapObjects = copyMapObjects();
         copyMap.maxX = maxX;
@@ -874,6 +885,12 @@ public class GameMap {
         if (botNextStep == NextStep.BACK && STORAGE_PREVIOUS_MAP) {
             if (previousMap != null)
                 backToLastCondition();
+
+        } else if (gameCondition != GameCondition.STILL_MINING)
+            return;
+
+        else if (botNextStep == NextStep.ABORT) {
+            gameCondition = GameCondition.ABORTED;
 
         } else {
             if (STORAGE_PREVIOUS_MAP)
@@ -946,7 +963,6 @@ public class GameMap {
 
     //Override
     //-----------------------------------------------------------------------------------
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -960,8 +976,6 @@ public class GameMap {
         }
         return stringBuilder.toString();
     }
-
-    //-----------------------------------------------------------------------------------
 
 
     //SETTERS

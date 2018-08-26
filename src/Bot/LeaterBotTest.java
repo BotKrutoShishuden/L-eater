@@ -73,10 +73,17 @@ public class LeaterBotTest {
         testBotOnMap("maps/contest6.map", "contest6", 0, 712);
     }
 
+    @Test
+    public void horock2() {
+        testBotOnMap("maps/horock2.map", "horock2", 0, 1203);
+    }
+
+
     //TODO в нормальном симуляторе при текущей выходной последовательности бот ломается под камнем
     //TODO Проверить этот тест после отладки лямбда камней
     @Test
     public void horock3() {
         testBotOnMap("maps/horock3.map", "horock3", 0, 1203);
     }
+
 }
