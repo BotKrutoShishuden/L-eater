@@ -98,7 +98,7 @@ public class GameMapTest {
                 outputMap.setFlooding(GameMap.cutParamAfterWord(address, "F_Flooding "));
                 outputMap.setScore(GameMap.cutParamAfterWord(address, "F_Score "));
                 outputMap.setAmountOfSteps(GameMap.cutParamAfterWord(address, "F_Moves "));
-                outputMap.setLamdasNumber(GameMap.cutParamAfterWord(address, "F_Lambda "));
+                outputMap.setLambdasNumber(GameMap.cutParamAfterWord(address, "F_Lambda "));
                 outputMap.setMaxLambdasNumber(GameMap.cutParamAfterWord(address, "F_LambdaMax "));
                 outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
                 outputMap.setGameCondition(GameMap.cutConditionAfterWord(address, "F_GameCondition "));
@@ -109,10 +109,10 @@ public class GameMapTest {
                 assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
                 assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
                 assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
-                assertEquals(inputMap.getLamdasNumber(), inputMap.getCollectedLambdas().length);
+                assertEquals(inputMap.getLambdasNumber(), inputMap.getCollectedLambdas().length);
                 assertEquals(outputMap.getScore(), inputMap.getScore());//TODO Какого
                 assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
-                assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
+                assertEquals(outputMap.getLambdasNumber(), inputMap.getLambdasNumber());
                 assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
                 assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
                 assertEquals(outputMap.toString(), inputMap.toString());

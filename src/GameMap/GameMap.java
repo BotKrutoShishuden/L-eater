@@ -33,7 +33,7 @@ public class GameMap {
     private GameCondition gameCondition = STILL_MINING;
     private int amountOfSteps;
     private int score;
-    private int lamdasNumber;
+    private int lambdasNumber;
     private int maxLambdasNumber;
     private int earthNumber;
 
@@ -42,7 +42,7 @@ public class GameMap {
     private List<MapObject> lambdas;
 
     private GameMap previousMap;
-    public static final boolean STORAGE_PREVIOUS_MAP = false;
+    public static final boolean STORAGE_PREVIOUS_MAP = true;
 
     private PortalSystem portalSystem;
 
@@ -451,7 +451,7 @@ public class GameMap {
                     if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.LAMBDA) {
                         collectedLambdas[getLambdaIndexFromCoordinates(bot.getX() - 1, bot.getY())] = true;
                         score += 50;
-                        lamdasNumber++;
+                        lambdasNumber++;
                     } else if (mapObjects[bot.getX() - 1][bot.getY()].getSpecies() == Species.RAZOR)
                         razorsNumber++;
 
@@ -521,7 +521,7 @@ public class GameMap {
                     if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.LAMBDA) {
                         collectedLambdas[getLambdaIndexFromCoordinates(bot.getX() + 1, bot.getY())] = true;
                         score += 50;
-                        lamdasNumber++;
+                        lambdasNumber++;
                     } else if ((mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.RAZOR))
                         razorsNumber++;
 
@@ -567,9 +567,11 @@ public class GameMap {
                         && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.LAMBDA_STONE) {
 
                     if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA) {
+
                         collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() - 1)] = true;
                         score += 50;
-                        lamdasNumber++;
+                        lambdasNumber++;
+
                     } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.RAZOR)
                         razorsNumber++;
 
@@ -616,7 +618,7 @@ public class GameMap {
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
                         collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() + 1)] = true;
                         score += 50;
-                        lamdasNumber++;
+                        lambdasNumber++;
                     } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR)
                         razorsNumber++;
 
@@ -792,7 +794,7 @@ public class GameMap {
         gameCondition = previousMap.gameCondition;
         amountOfSteps = previousMap.amountOfSteps;
         score = previousMap.score;
-        lamdasNumber = previousMap.lamdasNumber;
+        lambdasNumber = previousMap.lambdasNumber;
         maxLambdasNumber = previousMap.maxLambdasNumber;
         earthNumber = previousMap.earthNumber;
 
@@ -802,9 +804,10 @@ public class GameMap {
 
         collectedLambdas = previousMap.collectedLambdas;
         lambdas = previousMap.lambdas;
+        portalSystem = previousMap.portalSystem;
         previousMap = previousMap.previousMap;
 
-        portalSystem = previousMap.portalSystem;
+
 
     }
 
@@ -849,7 +852,7 @@ public class GameMap {
         copyMap.gameCondition = gameCondition;
         copyMap.amountOfSteps = amountOfSteps;
         copyMap.score = score;
-        copyMap.lamdasNumber = lamdasNumber;
+        copyMap.lambdasNumber = lambdasNumber;
         copyMap.maxLambdasNumber = maxLambdasNumber;
         copyMap.earthNumber = earthNumber;
 
@@ -894,7 +897,7 @@ public class GameMap {
                                     growBeard(workMap, x, y);
                             break;
                         case C_LIFT:
-                            if (lamdasNumber == maxLambdasNumber)
+                            if (lambdasNumber == maxLambdasNumber)
                                 mapObjects[x][y].setSpecies(Species.O_LIFT);
                             break;
                         default:
@@ -986,8 +989,8 @@ public class GameMap {
         this.gameCondition = gameCondition;
     }
 
-    public void setLamdasNumber(int lamdasNumber) {
-        this.lamdasNumber = lamdasNumber;
+    public void setLambdasNumber(int lambdasNumber) {
+        this.lambdasNumber = lambdasNumber;
     }
 
     public void setMaxLambdasNumber(int maxLambdasNumber) {
@@ -1057,8 +1060,8 @@ public class GameMap {
         return amountOfSteps;
     }
 
-    public int getLamdasNumber() {
-        return lamdasNumber;
+    public int getLambdasNumber() {
+        return lambdasNumber;
     }
 
 
@@ -1091,7 +1094,7 @@ public class GameMap {
         return collectedLambdas;
     }
 
-    public int getCollectedLamdasNumber() {
+    public int getCollectedLambdasNumber() {
         int number = 0;
         for (boolean lamda : getCollectedLambdas())
             if (lamda)

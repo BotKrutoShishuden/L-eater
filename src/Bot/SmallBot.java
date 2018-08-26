@@ -73,7 +73,11 @@ class SmallBot implements Comparable<SmallBot> {
         int foundedRazorNumber;
         int bonusForFoundedRazor;
         int oldRazorNumber = oldMap.getRazorsNumber();
-        gameMap.moveAllObjects(nextStep);
+        try {
+            gameMap.moveAllObjects(nextStep);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(printAllWayWithSteps());
+        }
         foundedRazorNumber = gameMap.getRazorsNumber() - oldMap.getRazorsNumber();
         if (foundedRazorNumber < 0)
             foundedRazorNumber = 0;
@@ -154,10 +158,10 @@ class SmallBot implements Comparable<SmallBot> {
     @Override
     public String toString() {
         return "survivability " + getSurvivalRate() + ", Score " + gameMap.getScore() + ", Steps " + getSteps().size() + "\n"
-                + toStringStepsSequence();
+                + printStepsSequence();
     }
 
-    public String toStringStepsSequence() {
+    public String printStepsSequence() {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (NextStep step : steps)
@@ -166,7 +170,7 @@ class SmallBot implements Comparable<SmallBot> {
         return stringBuilder.toString();
     }
 
-    public String toStringAllWayWithSteps() {
+    public String printAllWayWithSteps() {
         if (GameMap.STORAGE_PREVIOUS_MAP) {
             StringBuilder reportBuilder = new StringBuilder();
             while (gameMap.getPreviousMap() != null)
