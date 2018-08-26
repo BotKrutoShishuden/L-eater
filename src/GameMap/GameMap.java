@@ -846,7 +846,7 @@ public class GameMap {
         copyMap.waterLevel = waterLevel;
         copyMap.flooding = flooding;
 
-        GameCondition gameCondition = STILL_MINING;
+        copyMap.gameCondition = gameCondition;
         copyMap.amountOfSteps = amountOfSteps;
         copyMap.score = score;
         copyMap.lamdasNumber = lamdasNumber;
@@ -857,7 +857,7 @@ public class GameMap {
         copyMap.collectedLambdas = copyCollectedLambdas();
         copyMap.lambdas = new ArrayList<>(lambdas);
 
-        copyMap.previousMap = copyMap;
+        copyMap.previousMap = this;
 
         copyMap.portalSystem = new PortalSystem(portalSystem);
 
