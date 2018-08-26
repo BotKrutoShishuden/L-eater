@@ -114,6 +114,13 @@ public class LeaterBot extends MapObject {
         return result;
     }
 
+    private int numberOfWinnersBots() {
+        int i = 0;
+        for (SmallBot smallBot : smallBots)
+            if (smallBot.getGameCondition() == GameCondition.WIN)
+                i++;
+        return i;
+    }
 
     //Полезные
     private SmallBot foundbotWithSteps(List<NextStep> steps, int generation) {
@@ -276,9 +283,9 @@ public class LeaterBot extends MapObject {
     public void calculateBonusForRareLamdasFounder(List<SmallBot> smallBots) {
         int[] bonusForLambdas = new int[mainGameMap.getLambdas().size()];
         int[] numberOfPickups = new int[mainGameMap.getLambdas().size()];
-        for (SmallBot smallBot: smallBots) {
+        for (SmallBot smallBot : smallBots) {
             int i = 0;
-            for (boolean lambda : smallBot.getCollectedLambdasList()){
+            for (boolean lambda : smallBot.getCollectedLambdasList()) {
                 if (lambda) numberOfPickups[i]++;
                 else
                     bonusForLambdas[i] += BONUS_FOR_RARE_LAMBDA;
@@ -286,9 +293,9 @@ public class LeaterBot extends MapObject {
             }
         }
 
-        for (SmallBot smallBot: smallBots) {
+        for (SmallBot smallBot : smallBots) {
             int i = 0;
-            for (boolean lambda : smallBot.getCollectedLambdasList()){
+            for (boolean lambda : smallBot.getCollectedLambdasList()) {
                 if (lambda && numberOfPickups[i] < smallBots.size() / 100)
                     smallBot.addSurvivalRate(bonusForLambdas[i] * 50);
                 else if (lambda && numberOfPickups[i] > smallBots.size() * 0.75)
@@ -375,6 +382,7 @@ public class LeaterBot extends MapObject {
             for (SmallBot copyBot : smallBotsCopy)
                 if (copyBot.getSteps().size() >= generationDigit)
                     smallBots.add(copyBot);
+            smallBotsCopy.clear();
 
 
             //TODO Удаляем похожих ботов
