@@ -26,7 +26,7 @@ public class GameMap {
     private int beardsNumber = 0;
 
     private int movesUnderWater;
-    private int maxMovesUnderWater = 10;
+    private int maxMovesUnderWater = 10;            //ПРОСЬБА РЕДАКТИРОВАТЬ GameMap.copy()при добавлении полей
     private int waterLevel = 0;
     private int flooding = 0;
 
@@ -42,7 +42,7 @@ public class GameMap {
     private List<MapObject> lambdas;
 
     private GameMap previousMap;
-    public static final boolean STORAGE_PREVIOUS_MAP = true;
+    public static final boolean STORAGE_PREVIOUS_MAP = false;
 
     private PortalSystem portalSystem;
 
@@ -306,7 +306,7 @@ public class GameMap {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return new GameMap();
 
     }
 
@@ -472,7 +472,6 @@ public class GameMap {
                 if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.O_LIFT) {
                     mapObjects[bot.getX()][bot.getY()].setSpecies(Species.AIR);
                     gameCondition = WIN;
-                    score += 175;
                 } else if (mapObjects[bot.getX() + 1][bot.getY()].getSpecies() == Species.PORTAL_IN) {//Проверяем портал
                     int newX = portalSystem.getXOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
                     int newY = portalSystem.getYOutCoordinate(mapObjects[bot.getX() + 1][bot.getY()].getSymbol());
@@ -774,14 +773,18 @@ public class GameMap {
             gameCondition = RB_DROWNED;
     }
 
+
     private void backToLastCondition() {
         mapObjects = previousMap.mapObjects;
         maxX = previousMap.maxX;
         maxY = previousMap.maxY;
         growth = previousMap.growth;
         razorsNumber = previousMap.razorsNumber;
+        thrownRazors = previousMap.thrownRazors;
+        beardsNumber = previousMap.beardsNumber;
 
         movesUnderWater = previousMap.movesUnderWater;
+        maxMovesUnderWater = previousMap.maxMovesUnderWater;
         waterLevel = previousMap.waterLevel;
         flooding = previousMap.flooding;
 
@@ -791,55 +794,75 @@ public class GameMap {
         score = previousMap.score;
         lamdasNumber = previousMap.lamdasNumber;
         maxLambdasNumber = previousMap.maxLambdasNumber;
+        earthNumber = previousMap.earthNumber;
 
         bot.setSpecies(Species.BOT);
         bot.setX(previousMap.bot.getX());
         bot.setY(previousMap.bot.getY());
 
+        collectedLambdas = previousMap.collectedLambdas;
+        lambdas = previousMap.lambdas;
         previousMap = previousMap.previousMap;
+
+        portalSystem = previousMap.portalSystem;
+
     }
 
-    public GameMap copy() {
-        GameMap gameMap = new GameMap();
+    private boolean[] copyCollectedLambdas() {
+        boolean copiedCollLamdas[] = new boolean[collectedLambdas.length];
+        int i = 0;
+        for (boolean lambda : collectedLambdas) {
+            copiedCollLamdas[i] = lambda;
+            i++;
+        }
+        return copiedCollLamdas;
+    }
 
-        gameMap.mapObjects = new MapObject[maxX][maxY];
-
-
+    private MapObject[][] copyMapObjects() {
+        MapObject[][] copiedMapObjects = new MapObject[maxX][maxY];
         for (int x = 0; x < maxX; x++)
             for (int y = 0; y < maxY; y++)
                 try {
-                    gameMap.mapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y, mapObjects[x][y].getSymbol());
+                    copiedMapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y, mapObjects[x][y].getSymbol());
                 } catch (NullPointerException e) {
-                    gameMap.mapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y);
+                    copiedMapObjects[x][y] = new MapObject(mapObjects[x][y].getSpecies(), x, y);
                 }
+        return copiedMapObjects;
+    }
 
+    public GameMap copy() {
+        GameMap copyMap = new GameMap();
 
-        gameMap.maxX = maxX;
-        gameMap.maxY = maxY;
-        gameMap.growth = growth;
-        gameMap.razorsNumber = razorsNumber;
+        copyMap.mapObjects = copyMapObjects();
+        copyMap.maxX = maxX;
+        copyMap.maxY = maxY;
+        copyMap.growth = growth;
+        copyMap.razorsNumber = razorsNumber;
+        copyMap.thrownRazors = thrownRazors;
+        copyMap.beardsNumber = beardsNumber;
 
-        gameMap.movesUnderWater = movesUnderWater;
-        gameMap.waterLevel = waterLevel;
-        gameMap.flooding = flooding;
+        copyMap.movesUnderWater = movesUnderWater;
+        copyMap.maxMovesUnderWater = 10;
+        copyMap.waterLevel = waterLevel;
+        copyMap.flooding = flooding;
 
+        GameCondition gameCondition = STILL_MINING;
+        copyMap.amountOfSteps = amountOfSteps;
+        copyMap.score = score;
+        copyMap.lamdasNumber = lamdasNumber;
+        copyMap.maxLambdasNumber = maxLambdasNumber;
+        copyMap.earthNumber = earthNumber;
 
-        gameMap.gameCondition = gameCondition;
-        gameMap.amountOfSteps = amountOfSteps;
-        gameMap.score = score;
-        gameMap.lamdasNumber = lamdasNumber;
-        gameMap.maxLambdasNumber = maxLambdasNumber;
+        copyMap.bot = new MapObject(bot.getSpecies(), bot.getX(), bot.getY());
+        copyMap.collectedLambdas = copyCollectedLambdas();
+        copyMap.lambdas = new ArrayList<>(lambdas);
 
-        gameMap.bot = new MapObject(Species.BOT, bot.getX(), bot.getY());
+        copyMap.previousMap = copyMap;
 
-        gameMap.collectedLambdas = new boolean[collectedLambdas.length];
-        System.arraycopy(collectedLambdas, 0, gameMap.collectedLambdas, 0, collectedLambdas.length);
+        copyMap.portalSystem = new PortalSystem(portalSystem);
 
-        gameMap.lambdas = new ArrayList<>(getLambdas());
+        return copyMap;
 
-        gameMap.portalSystem = new PortalSystem(portalSystem);
-        gameMap.previousMap = previousMap;
-        return gameMap;
     }
 
     public void moveAllObjects(NextStep botNextStep) {
@@ -847,12 +870,6 @@ public class GameMap {
         if (botNextStep == NextStep.BACK && STORAGE_PREVIOUS_MAP) {
             if (previousMap != null)
                 backToLastCondition();
-
-        } else if (gameCondition != GameCondition.STILL_MINING)
-            return;
-
-        else if (botNextStep == NextStep.ABORT) {
-            gameCondition = GameCondition.ABORTED;
 
         } else {
             if (STORAGE_PREVIOUS_MAP)
@@ -886,8 +903,9 @@ public class GameMap {
 
             raiseWaterLevel();
 
-            for (int i = 0; i < lambdas.size(); i++) {
-                for (int j = 0; j < lambdas.size(); j++) {
+            //Контроль слившихся лямбд
+            for (int i = 0; i < lambdas.size(); i++)
+                for (int j = 0; j < lambdas.size(); j++)
                     if (i != j)
                         if (lambdas.get(i).getX() == lambdas.get(j).getX() &&
                                 lambdas.get(i).getY() == lambdas.get(j).getY()) {
@@ -895,9 +913,6 @@ public class GameMap {
                             maxLambdasNumber--;
                             break;
                         }
-                }
-
-            }
 
 
         }
@@ -923,11 +938,11 @@ public class GameMap {
 
 
     }
-    //-----------------------------------------------------------------------------------
 
 
     //Override
     //-----------------------------------------------------------------------------------
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -942,36 +957,6 @@ public class GameMap {
         return stringBuilder.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof GameMap)) return false;
-        GameMap gameMap = (GameMap) o;
-        return maxX == gameMap.maxX &&
-                maxY == gameMap.maxY &&
-                growth == gameMap.growth &&
-                razorsNumber == gameMap.razorsNumber &&
-                movesUnderWater == gameMap.movesUnderWater &&
-                maxMovesUnderWater == gameMap.maxMovesUnderWater &&
-                waterLevel == gameMap.waterLevel &&
-                flooding == gameMap.flooding &&
-                amountOfSteps == gameMap.amountOfSteps &&
-                score == gameMap.score &&
-                lamdasNumber == gameMap.lamdasNumber &&
-                maxLambdasNumber == gameMap.maxLambdasNumber &&
-                Arrays.equals(mapObjects, gameMap.mapObjects) &&
-                gameCondition == gameMap.gameCondition &&
-                Objects.equals(bot, gameMap.bot) &&
-                Objects.equals(previousMap, gameMap.previousMap);
-    }
-
-    @Override
-    public int hashCode() {
-
-        int result = Objects.hash(maxX, maxY, growth, razorsNumber, movesUnderWater, maxMovesUnderWater, waterLevel, flooding, gameCondition, amountOfSteps, score, lamdasNumber, maxLambdasNumber, bot, previousMap);
-        result = 31 * result + Arrays.hashCode(mapObjects);
-        return result;
-    }
     //-----------------------------------------------------------------------------------
 
 

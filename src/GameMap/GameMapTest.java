@@ -165,7 +165,8 @@ public class GameMapTest {
 
     @Test
     public void growBeard() {
-        makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "maps/growBeardTests/0_test.map");
+        makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "" +
+                "maps/growBeardTests/0_test.map");
     }
     //-----------------------------------------------------------------------------------
 
@@ -189,6 +190,14 @@ public class GameMapTest {
         assertEquals(10, gameMap.getMaxY());
         assertEquals(15, gameMap.getGrowth());
         assertEquals(0, gameMap.getRazorsNumber());
+
+    }
+
+    @Test
+    public void copy() {
+        GameMap gameMap = GameMap.cutNormalMap("maps/horock3.map");
+        GameMap copiedMap = gameMap.copy();
+
 
     }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import GameMap.GameMap;
 import GameMap.GameCondition;
-import MapObject.MapObject;
 
 import static Bot.LeaterBot.BONUS_OF_LOCAL_RESEARCH_DIVIDER;
 import static Bot.LeaterBot.LOCAL_START_BONUS_OF_RESEARCH;
@@ -146,7 +145,7 @@ class SmallBot implements Comparable<SmallBot> {
         return getSteps().get(getSteps().size() - 1);
     }
 
-    public void addSurvivalRate (int rate) {
+    public void addSurvivalRate(int rate) {
         survivalRate += rate;
     }
 
@@ -158,13 +157,33 @@ class SmallBot implements Comparable<SmallBot> {
                 + toStringStepsSequence();
     }
 
-    private String toStringStepsSequence() {
+    public String toStringStepsSequence() {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (NextStep step : steps)
             stringBuilder.append(step.getSymbol());
 
         return stringBuilder.toString();
+    }
+
+    public String toStringAllWayWithSteps() {
+        if (GameMap.STORAGE_PREVIOUS_MAP) {
+            StringBuilder reportBuilder = new StringBuilder();
+            while (gameMap.getPreviousMap() != null)
+                gameMap.moveAllObjects(NextStep.BACK);
+
+            reportBuilder.append("Start map\n").append(gameMap.toString());
+
+            for (NextStep nextStep : getSteps()) {
+                reportBuilder.append(nextStep).append("\n");
+                gameMap.moveAllObjects(nextStep);
+                reportBuilder.append(gameMap.toString()).append("\n");
+            }
+
+            return reportBuilder.toString();
+        }
+        return "STORAGE PREVIOUS MAP MODE OFF";
+
     }
 
     @Override

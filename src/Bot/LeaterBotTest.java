@@ -22,40 +22,20 @@ public class LeaterBotTest {
             System.out.print(nextStep.getSymbol());
             gameMap.moveAllObjects(nextStep);
         }
-        System.out.println();
+
+        System.out.println("\nCurrent = " + gameMap.getScore() +
+                "| Humans = " + humansScore +
+                "| BotBest = " + bestBotScore + "|");
+        System.out.println(gameMap.getGameCondition());
+        System.out.println("------------------------------------");
 
         assertEquals(bestWay.size(), gameMap.getAmountOfSteps());
         assertTrue(gameMap.getScore() > 0);
         assertTrue(gameMap.getGameCondition() == GameCondition.WIN ||
                 gameMap.getGameCondition() == GameCondition.ABORTED);
 
-        System.out.println("Current = " + gameMap.getScore() +
-                "| Humans = " + humansScore +
-                "| BotBest = " + bestBotScore + "|");
-        System.out.println(gameMap.getGameCondition());
-        System.out.println("------------------------------------");
-
 
     }
-
-    private String gameCondtionToString(GameCondition gameCondition) {
-        switch (gameCondition) {
-            case WIN:
-                return "WIN";
-            case NULL_CONDITION:
-                return "NULL_CONDITION";
-            case STILL_MINING:
-                return "STILL_MINING";
-            case ABORTED:
-                return "ABORTED";
-            case RB_CRUSHED:
-                return "RB_CRUSHED";
-            case RB_DROWNED:
-                return "RB_DROWNED";
-        }
-        return null;
-    }
-
 
     @Test
     public void beard0() {
