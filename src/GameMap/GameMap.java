@@ -777,7 +777,7 @@ public class GameMap {
 
 
     private void backToLastCondition() {
-        mapObjects = previousMap.mapObjects;
+        mapObjects = previousMap.copyMapObjects();
         maxX = previousMap.maxX;
         maxY = previousMap.maxY;
         growth = previousMap.growth;
@@ -808,7 +808,6 @@ public class GameMap {
         previousMap = previousMap.previousMap;
 
 
-
     }
 
     private boolean[] copyCollectedLambdas() {
@@ -836,6 +835,8 @@ public class GameMap {
     public GameMap copy() {
         GameMap copyMap = new GameMap();
 
+        copyMap.mapObjects=copyMapObjects();
+
         copyMap.mapObjects = copyMapObjects();
         copyMap.maxX = maxX;
         copyMap.maxY = maxY;
@@ -860,9 +861,9 @@ public class GameMap {
         copyMap.collectedLambdas = copyCollectedLambdas();
         copyMap.lambdas = new ArrayList<>(lambdas);
 
-        copyMap.previousMap = previousMap;
-
         copyMap.portalSystem = new PortalSystem(portalSystem);
+
+        copyMap.previousMap = previousMap;
 
         return copyMap;
 
