@@ -857,7 +857,7 @@ public class GameMap {
         copyMap.collectedLambdas = copyCollectedLambdas();
         copyMap.lambdas = new ArrayList<>(lambdas);
 
-        copyMap.previousMap = this;
+        copyMap.previousMap = previousMap;
 
         copyMap.portalSystem = new PortalSystem(portalSystem);
 
