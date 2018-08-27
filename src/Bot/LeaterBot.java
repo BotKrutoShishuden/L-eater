@@ -235,6 +235,7 @@ public class LeaterBot extends MapObject {
                 System.out.println("АБОРТ ЭТО ГРЕХ");
                 break;
         }
+
         return oldListSize != smallBots.size();
 
     }

@@ -42,7 +42,7 @@ public class GameMap {
     private List<MapObject> lambdas;
 
     private GameMap previousMap;
-    public static final boolean STORAGE_PREVIOUS_MAP = true;
+    public static final boolean STORAGE_PREVIOUS_MAP = false;
 
     private PortalSystem portalSystem;
 
@@ -565,9 +565,10 @@ public class GameMap {
                     mapObjects[oldX][oldY].setSpecies(Species.AIR);
                     mapObjects[oldX][oldY - 1].setSpecies(Species.AIR);
 
-                } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.STONE//Просто идем
-                        && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.WALL
-                        && mapObjects[bot.getX()][bot.getY() - 1].getSpecies() != Species.LAMBDA_STONE) {
+                } else if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.AIR || //Просто идем
+                        mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.EARTH ||
+                        mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA ||
+                        mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.RAZOR) {
 
                     if (mapObjects[bot.getX()][bot.getY() - 1].getSpecies() == Species.LAMBDA) {
 
@@ -615,8 +616,10 @@ public class GameMap {
                     mapObjects[oldX][oldY].setSpecies(Species.AIR);
                     mapObjects[oldX][oldY + 1].setSpecies(Species.AIR);
 
-                } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.STONE//Просто идем
-                        && mapObjects[bot.getX()][bot.getY() + 1].getSpecies() != Species.WALL) {
+                } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.AIR || //Просто идем
+                           mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.EARTH ||
+                           mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA ||
+                           mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR) {
 
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
                         try {

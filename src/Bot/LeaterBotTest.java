@@ -33,6 +33,8 @@ public class LeaterBotTest {
         assertTrue(gameMap.getScore() > 0);
         assertTrue(gameMap.getGameCondition() == GameCondition.WIN ||
                 gameMap.getGameCondition() == GameCondition.ABORTED);
+        if (gameMap.getGameCondition() == GameCondition.ABORTED)
+            System.out.println("АБОРТ ЭТО УБИЙСТВО");
 
 
     }
@@ -64,7 +66,7 @@ public class LeaterBotTest {
 
     @Test
     public void beard5() {
-        testBotOnMap("maps/beard5.map", "beard4", 0, 0);
+        testBotOnMap("maps/beard5.map", "beard5", 0, 0);
     }
 
     @Test
@@ -116,11 +118,6 @@ public class LeaterBotTest {
     @Test
     public void contest10() {
         testBotOnMap("maps/contest10.map", "contest10", 0, 0);
-    }
-    
-    @Test
-    public void custom0() {
-        testBotOnMap("maps/custom0.map", "custom0", 0, 0);
     }
     
     @Test

@@ -76,7 +76,8 @@ class SmallBot implements Comparable<SmallBot> {
         try {
             gameMap.moveAllObjects(nextStep);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println(printAllWayWithSteps());
+            if (gameMap.STORAGE_PREVIOUS_MAP)
+                System.out.println(printAllWayWithSteps());
         }
         foundedRazorNumber = gameMap.getRazorsNumber() - oldMap.getRazorsNumber();
         if (foundedRazorNumber < 0)
