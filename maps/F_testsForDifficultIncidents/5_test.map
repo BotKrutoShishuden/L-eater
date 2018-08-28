@@ -1,3 +1,4 @@
+beard5
 is
            ##########
         ####..******####
@@ -27,13 +28,12 @@ Trampoline E targets 1
 Trampoline F targets 1
 Trampoline G targets 2
 Trampoline H targets 3
-Flooding 10
+Flooding 0
 Growth 5
 Razors 10
 
 c
 RRLRURRRRULWRUUUULLULDLULLLLDLULDRUURUURRRRRRRRRRRRRDSRSRDSDSDSDSSRDSDSDLSLSLWWWLD
-RRLRURRRRULSRUUUULLULDLULLLLDLULDRUURUURRRRRRRRRRRRRDSRSRDSDSDSDSSRDSDSDLSLSLSSSLD
 c
 os
            ########## WWWWWWW
@@ -56,12 +56,12 @@ os
            ######  ######
 oe
 
-F_Growth 5
-F_Razors 1
-F_Flooding 10
-F_Score 443
-F_Moves 82
-F_Lambda 14
-F_LambdaMax 14
-F_WaterLevel 8
-F_GameCondition RB_CRUSHED
+Growth_F 5
+Razors_F 1
+Flooding_F 0
+Score_F 443
+Moves_F 82
+Lambda_F 14
+LambdaMax_F 14
+WaterLevel_F 0
+GameCondition_F RB_CRUSHED

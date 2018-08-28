@@ -1,0 +1,45 @@
+beard0
+is
+##########
+#**  \\\\#
+#.R..    #
+# \  ..*\#
+#    ..* #
+####   # #
+#\\... # L
+#\\. ... #
+#\\.     #
+##########
+ie
+
+Growth 15
+Razors 0
+Flooding 0
+
+c
+RDLRRUURRRRDDULLLLDDDDLLLDDRURRRRRRUR
+c
+
+os
+##########
+#*       #
+#.       #
+#    ..  #
+# *  ..* #
+####   # #
+#    . # O
+#        #
+#  .    *#
+##########
+oe
+
+
+Growth_F 15
+Razors_F 0
+Flooding_F 0
+Score_F 863
+Moves_F 37
+Lambda_F 12
+LambdaMax_F 12
+WaterLevel_F 0
+GameCondition_F WIN

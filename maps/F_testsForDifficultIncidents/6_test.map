@@ -1,0 +1,42 @@
+trampoline1
+is
+############
+#..*.R..*..#
+#..A....B..######
+#....2.. ..#\\\C#
+#......* *.#\\\1#
+########L########
+ie
+
+Trampoline A targets 1
+Trampoline B targets 1
+Trampoline C targets 2
+Growth 0
+Razors 0
+Flooding 0
+
+
+c
+RDDDURRDLRURRDULLDRLULLULLLLULDLURRRRRRRDLD
+c
+
+os
+############
+#.. .  . ..#
+#..*   . ..######
+#....      #    #
+#.....**  *#    #
+########O########
+oe
+
+
+
+Growth_F 0
+Razors_F 0
+Flooding_F 0
+Score_F 407
+Moves_F 43
+Lambda_F 6
+LambdaMax_F 6
+WaterLevel_F 0
+GameCondition_F WIN

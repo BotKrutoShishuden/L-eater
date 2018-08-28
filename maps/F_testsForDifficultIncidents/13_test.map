@@ -1,0 +1,50 @@
+flooding 5
+
+is
+#########
+#.*..#\.#
+#.\..#\.L
+#.R .##.#
+#.\  ...#
+#..\  ..#
+#...\  ##
+#....\ \#
+#########
+ie
+
+Razors
+Water 2
+Flooding 11
+Waterproof 5
+
+
+c
+DDRDRDRRRLUUULLLLUURRDDRRRUULURDR
+c
+
+os
+#########
+#. ..#  #
+#.   #  O
+#.   ## #
+#.      #
+#.*    .#
+#..    ##
+#...    #
+#########
+oe
+
+
+
+
+Razors_F 0
+Flooding_F 11
+Score_F 567
+Moves_F 33
+Lambda_F 8
+LambdaMax_F 8
+CurMovesUnderWater_F 0
+MaxMovesUnderWater_F
+WaterLevel_F 5
+GameCondition_F WIN
+MaxMovesUnderWater_F 5

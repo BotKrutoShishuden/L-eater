@@ -10,12 +10,12 @@ is
 #      \      #
 #      \      #
 #      \      #
-#             #
+#      L      #
 ###############
 ie
 
 c
-DDDDDDDWL
+DDDDDDDD
 c
 
 os
@@ -29,13 +29,13 @@ os
 #             #
 #             #
 #     *       #
-#     R       #
 #             #
+#      O      #
 ###############
 oe
 
-F_Score 341
-F_Moves 9
-F_Lambda 7
-F_LambdaMax 7
-F_GameCondition STILL_MINING
+Score_F 517
+Moves_F 8
+Lambda_F 7
+LambdaMax_F 7
+GameCondition_F WIN

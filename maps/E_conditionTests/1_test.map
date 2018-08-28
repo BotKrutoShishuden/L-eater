@@ -15,7 +15,7 @@ is
 ie
 
 c
-DDDDDDDL
+DDDDDDDWL
 c
 
 os
@@ -34,8 +34,8 @@ os
 ###############
 oe
 
-F_Score 167
-F_Moves 8
-F_Lambda 7
-F_LambdaMax 7
-F_GameCondition RB_CRUSHED
+Score_F 341
+Moves_F 9
+Lambda_F 7
+LambdaMax_F 7
+GameCondition_F STILL_MINING

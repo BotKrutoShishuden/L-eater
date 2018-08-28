@@ -1,0 +1,45 @@
+flood1
+is
+###########
+#....R....#
+#.*******.#
+#.\\\\\\\.#
+#.       .#
+#..*\\\*..#
+#.#*\\\*#.#
+#########L#
+ie
+
+Water 1
+Flooding 8
+Waterproof 5
+
+
+c
+LLLLDDRRRRLLRDRDDLUURRRLDDUUURRRLRDDDD
+c
+
+os
+###########
+#     ....#
+#        .#
+#         #
+#.*     * #
+#..* ***. #
+#.#*****# #
+#########O#
+oe
+
+
+
+Growth_F 0
+Razors_F 0
+Flooding_F 8
+Score_F 937
+Moves_F 38
+Lambda_F 13
+LambdaMax_F 13
+CurMovesUnderWater_F 6
+MaxMovesUnderWater_F 5
+WaterLevel_F 5
+GameCondition_F WIN

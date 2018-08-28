@@ -1,0 +1,34 @@
+contest2
+
+is
+#######
+#..***#
+#..\\\#
+#...**#
+#.*.*\#
+LR....#
+#######
+ie
+
+
+c
+RRRRWLRULURULLLLDDDL
+c
+
+os
+#######
+#..   #
+#  *  #
+# ..  #
+#  .**#
+O ****#
+#######
+oe
+
+
+
+Score_F 280
+Moves_F 20
+Lambda_F 4
+LambdaMax_F 4
+GameCondition_F WIN

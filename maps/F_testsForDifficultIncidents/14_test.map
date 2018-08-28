@@ -1,0 +1,35 @@
+contest1
+
+is
+######
+#. *R#
+#  \.#
+#\ * #
+L  .\#
+######
+ie
+
+
+
+c
+DLLLDDRRRLULLDL
+c
+
+os
+######
+#.   #
+#    #
+#    #
+O * *#
+######
+oe
+
+
+
+Growth_F 0
+Razors_F 0
+Score_F 210
+Moves_F 15
+Lambda_F 3
+LambdaMax_F 3
+GameCondition_F WIN

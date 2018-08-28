@@ -26,7 +26,7 @@ public class GameMap {
     private int beardsNumber = 0;
 
     private int movesUnderWater;
-    private int maxMovesUnderWater = 10;            //ПРОСЬБА РЕДАКТИРОВАТЬ GameMap.copy()при добавлении полей
+    private int maxMovesUnderWater = 0;            //ПРОСЬБА РЕДАКТИРОВАТЬ GameMap.copy()при добавлении полей
     private int waterLevel = 0;
     private int flooding = 0;
 
@@ -264,6 +264,9 @@ public class GameMap {
                 case "RB_CRUSHED":
                     return RB_CRUSHED;
 
+                case "ABORTED":
+                    return ABORTED;
+
                 default:
                     return NULL_CONDITION;
 
@@ -309,14 +312,13 @@ public class GameMap {
 
     public static NextStep[] cutSteps(String address) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
-        int c;
+        StringBuilder stringBuilder;
         do {
-            c = bufferedReader.read();
+            stringBuilder = new StringBuilder(bufferedReader.readLine());
 
-        } while (c != 'c');
-        bufferedReader.readLine();
+        } while (!stringBuilder.toString().equals("c"));
 
-        StringBuilder stringBuilder = new StringBuilder(bufferedReader.readLine());
+        stringBuilder = new StringBuilder(bufferedReader.readLine());
         Bot.NextStep nextSteps[] = new Bot.NextStep[stringBuilder.length()];
 
         for (int i = 0; i < stringBuilder.length(); i++) {
@@ -338,6 +340,9 @@ public class GameMap {
                     break;
                 case 'S':
                     nextSteps[i] = NextStep.USE_RAZOR;
+                    break;
+                case 'A':
+                    nextSteps[i] = NextStep.ABORT;
                     break;
             }
 
@@ -772,12 +777,16 @@ public class GameMap {
     }
 
     private void raiseWaterLevel() {
-        if (flooding != 0 && amountOfSteps % flooding == 0)
-            waterLevel++;
         if (bot.getY() >= getMaxY() - waterLevel)
             movesUnderWater++;
         else
             movesUnderWater = 0;
+
+        if (flooding != 0 && amountOfSteps % flooding == 0 && amountOfSteps != 0)
+            waterLevel++;
+
+        if (gameCondition == WIN)
+            return;
 
         if (movesUnderWater > maxMovesUnderWater)
             gameCondition = RB_DROWNED;
@@ -878,7 +887,6 @@ public class GameMap {
     }
 
     public void moveAllObjects(NextStep botNextStep) {
-        amountOfSteps++;
         if (botNextStep == NextStep.BACK && STORAGE_PREVIOUS_MAP) {
             if (previousMap != null)
                 backToLastCondition();
@@ -887,6 +895,7 @@ public class GameMap {
             return;
 
         else if (botNextStep == NextStep.ABORT) {
+            amountOfSteps++;
             gameCondition = GameCondition.ABORTED;
 
         } else {
@@ -896,6 +905,10 @@ public class GameMap {
             moveBot(botNextStep);
 
             GameMap workMap = this.copy();
+
+
+            amountOfSteps++;
+            raiseWaterLevel();
 
             for (int x = 0; x < maxX; x++)
                 for (int y = 0; y < maxY; y++)
@@ -918,8 +931,6 @@ public class GameMap {
                         default:
                             break;
                     }
-
-            raiseWaterLevel();
 
             //Контроль слившихся лямбд
             for (int i = 0; i < lambdas.size(); i++)
@@ -944,6 +955,7 @@ public class GameMap {
                 break;
             case ABORTED:
                 score += 1;
+                amountOfSteps--;
                 break;
             case WIN:
                 score += 175;
@@ -1013,6 +1025,13 @@ public class GameMap {
         this.flooding = flooding;
     }
 
+    public void setMaxMovesUnderWater(int maxMovesUnderWater) {
+        this.maxMovesUnderWater = maxMovesUnderWater;
+    }
+
+    public void setMovesUnderWater(int movesUnderWater) {
+        this.movesUnderWater = movesUnderWater;
+    }
 
     //GETTERS
     //-----------------------------------------------------------------------------------
@@ -1115,4 +1134,5 @@ public class GameMap {
         return number;
 
     }
+
 }

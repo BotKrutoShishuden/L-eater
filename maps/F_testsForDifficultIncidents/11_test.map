@@ -1,0 +1,57 @@
+floding 3
+
+is
+############
+#..........#
+#.....*....#
+#..\\\\\\..#
+#.     ....#
+#..\\\\\\\.#
+#..\..    .#
+#..\.. ....#
+#..... ..* #
+#..### ### #
+#...R#\#\\.#
+######L#####
+ie
+
+Water 2
+Waterproof 10
+Flooding 10
+
+c
+LLUURRRRRRURRDDDLLRRUUUUUUULLLLLLLDDDDURURRRLRRRLLLDDDDDD
+c
+
+os
+############
+#..........#
+#..... ....#
+#..        #
+#.     ... #
+#..  *     #
+#..  .     #
+#.. .. .   #
+#.       * #
+#. ### ### #
+#.   # #   #
+######O#####
+oe
+
+
+
+Growth_F 0
+Razors_F 0
+Flooding_F 10
+Score_F 1293
+Moves_F 57
+Lambda_F 18
+LambdaMax_F 18
+CurMovesUnderWater_F 7
+MaxMovesUnderWater_F 10
+WaterLevel_F 7
+GameCondition_F WIN
+
+Score: 1293 (57 moves, found 18/18 Lambdas, have 0 razors)
+Status: Won - Found lift
+For 7 moves under water
