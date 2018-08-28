@@ -12,7 +12,7 @@ public class CmdSimulator {
 
     public static void main(String[] args) {
         try {
-            String address = "maps/custom0.map";
+            String address = "maps/horock2.map";
 
 
             GameMap inputMap = GameMap.cutNormalMap(address);

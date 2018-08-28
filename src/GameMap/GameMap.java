@@ -702,9 +702,11 @@ public class GameMap {
     }
 
     private void moveLambdaList(int oldX, int oldY, int newX, int newY) {
-        for (MapObject lambda : lambdas)
-            if (lambda.getX() == oldX && lambda.getY() == oldY)
-                lambda.setCoordinates(newX, newY);
+        for (int i = 0; i < lambdas.size(); i++)
+            if (lambdas.get(i).getX() == oldX && lambdas.get(i).getY() == oldY) {
+               // lambda.setCoordinates(newX, newY);
+                lambdas.set(i, new MapObject(Species.LAMBDA, newX, newY));
+            }
     }
 
     private void moveLambdaStoneSim(GameMap workMap, int x, int y) {
