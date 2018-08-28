@@ -167,7 +167,7 @@ public class LeaterBotTest {
     
     @Test //TODO говорю же, что-то с водой
     public void horock2() {
-        testBotOnMap("maps/horock2.map", "horock2", 0, 1203);
+        testBotOnMap("maps/horock2.map", "horock2", 0, 0);
     }
 
 
@@ -175,7 +175,7 @@ public class LeaterBotTest {
     //TODO Проверить этот тест после отладки лямбда камней
     @Test //CONFIRMED
     public void horock3() {
-        testBotOnMap("maps/horock3.map", "horock3", 0, 1203);
+        testBotOnMap("maps/horock3.map", "horock3", 2344, 1556);
     }
 
 }
