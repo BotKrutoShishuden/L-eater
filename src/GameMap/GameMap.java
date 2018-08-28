@@ -374,7 +374,7 @@ public class GameMap {
                     nextSteps[i] = (NextStep.BACK);
                     break;
                 default:
-                    nextSteps[i]=(NextStep.WAIT);
+                    nextSteps[i] = (NextStep.WAIT);
                     break;
 
             }
@@ -390,7 +390,7 @@ public class GameMap {
     public int getLambdaIndexFromCoordinates(int x, int y) {
         int i = 0;
         for (MapObject lambda : lambdas) {
-            if (lambda.getX() == x && lambda.getY() == y)
+            if (lambda.getX() == x && lambda.getY() == y && !collectedLambdas[i])
                 return i;
             i++;
         }
@@ -617,20 +617,12 @@ public class GameMap {
                     mapObjects[oldX][oldY + 1].setSpecies(Species.AIR);
 
                 } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.AIR || //Просто идем
-                           mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.EARTH ||
-                           mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA ||
-                           mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR) {
+                        mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.EARTH ||
+                        mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA ||
+                        mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR) {
 
                     if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.LAMBDA) {
-                        try {
-                            collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() + 1)] = true;
-                        } catch (IndexOutOfBoundsException e) {
-                            System.out.println(botNextStep);
-                            System.out.println(toString());
-                            for (MapObject mapObject : lambdas) {
-                                System.out.println(mapObject.toString());
-                            }
-                        }
+                        collectedLambdas[getLambdaIndexFromCoordinates(bot.getX(), bot.getY() + 1)] = true;
                         score += 50;
                         lambdasNumber++;
                     } else if (mapObjects[bot.getX()][bot.getY() + 1].getSpecies() == Species.RAZOR)
@@ -704,7 +696,7 @@ public class GameMap {
     private void moveLambdaList(int oldX, int oldY, int newX, int newY) {
         for (int i = 0; i < lambdas.size(); i++)
             if (lambdas.get(i).getX() == oldX && lambdas.get(i).getY() == oldY) {
-               // lambda.setCoordinates(newX, newY);
+                // lambda.setCoordinates(newX, newY);
                 lambdas.set(i, new MapObject(Species.LAMBDA, newX, newY));
             }
     }
@@ -932,7 +924,7 @@ public class GameMap {
             //Контроль слившихся лямбд
             for (int i = 0; i < lambdas.size(); i++)
                 for (int j = 0; j < lambdas.size(); j++)
-                    if (i != j)
+                    if (i != j && !collectedLambdas[i] && !collectedLambdas[j])
                         if (lambdas.get(i).getX() == lambdas.get(j).getX() &&
                                 lambdas.get(i).getY() == lambdas.get(j).getY()) {
                             lambdas.remove(j);
