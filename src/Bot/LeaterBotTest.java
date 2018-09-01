@@ -2,18 +2,87 @@ package Bot;
 
 import GameMap.GameCondition;
 import GameMap.GameMap;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 
-import java.util.List;
+import java.io.*;
+import java.util.*;
+
 
 import static org.junit.Assert.*;
 
 public class LeaterBotTest {
-    //TODO поставить в humansScore нормальные значения
+    private static String address = "src/Bot/LResults.txt";
+    private static String resultsStrings[] = parseResultsArray(address);
+    private static Map<String, Integer> resultsMap = new HashMap<>();
+    private static Map<String, String> reportMap = new HashMap<>();
 
-    private void testBotOnMap(String address, String testName, int humansScore,
-                              int bestBotScore) {
+
+    private static String[] parseResultsArray(String address) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
+            int c;
+            while ((c = bufferedReader.read()) != -1)
+                stringBuilder.append((char) c);
+
+            return stringBuilder.toString().replace("\t", " ").split("\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Integer findValueByKey(String key) {
+        for (String str : resultsStrings)
+            if (str.contains(key + " ")) {
+                String stringBuilder = str.replace(key, " ").
+                        replace("BETTER", " ").
+                        replace("WORSE", " ").trim();
+
+                return Integer.valueOf(stringBuilder);
+            }
+
+        return 0;
+
+    }
+
+    @AfterClass
+    public static void reWriteOfLeaterResults() {
+        try {
+
+
+            Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
+            Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while (resultsSet.hasNext() && reportSet.hasNext()) {
+                Map.Entry<String, Integer> resultEntry = resultsSet.next();
+                Map.Entry<String, String> reportEntry = reportSet.next();
+                stringBuilder.append(resultEntry.getKey()).append("\t\t\t\t").
+                        append(resultEntry.getValue()).append("\t\t\t\t").
+                        append(reportEntry.getValue()).append("\n");
+            }
+
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
+            bufferedWriter.write("TestName\t\t\t\tScore\t\t\t\tReport\n" + stringBuilder.toString());
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private void testBotOnMap(String address, String testName, int humansScore) {
+
         System.out.println(testName);
+
+        resultsMap.put(testName, findValueByKey(testName));
         GameMap gameMap = GameMap.cutNormalMap(address);
         LeaterBot leaterBot = new LeaterBot(gameMap);
         List<NextStep> bestWay = leaterBot.calculateBestSteps();
@@ -24,9 +93,16 @@ public class LeaterBotTest {
             gameMap.moveAllObjects(nextStep);
         }
 
-        System.out.println("\nCurrent = " + gameMap.getScore() +
-                "| Humans = " + humansScore +
-                "| BotBest = " + bestBotScore + "|");
+
+        if (gameMap.getScore() > resultsMap.get(testName)) {
+            resultsMap.put(testName, gameMap.getScore());
+            reportMap.put(testName, "BETTER");
+        } else if (gameMap.getScore() < resultsMap.get(testName)) {
+            resultsMap.put(testName, gameMap.getScore());
+            reportMap.put(testName, "WORSE");
+        } else
+            reportMap.put(testName, "");
+
         System.out.println(gameMap.getGameCondition());
         System.out.println("------------------------------------");
 
@@ -34,142 +110,149 @@ public class LeaterBotTest {
         assertTrue(gameMap.getScore() > 0);
         assertTrue(gameMap.getGameCondition() == GameCondition.WIN ||
                 gameMap.getGameCondition() == GameCondition.ABORTED);
-        if (gameMap.getGameCondition() == GameCondition.ABORTED)
-            System.out.println("АБОРТ ЭТО УБИЙСТВО");
-
 
     }
 
     @Test //ЭТО ВООБЩЕ ХУИТА КАКАЯ-ТО, ТУТ БОРОД И БРИТВ НЕТ
     public void beard0() {
-        testBotOnMap("maps/beard0.map", "beard0", 0, 906);
+        testBotOnMap("maps/beard0.map", "beard0", 0);
     }
 
     @Test //CONFIRMED
     public void beard1() {
-        testBotOnMap("maps/beard1.map", "beard1", 858, 891);
+        testBotOnMap("maps/beard1.map", "beard1", 858);
     }
 
     @Test //CONFIRMED
     public void beard2() {
-        testBotOnMap("maps/beard2.map", "beard2", 4497, 2812);
+        testBotOnMap("maps/beard2.map", "beard2", 4497);
     }
 
-    @Test //TODO технически проходит, но почему-то абортится в двух шагах от лямбды
+    //TODO технически проходит, но почему-то абортится в двух шагах от лямбды
+    @Test
     public void beard3() {
-        testBotOnMap("maps/beard3.map", "beard3", 1162, 954);
+        testBotOnMap("maps/beard3.map", "beard3", 1162);
     }
 
     @Test //CONFIRMED
     public void beard4() {
-        testBotOnMap("maps/beard4.map", "beard4", 2013, 0);
+        testBotOnMap("maps/beard4.map", "beard4", 2013);
     }
 
     @Test //CONFIRMED
     public void beard5() {
-        testBotOnMap("maps/beard5.map", "beard5", 657, 0);
+        testBotOnMap("maps/beard5.map", "beard5", 657);
     }
 
     @Test //CONFIRMED только там очков на 100 меньше должно быть
     public void contest1() {
-        testBotOnMap("maps/contest1.map", "contest1", 210, 0);
+        testBotOnMap("maps/contest1.map", "contest1", 210);
     }
 
     @Test //CONFIRMED
     public void contest2() {
-        testBotOnMap("maps/contest2.map", "contest2", 280, 0);
+        testBotOnMap("maps/contest2.map", "contest2", 280);
     }
 
     @Test //CONFIRMED, опять себе лишних очков нарисовал
     public void contest3() {
-        testBotOnMap("maps/contest3.map", "contest3", 275, 524);
+        testBotOnMap("maps/contest3.map", "contest3", 275);
     }
 
     @Test //CONFIRMED, а тут наоборот, меньше дал, чем на самом деле, скромняга
     public void contest4() {
-        testBotOnMap("maps/contest4.map", "contest4", 575, 0);
+        testBotOnMap("maps/contest4.map", "contest4", 575);
     }
 
     @Test //CONFIRMED
     public void contest5() {
-        testBotOnMap("maps/contest5.map", "contest5", 1297, 0);
+        testBotOnMap("maps/contest5.map", "contest5", 1297);
     }
 
     @Test //CONFIRMED
     //Не ест дальнюю лямбду, а надо бы
     public void contest6() {
-        testBotOnMap("maps/contest6.map", "contest6", 1177, 712);
+        testBotOnMap("maps/contest6.map", "contest6", 1177);
     }
 
     @Test //CONFIRMED, BUT STILL WRONG SCORE (DANEK PRIVET)
     public void contest7() {
-        testBotOnMap("maps/contest7.map", "contest7", 869, 0);
+        testBotOnMap("maps/contest7.map", "contest7", 869);
     }
 
     @Test //CONFIRMED
     public void contest8() {
-        testBotOnMap("maps/contest8.map", "contest8", 1952, 0);
+        testBotOnMap("maps/contest8.map", "contest8", 1952);
     }
 
     @Test //CONFIRMED, НО ОН КАК-ТО ТУПО СДЕЛАЛ (НО ОН ВСЕ РАВНО КРУТОЙ)
     public void contest9() {
-        testBotOnMap("maps/contest9.map", "contest9", 3088, 0);
+        testBotOnMap("maps/contest9.map", "contest9", 3088);
     }
 
     @Test //CONFIRMED
     public void contest10() {
-        testBotOnMap("maps/contest10.map", "contest10", 3594, 0);
+        testBotOnMap("maps/contest10.map", "contest10", 3594);
     }
 
     @Test //CONFIRMED, OPYAT OCHKI SCHITAET NE TAK, A MNE LEN' MENYAT' RASKLADKU
     public void ems1() {
-        testBotOnMap("maps/ems1.map", "ems1", 334, 377);
+        testBotOnMap("maps/ems1.map", "ems1", 334);
     }
 
     @Test //CONFIRMED
     public void flood1() {
-        testBotOnMap("maps/flood1.map", "flood1", 937, 0);
+        testBotOnMap("maps/flood1.map", "flood1", 937);
     }
 
-    @Test //TODO а тут робот сдох (утонул лох)
+    //TODO а тут робот сдох (утонул лох)
+    @Test
     public void flood2() {
-        testBotOnMap("maps/flood2.map", "flood2", 281, 0);
+        testBotOnMap("maps/flood2.map", "flood2", 281);
     }
 
-    @Test //TODO опять утонул лох
+    //TODO опять утонул лох
+    @Test
     public void flood3() {
-        testBotOnMap("maps/flood3.map", "flood3", 1293, 0);
+        testBotOnMap("maps/flood3.map", "flood3", 1293);
     }
 
     @Test //CONFIRMED NE LOX
     public void flood4() {
-        testBotOnMap("maps/flood4.map", "flood4", 826, 0);
+        testBotOnMap("maps/flood4.map", "flood4", 826);
     }
 
-    @Test //TODO снова лох, чето с водой походу, он в ней вообще на похуй ходит
+    //TODO снова лох, чето с водой походу, он в ней вообще на похуй ходит
+    @Test
     public void flood5() {
-        testBotOnMap("maps/flood5.map", "flood5", 567, 0);
+        testBotOnMap("maps/flood5.map", "flood5", 567);
     }
 
     @Test //CONFIRMED
     public void trampoline1() {
-        testBotOnMap("maps/trampoline1.map", "trampoline1",407 , 0);
+        testBotOnMap("maps/trampoline1.map", "trampoline1", 407);
     }
 
-    @Test
     //TODO технически, соответствует оригинальному симулятору, но что-то странное со сбором лямбд, мог бы и выйти в WIN
+    @Test
     public void trampoline2() {
-        testBotOnMap("maps/trampoline2.map", "trampoline2", 1724 , 0);
+        testBotOnMap("maps/trampoline2.map", "trampoline2", 1724);
     }
 
     @Test //CONFIRMED
     public void trampoline3() {
-        testBotOnMap("maps/trampoline3.map", "trampoline3", 5467 , 0);
+        testBotOnMap("maps/trampoline3.map", "trampoline3", 5467);
     }
 
-    @Test //TODO говорю же, что-то с водой
+    @Test
+    public void horock1() {
+        testBotOnMap("maps/horock1.map", "horock1", 735);
+    }
+
+    //TODO говорю же, что-то с водой
+    @Test
     public void horock2() {
-        testBotOnMap("maps/horock2.map", "horock2", 735 , 1203);
+        testBotOnMap("maps/horock2.map", "horock2", 735);
     }
 
 
@@ -177,7 +260,8 @@ public class LeaterBotTest {
     //TODO Проверить этот тест после отладки лямбда камней
     @Test //CONFIRMED
     public void horock3() {
-        testBotOnMap("maps/horock3.map", "horock3", 2365, 1203);
+        testBotOnMap("maps/horock3.map", "horock3", 2365);
     }
+
 
 }
