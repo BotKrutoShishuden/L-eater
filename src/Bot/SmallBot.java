@@ -36,6 +36,10 @@ class SmallBot implements Comparable<SmallBot> {
                 (gameMap.getRazorsNumber() + 1);
     }
 
+    void addSurvivalRate(int rate) {
+        survivalRate += rate;
+    }
+
     SmallBot(GameMap oldMap, List<NextStep> oldSteps, NextStep nextStep,
              int oldSurvivalRate, int oldBonusOfResearch[][]) {
 
@@ -142,7 +146,7 @@ class SmallBot implements Comparable<SmallBot> {
         return gameMap.getScore();
     }
 
-    boolean[] getCollectedLambdasList() {
+    boolean[] getCollectedLambdas() {
         return gameMap.getCollectedLambdas();
     }
 
@@ -150,16 +154,18 @@ class SmallBot implements Comparable<SmallBot> {
         return getSteps().get(getSteps().size() - 1);
     }
 
-    public void addSurvivalRate(int rate) {
-        survivalRate += rate;
+    Boolean[] getCollectedLamdasObj() {
+        return gameMap.getCollectedLambdasObj();
     }
 
 
     //Override--------------------------------------------------------------------
     @Override
     public String toString() {
-        return "survivability " + getSurvivalRate() + ", Score " + gameMap.getScore() + ", Steps " + getSteps().size() + "\n"
-                + printStepsSequence();
+//        return "survivability " + getSurvivalRate() + ", Score " + gameMap.getScore() + ", Steps " + getSteps().size() + "\n"
+//                + printStepsSequence() + "Lamdas " + printCollectedLamdas();
+        return "survivability " + getSurvivalRate() + ", Score " + gameMap.getScore() + "\nLamdas " + printCollectedLamdas() +
+                ", Steps " + getSteps().size() + "\n" + printStepsSequence();
     }
 
     public String printStepsSequence() {
@@ -191,6 +197,16 @@ class SmallBot implements Comparable<SmallBot> {
 
     }
 
+    public String printCollectedLamdas() {
+        StringBuilder result = new StringBuilder();
+        for (boolean lamda : getCollectedLambdas())
+            if (lamda)
+                result.append("1");
+            else
+                result.append("0");
+        return result.toString();
+    }
+
     @Override
     public int compareTo(SmallBot o) {
         if (getSurvivalRate() > o.getSurvivalRate())
@@ -201,4 +217,6 @@ class SmallBot implements Comparable<SmallBot> {
             return Integer.compare(getSteps().size(), o.getSteps().size());
 
     }
+
+
 }

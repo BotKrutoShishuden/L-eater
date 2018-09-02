@@ -1121,6 +1121,15 @@ public class GameMap {
         return beardsNumber;
     }
 
+    public Boolean[] getCollectedLambdasObj() {
+        Boolean collectedLamdasObj[] = new Boolean[collectedLambdas.length];
+        for (int i = 0; i < collectedLambdas.length; i++)
+            collectedLamdasObj[i] = collectedLambdas[i];
+        return collectedLamdasObj;
+
+
+    }
+
     public boolean[] getCollectedLambdas() {
         return collectedLambdas;
     }
