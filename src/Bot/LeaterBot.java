@@ -211,70 +211,42 @@ public class LeaterBot extends MapObject {
             case UP:
                 if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX][botY - 1].getSpecies())) {
                     SmallBot newSmallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                    List<SmallBot> smallBotList;
-                    if (smallBotsMap.get(newSmallBot.getCollectedLamdasObj()) == null)
-                        smallBotList = new ArrayList<>();
-                    else
-                        smallBotList = new ArrayList<>(smallBotsMap.get(newSmallBot.getCollectedLamdasObj()));
-                    smallBotList.add(newSmallBot);
-                    smallBotsMap.put(newSmallBot.getCollectedLamdasObj(), smallBotList);
+                    smallBotsMap.computeIfAbsent(newSmallBot.getCollectedLamdasObj(), k -> new ArrayList<>());
+                    smallBotsMap.get(newSmallBot.getCollectedLamdasObj()).add(newSmallBot);
                 }
                 break;
             case DOWN:
                 if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX][botY + 1].getSpecies())) {
                     SmallBot newSmallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                    List<SmallBot> smallBotList;
-                    if (smallBotsMap.get(newSmallBot.getCollectedLamdasObj()) == null)
-                        smallBotList = new ArrayList<>();
-                    else
-                        smallBotList = new ArrayList<>(smallBotsMap.get(newSmallBot.getCollectedLamdasObj()));
-                    smallBotList.add(newSmallBot);
-                    smallBotsMap.put(newSmallBot.getCollectedLamdasObj(), smallBotList);
+                    smallBotsMap.computeIfAbsent(newSmallBot.getCollectedLamdasObj(), k -> new ArrayList<>());
+                    smallBotsMap.get(newSmallBot.getCollectedLamdasObj()).add(newSmallBot);
                 }
                 break;
             case LEFT:
                 if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX - 1][botY].getSpecies())) {
                     SmallBot newSmallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                    List<SmallBot> smallBotList;
-                    if (smallBotsMap.get(newSmallBot.getCollectedLamdasObj()) == null)
-                        smallBotList = new ArrayList<>();
-                    else
-                        smallBotList = new ArrayList<>(smallBotsMap.get(newSmallBot.getCollectedLamdasObj()));
-                    smallBotList.add(newSmallBot);
-                    smallBotsMap.put(newSmallBot.getCollectedLamdasObj(), smallBotList);
+                    smallBotsMap.computeIfAbsent(newSmallBot.getCollectedLamdasObj(), k -> new ArrayList<>());
+                    smallBotsMap.get(newSmallBot.getCollectedLamdasObj()).add(newSmallBot);
                 }
                 break;
             case RIGHT:
                 if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX + 1][botY].getSpecies())) {
                     SmallBot newSmallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                    List<SmallBot> smallBotList;
-                    if (smallBotsMap.get(newSmallBot.getCollectedLamdasObj()) == null)
-                        smallBotList = new ArrayList<>();
-                    else
-                        smallBotList = new ArrayList<>(smallBotsMap.get(newSmallBot.getCollectedLamdasObj()));
-
-                    smallBotList.add(newSmallBot);
-                    smallBotsMap.put(newSmallBot.getCollectedLamdasObj(), smallBotList);
+                    smallBotsMap.computeIfAbsent(newSmallBot.getCollectedLamdasObj(), k -> new ArrayList<>());
+                    smallBotsMap.get(newSmallBot.getCollectedLamdasObj()).add(newSmallBot);
                 }
                 break;
             case USE_RAZOR:
                 if (UsingOfRazorIsAcceptable(oldMap, botX, botY)) {
                     SmallBot newSmallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                    List<SmallBot> smallBotList =
-                            new ArrayList<>(smallBotsMap.get(newSmallBot.getCollectedLamdasObj()));
-                    smallBotList.add(newSmallBot);
-                    smallBotsMap.put(newSmallBot.getCollectedLamdasObj(), smallBotList);
+                    smallBotsMap.computeIfAbsent(newSmallBot.getCollectedLamdasObj(), k -> new ArrayList<>());
+                    smallBotsMap.get(newSmallBot.getCollectedLamdasObj()).add(newSmallBot);
                 }
                 break;
             case WAIT:
                 SmallBot newSmallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                List<SmallBot> smallBotList;
-                if (smallBotsMap.get(newSmallBot.getCollectedLamdasObj()) == null)
-                    smallBotList = new ArrayList<>();
-                else
-                    smallBotList = new ArrayList<>(smallBotsMap.get(newSmallBot.getCollectedLamdasObj()));
-                smallBotList.add(newSmallBot);
-                smallBotsMap.put(newSmallBot.getCollectedLamdasObj(), smallBotList);
+                smallBotsMap.computeIfAbsent(newSmallBot.getCollectedLamdasObj(), k -> new ArrayList<>());
+                smallBotsMap.get(newSmallBot.getCollectedLamdasObj()).add(newSmallBot);
                 break;
             case ABORT:
                 System.out.println("АБОРТ ЭТО ГРЕХ");
@@ -472,6 +444,5 @@ public class LeaterBot extends MapObject {
 
         return bestSteps;
     }
-
 
 }
