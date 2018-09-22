@@ -951,14 +951,14 @@ public class GameMap {
                 score -= 1550;
                 break;
             case RB_CRUSHED:
-                score -= 175;
+                score -= collectedLambdas.length * 25; //такие вот дела
                 break;
             case ABORTED:
                 score += 1;
                 amountOfSteps--;
                 break;
             case WIN:
-                score += 175;
+                score += collectedLambdas.length * 25; //такие вот дела
                 break;
             case STILL_MINING:
                 break;

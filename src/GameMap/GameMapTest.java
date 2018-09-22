@@ -9,7 +9,6 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class GameMapTest {
-
     //Методы для автоматизации и облегчения тестирования
     private void makeTestFromFormattedFile(String address) throws IOException, NullPointerException {
 
@@ -21,15 +20,18 @@ public class GameMapTest {
         inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
         inputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "Razors "));
         inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+        inputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "Water "));
+        inputMap.setMaxMovesUnderWater(GameMap.cutParamAfterWord(address, "Waterproof "));
 
         for (NextStep nextStep : nextSteps)
             inputMap.moveAllObjects(nextStep);
 
         GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
-
         assertEquals(outputMap.toString(), inputMap.toString());
-
-
+        if (address.equals("maps/G_scoreTests/0_test.map")) {
+            outputMap.setScore(GameMap.cutParamAfterWord(address, "Score_F "));
+            assertEquals(outputMap.getScore(), inputMap.getScore());
+        }
     }
 
 
@@ -113,7 +115,7 @@ public class GameMapTest {
                 assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
                 assertEquals(inputMap.getLambdasNumber(), inputMap.getCollectedLambdasNumber());
                 assertEquals(outputMap.getMovesUnderWater(), inputMap.getMovesUnderWater());
-                //assertEquals(outputMap.getScore(), inputMap.getScore());//TODO исправить
+                assertEquals(outputMap.getScore(), inputMap.getScore());
                 assertEquals(outputMap.getGameCondition(), inputMap.getGameCondition());
                 assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
                 assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
@@ -183,6 +185,12 @@ public class GameMapTest {
     public void difficultTest() {
         makeDifficultTestFromFormattedDirectory(32, "difficult test", "maps/F_testsForDifficultIncidents/0_test.map");
 
+    }
+
+    @Test
+    public void scoreTest() {
+        makeTestFromFormattedDirectory(3, "score tests",
+                "maps/G_scoreTests/0_test.map");
     }
 
     //-----------------------------------------------------------------------------------
