@@ -1,0 +1,44 @@
+contest 7
+
+is
+    #######
+    ##    *#
+     ##R  *##
+      ##\\\\##
+       ##....##
+      ##..\ . ##
+     ## . L .  ##
+    ##\\\# #\\\\##
+   ######   #######
+ie
+
+
+
+c
+RDRRRDDRDDRRRLLLULULLLDLDLRRURR
+c
+
+os
+    #######
+    ##     #
+     ##    ##
+      ## ** ##
+       ##.. .##
+      ##      ##
+     ##   O    ##
+    ##   # #    ##
+   ######   #######
+oe
+
+
+
+Razors_F 0
+Score_F 869
+Moves_F 31
+Lambda_F 12
+LambdaMax_F 12
+GameCondition_F WIN
+
+Score: 869 (31 moves, found 12/12 Lambdas, have 0 razors)
+Status: Won - Found lift
+For 0 moves under water

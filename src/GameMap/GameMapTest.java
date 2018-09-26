@@ -9,7 +9,6 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class GameMapTest {
-
     //Методы для автоматизации и облегчения тестирования
     private void makeTestFromFormattedFile(String address) throws IOException, NullPointerException {
 
@@ -19,17 +18,20 @@ public class GameMapTest {
         NextStep nextSteps[] = GameMap.cutSteps(address);
 
         inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
-        inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+        inputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "Razors "));
         inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+        inputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "Water "));
+        inputMap.setMaxMovesUnderWater(GameMap.cutParamAfterWord(address, "Waterproof "));
 
         for (NextStep nextStep : nextSteps)
             inputMap.moveAllObjects(nextStep);
 
         GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
-
         assertEquals(outputMap.toString(), inputMap.toString());
-
-
+        if (address.equals("maps/G_scoreTests/0_test.map")) {
+            outputMap.setScore(GameMap.cutParamAfterWord(address, "Score_F "));
+            assertEquals(outputMap.getScore(), inputMap.getScore());
+        }
     }
 
 
@@ -59,7 +61,8 @@ public class GameMapTest {
     }
 
 
-    private void makeDifficultTestFromFormattedDirectory(int testNumber, String testName, String address) {
+    private void makeDifficultTestFromFormattedDirectory(int testNumber, String testName,
+                                                         String address) {
         int i = 0;
         try {
 
@@ -67,50 +70,62 @@ public class GameMapTest {
 
                 GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
                 inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
-                inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
+                inputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "Razors "));
                 inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
-
+                inputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "Water "));
+                inputMap.setMaxMovesUnderWater(GameMap.cutParamAfterWord(address, "Waterproof "));
                 NextStep nextSteps[] = GameMap.cutSteps(address);
 
-                //TestingOf GameMap.moveToLastCondition()
-                for (NextStep nextStep : nextSteps)
-                    inputMap.moveAllObjects(nextStep);
-
-                for (NextStep nextStep : nextSteps)
-                    inputMap.moveAllObjects(NextStep.BACK);
 
                 for (NextStep nextStep : nextSteps)
                     inputMap.moveAllObjects(nextStep);
-                //TestingOf GameMap.moveToLastCondition()
 
 
+                //TestingOf GameMap.back()
+                if (GameMap.STORAGE_PREVIOUS_MAP) {
+                    for (NextStep nextStep : nextSteps)
+                        inputMap.moveAllObjects(NextStep.BACK);
+
+                    for (NextStep nextStep : nextSteps)
+                        inputMap.moveAllObjects(nextStep);
+                }
+
+
+                //Эталонная карта
                 GameMap outputMap = GameMap.cutMapBetweenStartAndEnd(address, "os", "oe");
-                outputMap.setGrowth(GameMap.cutParamAfterWord(address, "F_Growth "));
-                outputMap.setRazors(GameMap.cutParamAfterWord(address, "F_Razors "));
-                outputMap.setFlooding(GameMap.cutParamAfterWord(address, "F_Flooding "));
-                outputMap.setScore(GameMap.cutParamAfterWord(address, "F_Score "));
-                outputMap.setAmountOfSteps(GameMap.cutParamAfterWord(address, "F_Moves "));
-                outputMap.setLamdasNumber(GameMap.cutParamAfterWord(address, "F_Lambda "));
-                outputMap.setMaxLambdasNumber(GameMap.cutParamAfterWord(address, "F_LambdaMax "));
-                outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "F_WaterLevel "));
-                outputMap.setGameCondition(GameMap.cutConditionAfterWord(address, "F_GameCondition "));
+                outputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth_F "));
+                outputMap.setRazorsNumber(GameMap.cutParamAfterWord(address, "Razors_F "));
+                outputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding_F "));
+                outputMap.setScore(GameMap.cutParamAfterWord(address, "Score_F "));
+                outputMap.setAmountOfSteps(GameMap.cutParamAfterWord(address, "Moves_F "));
+                outputMap.setLambdasNumber(GameMap.cutParamAfterWord(address, "Lambda_F "));
+                outputMap.setMaxLambdasNumber(GameMap.cutParamAfterWord(address, "LambdaMax_F "));
+                outputMap.setWaterLevel(GameMap.cutParamAfterWord(address, "WaterLevel_F "));
+                outputMap.setMovesUnderWater(GameMap.cutParamAfterWord(address, "CurMovesUnderWater_F "));
+                outputMap.setMaxMovesUnderWater(GameMap.cutParamAfterWord(address, "MaxMovesUnderWater_F "));
+                outputMap.setGameCondition(GameMap.cutConditionAfterWord(address, "GameCondition_F "));
 
+                //Сравнение
                 assertEquals(outputMap.getGrowth(), inputMap.getGrowth());
-                assertEquals(outputMap.getRazors(), inputMap.getRazors());
                 assertEquals(outputMap.getFlooding(), inputMap.getFlooding());
+                assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
+                assertEquals(outputMap.getRazorsNumber(), inputMap.getRazorsNumber());
+                assertEquals(outputMap.getMaxMovesUnderWater(), inputMap.getMaxMovesUnderWater());
                 assertEquals(outputMap.getMaxX(), inputMap.getMaxX());
                 assertEquals(outputMap.getMaxY(), inputMap.getMaxY());
-                //assertEquals(outputMap.getScore(), inputMap.getScore());
+                assertEquals(inputMap.getLambdasNumber(), inputMap.getCollectedLambdasNumber());
+                assertEquals(outputMap.getMovesUnderWater(), inputMap.getMovesUnderWater());
+                assertEquals(outputMap.getScore(), inputMap.getScore());
+                assertEquals(outputMap.getGameCondition(), inputMap.getGameCondition());
                 assertEquals(outputMap.getAmountOfSteps(), inputMap.getAmountOfSteps());
-                assertEquals(outputMap.getLamdasNumber(), inputMap.getLamdasNumber());
                 assertEquals(outputMap.getMaxLambdasNumber(), inputMap.getMaxLambdasNumber());
-                assertEquals(outputMap.getWaterLevel(), inputMap.getWaterLevel());
+                assertEquals(outputMap.getLambdasNumber(), inputMap.getLambdasNumber());
                 assertEquals(outputMap.toString(), inputMap.toString());
 
 
                 i++;
                 address = address.replace((i - 1) + "", i + "");
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AssertionError e) {
@@ -142,28 +157,43 @@ public class GameMapTest {
     @Test
     public void moveStones() {
 
-        makeTestFromFormattedDirectory(5, "stay step & stones tests", "maps/B_moveStoneTests/0_test.map");
+        makeTestFromFormattedDirectory(8, "move stone tests", "maps/B_moveStoneTests/0_test.map");
+
+    }
+
+    @Test
+    public void moveLambdaStones() {
+
+        makeTestFromFormattedDirectory(2, "lambdas stone tests", "maps/C_lambdaStoneTests/0_test.map");
 
     }
 
     @Test
     public void growBeard() {
-        makeTestFromFormattedDirectory(5, "grow simple beard, obstacles and cutting", "maps/growBeardTests/0_test.map");
+        makeTestFromFormattedDirectory(5, "grow beard tests",
+                "maps/D_growBeardTests/0_test.map");
     }
-
     //-----------------------------------------------------------------------------------
 
     @Test
     public void conditionTest() {
         makeDifficultTestFromFormattedDirectory
-                (3, "condtition test", "maps/conditionTests/0_test.map");
+                (3, "condtition test", "maps/E_conditionTests/0_test.map");
     }
 
     @Test
     public void difficultTest() {
-        makeDifficultTestFromFormattedDirectory(3, "difficult test", "maps/testsForDifficultIncidents/0_test.map");
+        makeDifficultTestFromFormattedDirectory(32, "difficult test", "maps/F_testsForDifficultIncidents/0_test.map");
 
     }
+
+    @Test
+    public void scoreTest() {
+        makeTestFromFormattedDirectory(3, "score tests",
+                "maps/G_scoreTests/0_test.map");
+    }
+
+    //-----------------------------------------------------------------------------------
 
     @Test
     public void cutNormalMap() {
@@ -172,7 +202,15 @@ public class GameMapTest {
         assertEquals(10, gameMap.getMaxX());
         assertEquals(10, gameMap.getMaxY());
         assertEquals(15, gameMap.getGrowth());
-        assertEquals(0, gameMap.getRazors());
+        assertEquals(0, gameMap.getRazorsNumber());
+
+    }
+
+    @Test
+    public void copy() {
+        GameMap gameMap = GameMap.cutNormalMap("maps/horock3.map");
+        GameMap copiedMap = gameMap.copy();
+
 
     }
 }

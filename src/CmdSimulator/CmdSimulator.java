@@ -12,14 +12,10 @@ public class CmdSimulator {
 
     public static void main(String[] args) {
         try {
-            String address = "maps/testsForDifficultIncidents/1_test.map";
+            String address = "maps/horock2.map";
 
 
-
-            GameMap inputMap = GameMap.cutMapBetweenStartAndEnd(address, "is", "ie");
-            inputMap.setGrowth(GameMap.cutParamAfterWord(address, "Growth "));
-            inputMap.setRazors(GameMap.cutParamAfterWord(address, "Razors "));
-            inputMap.setFlooding(GameMap.cutParamAfterWord(address, "Flooding "));
+            GameMap inputMap = GameMap.cutNormalMap(address);
 
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -37,7 +33,8 @@ public class CmdSimulator {
                     inputMap.moveAllObjects(nextstep);
                 System.out.println(inputMap.toString() + "\n");
                 System.out.println("Score = " + inputMap.getScore());
-                System.out.println("Lambdas " + inputMap.getLamdasNumber() + "/" + inputMap.getMaxLambdasNumber());
+                System.out.println("Lambdas " + inputMap.getLambdasNumber() + "/" + inputMap.getMaxLambdasNumber());
+                System.out.println("Lambda list " + inputMap.getLambdas());
             }
         } catch (IOException e) {
             e.printStackTrace();

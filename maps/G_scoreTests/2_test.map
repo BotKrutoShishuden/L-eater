@@ -10,12 +10,14 @@ is
 #      \      #
 #      \      #
 #      \      #
-#             #
+#      \      #
+#      \      #
+#      \      #
 ###############
 ie
 
 c
-DDDDDDDL
+DDDDDDDDDDL
 c
 
 os
@@ -28,14 +30,13 @@ os
 #             #
 #             #
 #             #
+#             #
+#             #
+#             #
 #     *       #
 #     R       #
-#             #
 ###############
 oe
 
-F_Score 167
-F_Moves 8
-F_Lambda 7
-F_LambdaMax 7
-F_GameCondition RB_CRUSHED
+Score_F 239
+GameCondition_F RB_CRUSHED

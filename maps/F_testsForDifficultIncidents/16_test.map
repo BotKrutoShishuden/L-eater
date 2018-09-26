@@ -1,0 +1,46 @@
+contest 3
+
+is
+########
+#..R...#
+#..*...#
+#..#...#
+#.\.\ .L
+####**.#
+#\.....#
+#\..* .#
+########
+ie
+
+Growth
+Razors
+Water
+Flooding
+Waterproof
+
+
+c
+LDDDRRRRDDLLLLLDRRURRUURR
+c
+
+os
+########
+#.  ...#
+#. *...#
+#. #...#
+#.     O
+####   #
+#     *#
+#   **.#
+########
+oe
+
+
+
+
+Razors_F 0
+Score_F 275
+Moves_F 25
+Lambda_F 4
+LambdaMax_F 4
+GameCondition_F WIN

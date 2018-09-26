@@ -1,0 +1,57 @@
+trampoline2
+is
+     ######
+     #....#
+     #.**.#
+     #.**.#
+     #.**.#
+######.\\.######
+#**....*.......#
+#\\....L\\\....#
+#A......*****..#
+######R.....###########
+     ###.....*.....\\\#
+       #\\\\#..1...\\\#
+       #\\\\#......\\\#
+       ################
+ie
+
+Trampoline A targets 1
+Growth 0
+Razors 0
+Flooding 0
+
+
+
+c
+RRLLULLLULLRDRRRRRRURRULULLLDLDDLLLLRRRDRRRUULDLULLLLDLLRULLLDDLULDLUURULLUU
+c
+
+os
+     ######
+     #....#
+     #.  .#
+     #. *.#
+     #.**.#
+###### ** ######
+#  .. **.  ....#
+#   . .O   ....#
+#*        ***..#
+######*   ..###########
+     ###  .           #
+       #    #*        #
+       #**  #.....    #
+       ################
+oe
+
+
+
+Growth_F 0
+Razors_F 0
+Flooding_F 0
+Score_F 1724
+Moves_F 76
+Lambda_F 24
+LambdaMax_F 24
+WaterLevel_F 0
+GameCondition_F WIN

@@ -1,0 +1,45 @@
+flooding2
+is
+#######
+#..***#
+#..\\\#
+#...**#
+#.*.*\#
+LR....#
+#######
+ie
+
+Flooding 5
+Waterproof 3
+
+
+
+
+c
+RRUDRRULURULLLLDDDL
+c
+
+os
+#######
+#..   #
+#  *  #
+# ..  #
+#   **#
+O ****#
+#######
+oe
+
+
+
+Growth_F 0
+Razors_F 0
+Flooding_F 5
+Score_F 281
+Moves_F 19
+Lambda_F 4
+LambdaMax_F 4
+CurMovesUnderWater_F 3
+MaxMovesUnderWater_F 3
+Waterproof_ 5
+WaterLevel_F 3
+GameCondition_F WIN

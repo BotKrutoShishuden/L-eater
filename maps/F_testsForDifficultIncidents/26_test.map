@@ -1,0 +1,52 @@
+ems3
+
+is
+################
+#\.****####\#*##
+#\.\\\\.***...##
+##*####.#*###..#
+#\.R....#...##\#
+#\ ####...#.#*.#
+#\ **######.#..#
+##...\\\\\\...##
+#L.##########.##
+################
+ie
+
+Growth
+Razors
+Water
+Flooding
+Waterproof
+
+
+c
+LLRLDDUURUULURDRRRRRDDLRDRRURRDDDLLLLLLRRRRRRRRURUUULULLUA
+c
+
+os
+################
+#      ####R# ##
+#  **** * *   ##
+## #### # ###* #
+#  *..  #*  ## #
+#  ####  *# #  #
+#  **###### #  #
+##...        *##
+#O.##########.##
+################
+oe
+
+
+
+
+Razors_F 0
+Score_F 793
+Moves_F 57
+Lambda_F 17
+LambdaMax_F 17
+GameCondition_F ABORTED
+
+Score: 793 (57 moves, found 17/17 Lambdas, have 0 razors)
+Status: Aborted
+For 0 moves under water

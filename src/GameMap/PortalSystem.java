@@ -30,6 +30,12 @@ public class PortalSystem {
         }
     }
 
+    public PortalSystem(PortalSystem copied) {
+        xOutValue = new HashMap<>(copied.getxOutValue());
+        yOutValue = new HashMap<>(copied.getyOutValue());
+        yInListValue = new HashMap<>(copied.getyInListValue());
+        xInListValue = new HashMap<>(copied.getxInListValue());
+    }
 
     public int getXOutCoordinate(Character symbol) {
         return xOutValue.get(symbol);
@@ -45,5 +51,23 @@ public class PortalSystem {
 
     public ArrayList<Integer> getYCoordinateThatWeMustBeClosed(Character symbol) {
         return yInListValue.get(symbol);
+    }
+
+
+    //GETTERS
+    public HashMap<Character, Integer> getxOutValue() {
+        return xOutValue;
+    }
+
+    public HashMap<Character, Integer> getyOutValue() {
+        return yOutValue;
+    }
+
+    public HashMap<Character, ArrayList<Integer>> getxInListValue() {
+        return xInListValue;
+    }
+
+    public HashMap<Character, ArrayList<Integer>> getyInListValue() {
+        return yInListValue;
     }
 }

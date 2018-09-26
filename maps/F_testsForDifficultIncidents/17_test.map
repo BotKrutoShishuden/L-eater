@@ -1,0 +1,41 @@
+contest4
+
+is
+#########
+#.*..#\.#
+#.\..#\.L
+#.R .##.#
+#.\  ...#
+#..\  ..#
+#...\  ##
+#....\ \#
+#########
+ie
+
+
+
+c
+URDDLRDRDRDRRLUURUUULURDR
+c
+
+os
+#########
+#. ..#  #
+#.  .#  O
+#.  .## #
+#.*  .. #
+#..     #
+#...   ##
+#....   #
+#########
+oe
+
+
+
+
+Score_F 575
+Moves_F 25
+Lambda_F 8
+LambdaMax_F 8
+GameCondition_F WIN
+

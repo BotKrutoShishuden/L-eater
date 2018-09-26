@@ -1,0 +1,60 @@
+beard4
+is
+####################
+#W\\!#\\\**.\#W\\\W#
+##*######..###..\\\#
+#.......\.R ###...\#
+#####.###.#.......##
+#.......#.#\####.###
+#\\##\###\#\\#...#.L
+#\##\.###.####.#.#.#
+#\W#####.....###.W.#
+####\\...\\\...#.#.#
+#W*######.######.#.#
+#\\\\\\\\\.........#
+############\###\###
+#\\.. *..........\\#
+#W... #.........##W#
+####################
+ie
+
+Growth 25
+Razors 0
+Flooding 0
+
+
+
+c
+RDDDRLUURRRRRRURULULLDRDDLLLLLULLDDDDDDRRLLLLLLLRRRRRDDRRRDDRRRRUDRRLLLLLLLLLLLLLLLLLRRRRRRRRRRRUULLLLLLLLLLLRRRRRRRRUUUUUUUULLLLDDDDLRUULLLDLDDUUURRRRUULLLLRUURRLLDDRRRRRRRURWLURRRLLLLLLA
+c
+
+os
+####################
+#WW  #R      #WWWWW#
+##W######  ###.WWWW#
+#         *W###.WWW#
+##### ### #WWWWWWW##
+#     ..# #W####.###
+#WW## ### #  #...#.O
+#W## *### ####.#.#.#
+#WW#####. ...###.W.#
+####        ...#.#.#
+#WW###### ######.#.#
+#WWWW    **  ......#
+############ ###W###
+#WWWWW       WWWWWW#
+#W...*#.........##W#
+####################
+oe
+
+
+
+Growth_F 25
+Razors_F 1
+Flooding_F 0
+Score_F 2013
+Moves_F 187
+Lambda_F 44
+LambdaMax_F 44
+WaterLevel_F 0
+GameCondition_F ABORTED

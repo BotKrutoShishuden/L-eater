@@ -1,0 +1,56 @@
+beard3
+is
+        ################
+        #*****#!!  1   #
+        #..\..#        #
+#########\\\\ # .\\\.  #
+#.............# *      #
+#.. .\\\#..!..#\**     #
+#.. LW\\#W  ..##### ####
+#..R\\\\#.. ..*\*\*W...#
+#.......A.. ...\.\...\\#
+#..........     **     #
+############....\.######
+           #.....!#
+           ########
+ie
+
+Trampoline A targets 1
+Growth 10
+Razors 0
+Flooding 0
+
+
+
+c
+RRRRUULLRDRUURRUURRLDRRDDLRDDDRRRUDDDDRRULLURRUUDRRRRRLLLLLDDLLLLLSULLLLUSLLLLDDDDUURRRRA
+c
+
+os
+        ################
+        #WWW**#     WWW#
+        #WWW..#     WWW#
+#########*W*WW#    R.WW#
+#......WW*..W.#  WWWWWW#
+#..W.WWW#..WW.#***WWWWW#
+#..WOWWW#WWWW.#####W####
+#..WWWWW#..WW.WW*WWW...#
+#.......W..WWWWW.WWWWWW#
+#.......  WWWWWWWW*WWWW#
+############WW*WWW######
+           #...W**#
+           ########
+oe
+
+
+
+Growth_F 10
+Razors_F 2
+Flooding_F 0
+Score_F 1162
+Moves_F 88
+Lambda_F 25
+LambdaMax_F 25
+WaterLevel_F 0
+GameCondition_F ABORTED
+

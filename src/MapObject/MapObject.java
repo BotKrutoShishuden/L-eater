@@ -22,13 +22,21 @@ public class MapObject {
         this.symbol = symbol;
     }
 
+    public static MapObject CopyMapObject(MapObject copied) {
+        MapObject mapObject = new MapObject(copied.getSpecies(), copied.getX(), copied.getY());
+        if (copied.symbol != null)
+            mapObject.symbol = copied.getSymbol();
+        return mapObject;
+
+    }
+
     protected MapObject() {
     }
 
 
     @Override
     public String toString() {
-        return species.name();
+        return species.name() + " " + getX() + " " + getY();
     }
 
     @Override
@@ -97,6 +105,7 @@ public class MapObject {
             case PORTAL_OUT:
                 return symbol;
             default:
+                System.out.println("Underfined case in MapObject.getSymbol()");
                 return 'E';
         }
 
@@ -104,6 +113,11 @@ public class MapObject {
 
     public void setSpecies(Species species) {
         this.species = species;
+    }
+
+    public void setCoordinates (int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
 }
