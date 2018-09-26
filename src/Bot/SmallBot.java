@@ -150,14 +150,19 @@ class SmallBot implements Comparable<SmallBot> {
         return gameMap.getCollectedLambdas();
     }
 
-    NextStep getLastStep() {
-        return getSteps().get(getSteps().size() - 1);
-    }
 
     Boolean[] getCollectedLamdasObj() {
         return gameMap.getCollectedLambdasObj();
     }
 
+    Integer getKey() {
+        Integer key = 0;
+        for (int i = 0; i < getCollectedLambdas().length; i++)
+            if (getCollectedLambdas()[i])
+                key += i % 2 == 0 ? 27 * (i + 1) + 11 * (i + 2) : 31 * (i + 1) + 13 * (i + 2);
+
+        return key;
+    }
 
     //Override--------------------------------------------------------------------
     @Override
@@ -209,12 +214,13 @@ class SmallBot implements Comparable<SmallBot> {
 
     @Override
     public int compareTo(SmallBot o) {
-        if (getSurvivalRate() > o.getSurvivalRate())
+        if (getSteps().size() > o.getSteps().size())
             return 1;
-        else if (getSurvivalRate() < o.getSurvivalRate())
+        else if (getSteps().size() < o.getSteps().size())
             return -1;
-        else//Новые поколения живут
-            return Integer.compare(getSteps().size(), o.getSteps().size());
+        else
+            return Integer.compare(getSurvivalRate(), o.getSurvivalRate());
+
 
     }
 

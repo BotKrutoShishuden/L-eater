@@ -48,34 +48,34 @@ public class LeaterBotTest {
 
     }
 
-    @AfterClass
-    public static void reWriteOfLeaterResults() {
-        try {
-
-
-            Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
-            Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            while (resultsSet.hasNext() && reportSet.hasNext()) {
-                Map.Entry<String, Integer> resultEntry = resultsSet.next();
-                Map.Entry<String, String> reportEntry = reportSet.next();
-                stringBuilder.append(resultEntry.getKey()).append("\t\t\t\t").
-                        append(resultEntry.getValue()).append("\t\t\t\t").
-                        append(reportEntry.getValue()).append("\n");
-            }
-
-
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
-            bufferedWriter.write("TestName\t\t\t\tScore\t\t\t\tReport\n" + stringBuilder.toString());
-            bufferedWriter.flush();
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    @AfterClass
+//    public static void reWriteOfLeaterResults() {
+//        try {
+//
+//
+//            Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
+//            Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
+//
+//            StringBuilder stringBuilder = new StringBuilder();
+//
+//            while (resultsSet.hasNext() && reportSet.hasNext()) {
+//                Map.Entry<String, Integer> resultEntry = resultsSet.next();
+//                Map.Entry<String, String> reportEntry = reportSet.next();
+//                stringBuilder.append(resultEntry.getKey()).append("\t\t\t\t").
+//                        append(resultEntry.getValue()).append("\t\t\t\t").
+//                        append(reportEntry.getValue()).append("\n");
+//            }
+//
+//
+//            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
+//            bufferedWriter.write("TestName\t\t\t\tScore\t\t\t\tReport\n" + stringBuilder.toString());
+//            bufferedWriter.flush();
+//            bufferedWriter.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
     private void testBotOnMap(String address, String testName, int humansScore) {
