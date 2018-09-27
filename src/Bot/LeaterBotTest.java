@@ -103,7 +103,8 @@ public class LeaterBotTest {
         } else
             reportMap.put(testName, "");
 
-        System.out.println(gameMap.getGameCondition());
+        System.out.println("\n" + gameMap.getGameCondition());
+        System.out.println("Score = " + gameMap.getScore());
         System.out.println("------------------------------------");
 
         //assertEquals(bestWay.size(), gameMap.getAmountOfSteps());

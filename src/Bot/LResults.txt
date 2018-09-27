@@ -1,29 +1,29 @@
 TestName				Score				Report
-flood2				172				
-flood3				786				
-flood4				380				
-flood5				486				
-flood1				431				
+flood2				    172
+flood3				    786
+flood4				    380
+flood5				    511				BETTER
+flood1				    431
 contest9				239				
 contest8				1050				
-contest7				742				
+contest7				867				BETTER
 contest6				707				
 contest10				857				
 contest5				786				
-contest4				486				
+contest4				511				BETTER
 trampoline3				939				
 trampoline1				291				
 trampoline2				985				
-ems1				380				
-horock1				459				
-horock2				625				
-horock3				1570				
-contest3				350				
+ems1				    330				WORSE
+horock1				    459
+horock2				    725				BETTER
+horock3				    1570
+contest3				275				WORSE
 contest2				172				
-contest1				312				
-beard0				718				
-beard1				563				
-beard2				2616				
-beard3				885				
-beard4				533				
-beard5				604				
+contest1				212				WORSE
+beard0				    843				BETTER
+beard1				    563
+beard2				    2616
+beard3				    885
+beard4				    533
+beard5				    604

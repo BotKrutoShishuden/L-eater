@@ -10,7 +10,7 @@ import GameMap.GameCondition;
 import static Bot.LeaterBot.BONUS_OF_LOCAL_RESEARCH_DIVIDER;
 import static Bot.LeaterBot.LOCAL_START_BONUS_OF_RESEARCH;
 
-class SmallBot implements Comparable<SmallBot> {
+final class SmallBot implements Comparable<SmallBot> {
     private GameMap gameMap;
     private List<NextStep> steps;
     private int bonusOfLocalResearch[][];
