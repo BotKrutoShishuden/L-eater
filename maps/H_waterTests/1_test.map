@@ -1,0 +1,29 @@
+is
+###############
+#             #
+#             #
+#      R      #
+#             #
+#             #
+###############
+ie
+
+Flooding 1
+Waterproof 1
+
+c
+DDWW
+c
+
+os
+###############
+#             #
+#             #
+#             #
+#             #
+#      R      #
+###############
+oe
+
+WaterLevel_F = 4
+GameCondition_F RB_DROWNED

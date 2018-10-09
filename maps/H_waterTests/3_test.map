@@ -1,0 +1,30 @@
+is
+###############
+#             #
+#             #
+#             #
+#             #
+#      R      #
+###############
+ie
+
+Flooding 5
+Waterproof 5
+
+c
+WWWWWWWWWWWWWUD
+c
+
+os
+###############
+#             #
+#             #
+#             #
+#             #
+#      R      #
+###############
+oe
+
+WaterLevel_F = 3
+CurMovesUnderWater_F = 0
+GameCondition_F STILL_MINING

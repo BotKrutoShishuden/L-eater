@@ -26,7 +26,7 @@ public class GameMap {
     private int beardsNumber = 0;
 
     private int movesUnderWater;
-    private int maxMovesUnderWater = 0;            //ПРОСЬБА РЕДАКТИРОВАТЬ GameMap.copy()при добавлении полей
+    private int maxMovesUnderWater = 10;            //ПРОСЬБА РЕДАКТИРОВАТЬ GameMap.copy()при добавлении полей
     private int waterLevel = 0;
     private int flooding = 0;
 

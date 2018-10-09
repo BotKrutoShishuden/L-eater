@@ -1,0 +1,28 @@
+is
+###############
+#             #
+#             #
+#      R      #
+#             #
+#             #
+###############
+ie
+
+Flooding 3
+
+c
+WWWWWWWWW
+c
+
+os
+###############
+#             #
+#             #
+#      R      #
+#             #
+#             #
+###############
+oe
+
+WaterLevel_F = 1
+GameCondition_F STILL_MINING

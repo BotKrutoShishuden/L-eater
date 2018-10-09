@@ -182,6 +182,12 @@ public class GameMapTest {
     }
 
     @Test
+    public void waterLevel() {
+        makeTestFromFormattedDirectory(4, "rising water level",
+                "maps/H_waterTests/0_test.map");
+    }
+
+    @Test
     public void difficultTest() {
         makeDifficultTestFromFormattedDirectory(32, "difficult test", "maps/F_testsForDifficultIncidents/0_test.map");
 

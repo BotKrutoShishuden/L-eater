@@ -191,7 +191,8 @@ final class LeaterBot {
 
     private void smartAdd(List<SmallBot> smallBots, SmallBot oldBot, NextStep nextStep) {
         if (oldBot.getGameMap().getGameCondition() == GameCondition.ABORTED ||
-                oldBot.getGameMap().getGameCondition() == GameCondition.WIN)
+                oldBot.getGameMap().getGameCondition() == GameCondition.WIN ||
+                oldBot.getGameMap().getGameCondition() == GameCondition.RB_DROWNED)
             return;
 
         int botX = oldBot.getGameMap().getBot().getX();

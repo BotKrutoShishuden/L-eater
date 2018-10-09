@@ -1,0 +1,29 @@
+is
+###############
+#             #
+#             #
+#      R      #
+#             #
+#             #
+###############
+ie
+
+Flooding 3
+Waterproof 2
+
+c
+DDWWWWWU
+c
+
+os
+###############
+#             #
+#             #
+#             #
+#      R      #
+#             #
+###############
+oe
+
+WaterLevel_F = 2
+GameCondition_F STILL_MINING
