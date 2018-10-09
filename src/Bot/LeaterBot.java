@@ -172,7 +172,7 @@ final class LeaterBot {
     }
 
 
-    //Контроль ненужных добавлений (типо ботов идущих в стену или проигравших ботов)
+    //Контроль ненужных добавлений (типа ботов идущих в стену или проигравших ботов)
     //-----------------------------------------------------------------------------------
     private static boolean SpeciesIsAcceptable(Species species) {
         return species != Species.PORTAL_OUT && species != Species.WALL && species != Species.BEARD;
@@ -399,7 +399,7 @@ final class LeaterBot {
                 controlOfSimilarSmallBots();
 
 
-            //Удаляем худших ботов, если лист больше максимального допустимого размер
+            //Удаляем худших ботов, если лист больше максимально допустимого размера
             if (smallBots.size() > MAX_SMALL_BOT_SIZE) {
                 int deletedBotsDigit = smallBots.size() - MAX_SMALL_BOT_SIZE;
                 for (int i = 0; i < deletedBotsDigit; i++)
@@ -409,9 +409,13 @@ final class LeaterBot {
         }
 
         List<NextStep> bestSteps = new ArrayList<>(bestSmallBotEver.getSteps());
-        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT && bestSmallBotEver.getGameCondition() != GameCondition.WIN)
+        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT || bestSmallBotEver.getGameCondition() != GameCondition.WIN)
             bestSteps.add(NextStep.ABORT);
 
+        System.out.println("Flooding = " + bestSmallBotEver.getGameMap().getFlooding());
+        System.out.println("Water level = " + bestSmallBotEver.getGameMap().getWaterLevel());
+        System.out.println("Max moves under water = " + bestSmallBotEver.getGameMap().getMaxMovesUnderWater());
+        System.out.println("Moves under water = " + bestSmallBotEver.getGameMap().getMovesUnderWater());
         return bestSteps;
     }
 

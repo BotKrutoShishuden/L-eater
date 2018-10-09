@@ -1,5 +1,140 @@
 flood2
-Score = -1424
+Score = 143
+Report = 
+Steps = RRUUURRA
+-----------------------------------------
+flood3
+Score = 786
+Report = 
+Steps = LLUUURUURRRRRRULLLULLLRRRRRRURULLDLLULLDLLULDDDDDRRRRRRRRDRDDDLLA
+-----------------------------------------
+flood4
+Score = 380
+Report = 
+Steps = DDDDLLLLLUURUUUURURRRRDRRUUUULRULURRRLDDDDDRDDDDDRDLDRRRRRDDLLDLLLLLLUA
+-----------------------------------------
+flood5
+Score = 527
+Report = 
+Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDDLDDRLLUULLLLDDUUUUUURRRDLULDLDDRRURDRRRUURA
+-----------------------------------------
+flood1
+Score = 431
+Report = 
+Steps = LLLLDDRRRRRRLLRDDLLA
+-----------------------------------------
+contest9
+Score = 239
+Report = 
+Steps = RRRULULLDDLA
+-----------------------------------------
+contest8
+Score = 1050
+Report = 
+Steps = UULLDLLLLLLLRURURRRRRUUUULLLUUUUUUUULLLRDDDDDDDDDDLLRRUUWULLRRULLUURWRUUUULLRRRRRRDDRRDDDRRRRRRDRRDDA
+-----------------------------------------
+contest7
+Score = 867
+Report = 
+Steps = RDRRRDDLLDLDLLRURURRRDRDRRRLLLULLA
+-----------------------------------------
+contest6
+Score = 707
+Report = 
+Steps = RUURRRRLRRRLLLLLLLWWRDDLRUURRRRRRRRRUUURUURUUULULLULLLLLLLLDDLDDDDDDRLUURUURRRRRURULLLLUULLLDA
+-----------------------------------------
+contest10
+Score = 857
+Report = 
+Steps = UUUUULLLLLLUUULLLLLURUUUUUDDLRRRDDRRRRRUURRDRLURLLLDDRDDRRUULLDLLLUUUUUUUUUULUURRRRRRLLLLDDRRA
+-----------------------------------------
+contest5
+Score = 786
+Report = 
+Steps = LLUUURUURRRRRRULLLULLLRRRRRRURULLDLLULLDLLULDDDDDRRRRRRRRDRDDDLLA
+-----------------------------------------
+contest4
+Score = 511
+Report = 
+Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDDLDDRLLLLLLUUUWUUURRRDDDRDWRDLLULUUUULDLDDRDLDDRURURURRRUURA
+-----------------------------------------
+trampoline3
+Score = 939
+Report = 
+Steps = RRRLLDDDLLDDRDDDDRRRRRULURRRRRRUUURRRRULURRRRRDDRLRRRRRRRRRRRA
+-----------------------------------------
+trampoline1
+Score = 291
+Report = 
+Steps = LDLLULDLUA
+-----------------------------------------
+trampoline2
+Score = 985
+Report = 
+Steps = RRRLDDRRRDUUULLUULUULLDLDLLLLDRRRRRRDLLLLLLLLURULLLDLDLLRUURRLUUUA
+-----------------------------------------
+ems1
+Score = 330
+Report = 
+Steps = DDLWRWLRRLRWWWRRUUURRDDDRLUUUUULUUUUUUUUURLLLA
+-----------------------------------------
+horock1
+Score = 459
+Report = 
+Steps = DLLLLDDDDRRLURRRRRULRRUWLURURRLRRURULLDRRLURUUUUULDLUUURRRRRRRRLDDLDDDDLDDDRRRULLLUULLLDURRA
+-----------------------------------------
+horock2
+Score = 233
+Report = 
+Steps = UULRRURRRDURRRRRRA
+-----------------------------------------
+horock3
+Score = 1570
+Report = 
+Steps = RRRRRLRRRRRLRUURRRULLURDDRDDRLRURUUULLLLLULULLLUULLLDLLDDDDUUUUURUUURRRDDDRDRLDRA
+-----------------------------------------
+contest3
+Score = 275
+Report = 
+Steps = LDDDRRRRDDLLLLLDRURRUURRRA
+-----------------------------------------
+contest2
+Score = 172
 Report = 
 Steps = UURRURRLURLLWLLDRRLDLDDRRRRUA
+-----------------------------------------
+contest1
+Score = 212
+Report = 
+Steps = LRDDDUULLLDDLA
+-----------------------------------------
+beard0
+Score = 843
+Report = 
+Steps = RRRRURRDDULDLDDDLLLLLDURRRUULLURUURRDDDDDDLLLDLRRRRURRRURA
+-----------------------------------------
+beard1
+Score = 563
+Report = 
+Steps = RRRRURRDDDUULDLLLLLUURRRDLDDDDLLLDDRUA
+-----------------------------------------
+beard2
+Score = 2578
+Report = 
+Steps = RRDRRDRRRRRRRRRRRRRRRRRRRRRRDDDLLRDDDDDLLLLLLLLLLLLLLLLLLLLLLUUUUURLUUULA
+-----------------------------------------
+beard3
+Score = 885
+Report = 
+Steps = RRRURUURRURRRDDLUUULLRULRRDDRRDDDDDRRRRRRRRRLLLLLULLLLLSLLDLLLDDLA
+-----------------------------------------
+beard4
+Score = 533
+Report = 
+Steps = LDDDDDDDDLLLLLLLLA
+-----------------------------------------
+beard5
+Score = 604
+Report = 
+Steps = ULLLLRULWRUUUURRRRRRRUULLDLLLLLLDUUURRURRRRRRRA
 -----------------------------------------

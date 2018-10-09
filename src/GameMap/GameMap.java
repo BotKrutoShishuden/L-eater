@@ -868,7 +868,7 @@ public class GameMap {
         copyMap.beardsNumber = beardsNumber;
 
         copyMap.movesUnderWater = movesUnderWater;
-        copyMap.maxMovesUnderWater = 10;
+        copyMap.maxMovesUnderWater = maxMovesUnderWater;
         copyMap.waterLevel = waterLevel;
         copyMap.flooding = flooding;
 
@@ -953,7 +953,7 @@ public class GameMap {
         score--;
         switch (gameCondition) {
             case RB_DROWNED:
-                score -= 1550;
+                score -= collectedLambdas.length * 25;
                 break;
             case RB_CRUSHED:
                 score -= collectedLambdas.length * 25; //такие вот дела
