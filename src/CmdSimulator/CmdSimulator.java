@@ -12,7 +12,7 @@ public class CmdSimulator {
 
     public static void main(String[] args) {
         try {
-            String address = "maps/horock2.map";
+            String address = "maps/flood2.map";
 
 
             GameMap inputMap = GameMap.cutNormalMap(address);
@@ -35,6 +35,9 @@ public class CmdSimulator {
                 System.out.println("Score = " + inputMap.getScore());
                 System.out.println("Lambdas " + inputMap.getLambdasNumber() + "/" + inputMap.getMaxLambdasNumber());
                 System.out.println("Lambda list " + inputMap.getLambdas());
+                System.out.println("Flooding " + inputMap.getFlooding());
+                System.out.println("Water level " + inputMap.getWaterLevel());
+                System.out.println("Moves under water " + inputMap.getMovesUnderWater());
             }
         } catch (IOException e) {
             e.printStackTrace();
