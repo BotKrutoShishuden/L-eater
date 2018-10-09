@@ -381,7 +381,7 @@ public class GameMap {
                 case 'B':
                     nextSteps[i] = (NextStep.BACK);
                     break;
-                case 'A' :
+                case 'A':
                     nextSteps[i] = (NextStep.ABORT);
                     break;
                 default:
@@ -896,12 +896,15 @@ public class GameMap {
         if (botNextStep == NextStep.BACK && STORAGE_PREVIOUS_MAP) {
             if (previousMap != null)
                 backToLastCondition();
+            return;
+
 
         } else if (gameCondition != GameCondition.STILL_MINING)
             return;
 
         else if (botNextStep == NextStep.ABORT) {
-            amountOfSteps++;
+            if (STORAGE_PREVIOUS_MAP)
+                previousMap = this.copy();
             gameCondition = GameCondition.ABORTED;
             return;
         } else {
