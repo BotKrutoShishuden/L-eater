@@ -246,7 +246,6 @@ final class LeaterBot {
                 }
                 break;
             case ABORT:
-                System.out.println("АБОРТ ЭТО ГРЕХ");
                 break;
         }
 
@@ -409,13 +408,16 @@ final class LeaterBot {
         }
 
         List<NextStep> bestSteps = new ArrayList<>(bestSmallBotEver.getSteps());
-        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT || bestSmallBotEver.getGameCondition() != GameCondition.WIN)
+        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT || bestSmallBotEver.getGameCondition() != GameCondition.WIN){
             bestSteps.add(NextStep.ABORT);
+            System.out.println("АБОРТ ЭТО ГРЕХ");
+        }
 
-        System.out.println("Flooding = " + bestSmallBotEver.getGameMap().getFlooding());
-        System.out.println("Water level = " + bestSmallBotEver.getGameMap().getWaterLevel());
-        System.out.println("Max moves under water = " + bestSmallBotEver.getGameMap().getMaxMovesUnderWater());
-        System.out.println("Moves under water = " + bestSmallBotEver.getGameMap().getMovesUnderWater());
+
+        //System.out.println("Flooding = " + bestSmallBotEver.getGameMap().getFlooding());
+        //System.out.println("Water level = " + bestSmallBotEver.getGameMap().getWaterLevel());
+        //System.out.println("Max moves under water = " + bestSmallBotEver.getGameMap().getMaxMovesUnderWater());
+        //System.out.println("Moves under water = " + bestSmallBotEver.getGameMap().getMovesUnderWater());
         return bestSteps;
     }
 
