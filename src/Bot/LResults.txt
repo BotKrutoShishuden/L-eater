@@ -1,5 +1,5 @@
 flood2
-Score = 172
+Score = -1424
 Report = 
 Steps = UURRURRLURLLWLLDRRLDLDDRRRRUA
 -----------------------------------------

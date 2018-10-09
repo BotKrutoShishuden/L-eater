@@ -89,12 +89,16 @@ public class LeaterBotTest {
 
         resultsMap.put(testName, gameMap.getScore());
 
-        if (gameMap.getScore() > oldResultMap.get(testName))
-            reportMap.put(testName, "BETTER");
-        else if (gameMap.getScore() < oldResultMap.get(testName))
-            reportMap.put(testName, "WORSE");
-        else
+        try {
+            if (gameMap.getScore() > oldResultMap.get(testName))
+                reportMap.put(testName, "BETTER");
+            else if (gameMap.getScore() < oldResultMap.get(testName))
+                reportMap.put(testName, "WORSE");
+            else
+                reportMap.put(testName, "");
+        } catch(NullPointerException e){
             reportMap.put(testName, "");
+        }
 
         stepsMap.put(testName, stepsBuilder.toString());
 

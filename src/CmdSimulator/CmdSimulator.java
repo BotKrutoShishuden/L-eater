@@ -32,6 +32,7 @@ public class CmdSimulator {
                 for (NextStep nextstep : nextSteps)
                     inputMap.moveAllObjects(nextstep);
                 System.out.println(inputMap.toString() + "\n");
+                System.out.println("Game Condition " + inputMap.getGameCondition());
                 System.out.println("Score = " + inputMap.getScore());
                 System.out.println("Lambdas " + inputMap.getLambdasNumber() + "/" + inputMap.getMaxLambdasNumber());
                 System.out.println("Lambda list " + inputMap.getLambdas());

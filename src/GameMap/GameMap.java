@@ -42,7 +42,7 @@ public class GameMap {
     private List<MapObject> lambdas;
 
     private GameMap previousMap;
-    public static final boolean STORAGE_PREVIOUS_MAP = false;
+    public static final boolean STORAGE_PREVIOUS_MAP = true;
 
     private PortalSystem portalSystem;
 
@@ -233,7 +233,7 @@ public class GameMap {
             }
             while (!currentLine.toString().contains(paramName));
 
-            return Integer.valueOf(currentLine.delete(0, paramName.length()).toString());
+            return Integer.valueOf(currentLine.delete(0, paramName.length()).toString().trim());
 
         } catch (NullPointerException e) {
             return 0;
@@ -379,6 +379,9 @@ public class GameMap {
                     break;
                 case 'B':
                     nextSteps[i] = (NextStep.BACK);
+                    break;
+                case 'A' :
+                    nextSteps[i] = (NextStep.ABORT);
                     break;
                 default:
                     nextSteps[i] = (NextStep.WAIT);
@@ -899,7 +902,7 @@ public class GameMap {
         else if (botNextStep == NextStep.ABORT) {
             amountOfSteps++;
             gameCondition = GameCondition.ABORTED;
-
+            return;
         } else {
             if (STORAGE_PREVIOUS_MAP)
                 previousMap = this.copy();
