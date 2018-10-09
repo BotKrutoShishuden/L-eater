@@ -31,8 +31,7 @@ public class LeaterBotTest {
             String lines[] = stringBuilder.toString().split("\n");
             for (int i = 0; i < lines.length; i++)
                 if (lines[i].contains("Score = "))
-                    returnedOldResultMap.put(lines[i - 1].trim(),
-                            Integer.valueOf(lines[i].replace("Score = ", "")));
+                    returnedOldResultMap.put(lines[i - 1].trim(), Integer.valueOf(lines[i].replace("Score = ", "").trim()));
 
             return returnedOldResultMap;
 
