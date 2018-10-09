@@ -304,6 +304,7 @@ public class GameMap {
             gameMap.razorsNumber = cutParamAfterWord(address, "Razors ");
             gameMap.flooding = cutParamAfterWord(address, "Flooding ");
             gameMap.maxMovesUnderWater = cutParamAfterWord(address, "Waterproof ");
+            gameMap.waterLevel = cutParamAfterWord(address, "Water ");
             return gameMap;
         } catch (IOException e) {
             e.printStackTrace();
