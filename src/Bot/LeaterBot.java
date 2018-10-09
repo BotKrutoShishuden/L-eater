@@ -14,8 +14,6 @@ final class LeaterBot {
     //Управление отбором
     private final int MAX_GENERATION_DIGIT = 100;//TODO высчитывать относительно карты
     private final int MAX_SMALL_BOT_SIZE = 500;
-    private final int MAX_SIMILAR_BOTS = 10;
-    private final int MIN_REDUCED_GENERATION = 0;
 
     //Математика бонусов
     static final int LOCAL_START_BONUS_OF_RESEARCH = 30;
@@ -189,59 +187,54 @@ final class LeaterBot {
         return false;
     }
 
-    private void smartAdd(List<SmallBot> smallBots, SmallBot oldBot, NextStep nextStep) {
+    private void smartAdd(List<SmallBot> smallBots, SmallBot oldBot, NextStep nextStep, int generationDigit) {
         if (oldBot.getGameMap().getGameCondition() == GameCondition.ABORTED ||
                 oldBot.getGameMap().getGameCondition() == GameCondition.WIN ||
                 oldBot.getGameMap().getGameCondition() == GameCondition.RB_DROWNED)
             return;
 
-        int botX = oldBot.getGameMap().getBot().getX();
-        int botY = oldBot.getGameMap().getBot().getY();
-
-        GameMap oldMap = oldBot.getGameMap();
-        List<NextStep> oldSteps = oldBot.getSteps();
-        int oldRate = oldBot.getSurvivalRate();
-        int oldBonusOfResearch[][] = oldBot.getBonusOfLocalResearch();
 
         SmallBot smallBot;
 
         switch (nextStep) {
             case UP:
-                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX][botY - 1].getSpecies())) {
-                    smallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
+                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX()][oldBot.getY() - 1].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                    smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case DOWN:
-                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX][botY + 1].getSpecies())) {
-                    smallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
+                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX()][oldBot.getY() + 1].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                    smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case LEFT:
-                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX - 1][botY].getSpecies())) {
-                    smallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
+                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX() - 1][oldBot.getY()].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                    smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case RIGHT:
-                if (SpeciesIsAcceptable(oldMap.getMapObjects()[botX + 1][botY].getSpecies())) {
-                    smallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
+                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX() + 1][oldBot.getY()].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                    smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case WAIT:
-                smallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
-                if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
-                    smallBots.add(smallBot);
+                if (oldBot.getSteps().size() + 1 == generationDigit) {
+                    smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
+                    if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
+                        smallBots.add(smallBot);
+                }
                 break;
             case USE_RAZOR:
-                if (UsingOfRazorIsAcceptable(oldMap, botX, botY)) {
-                    smallBot = new SmallBot(oldMap, oldSteps, nextStep, oldRate, oldBonusOfResearch);
+                if (UsingOfRazorIsAcceptable(oldBot.getGameMap(), oldBot.getX(), oldBot.getY()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                    smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
@@ -299,7 +292,7 @@ final class LeaterBot {
         int[] numberOfPickups = new int[mainGameMap.getLambdas().size()];
         for (SmallBot smallBot : smallBots) {
             int i = 0;
-            for (boolean lambda : smallBot.getCollectedLambdasList()) {
+            for (boolean lambda : smallBot.getCollectedLambdas()) {
                 if (lambda)
                     numberOfPickups[i]++;
                 else
@@ -311,7 +304,7 @@ final class LeaterBot {
         //TODO не использовать магические числа, привязать все к полям класса
         for (SmallBot smallBot : smallBots) {
             int i = 0;
-            for (boolean lambda : smallBot.getCollectedLambdasList()) {
+            for (boolean lambda : smallBot.getCollectedLambdas()) {
                 if (lambda && numberOfPickups[i] < smallBots.size() / 100)
                     smallBot.addSurvivalRate(bonusForLambdas[i] * 50);
                 else if (lambda && numberOfPickups[i] > smallBots.size() * 0.75)
@@ -332,27 +325,30 @@ final class LeaterBot {
         SmallBot bestSmallBotEver = new SmallBot(mainGameMap, initBot.getSteps(), NextStep.ABORT,
                 initBot.getSurvivalRate(), initBot.getBonusOfLocalResearch());
 
-        smartAdd(smallBots, initBot, NextStep.LEFT);
-        smartAdd(smallBots, initBot, NextStep.RIGHT);
-        smartAdd(smallBots, initBot, NextStep.UP);
-        smartAdd(smallBots, initBot, NextStep.DOWN);
-        smartAdd(smallBots, initBot, NextStep.WAIT);
-        smartAdd(smallBots, initBot, NextStep.USE_RAZOR);
-
 
         int generationDigit = 1;
+
+        smartAdd(smallBots, initBot, NextStep.LEFT, generationDigit);
+        smartAdd(smallBots, initBot, NextStep.RIGHT, generationDigit);
+        smartAdd(smallBots, initBot, NextStep.UP, generationDigit);
+        smartAdd(smallBots, initBot, NextStep.DOWN, generationDigit);
+        smartAdd(smallBots, initBot, NextStep.WAIT, generationDigit);
+        smartAdd(smallBots, initBot, NextStep.USE_RAZOR, generationDigit);
+
 
         while (generationDigit < MAX_GENERATION_DIGIT) {
 
             List<SmallBot> newSmallBots = new ArrayList<>();
 
+            generationDigit++;
+
             for (SmallBot smallBot : smallBots) {
-                smartAdd(newSmallBots, smallBot, NextStep.LEFT);
-                smartAdd(newSmallBots, smallBot, NextStep.RIGHT);
-                smartAdd(newSmallBots, smallBot, NextStep.UP);
-                smartAdd(newSmallBots, smallBot, NextStep.DOWN);
-                smartAdd(newSmallBots, smallBot, NextStep.WAIT);
-                smartAdd(newSmallBots, smallBot, NextStep.USE_RAZOR);
+                smartAdd(newSmallBots, smallBot, NextStep.LEFT, generationDigit);
+                smartAdd(newSmallBots, smallBot, NextStep.RIGHT, generationDigit);
+                smartAdd(newSmallBots, smallBot, NextStep.UP, generationDigit);
+                smartAdd(newSmallBots, smallBot, NextStep.DOWN, generationDigit);
+                smartAdd(newSmallBots, smallBot, NextStep.WAIT, generationDigit);
+                smartAdd(newSmallBots, smallBot, NextStep.USE_RAZOR, generationDigit);
             }
 
             smallBots.addAll(newSmallBots);
@@ -378,25 +374,12 @@ final class LeaterBot {
 
             }
 
-            generationDigit++;
 
             //Ищем лучшего бота по очкам среди всех ботов
             for (SmallBot smallBot : smallBots)
                 if (smallBot.getScore() >= bestSmallBotEver.getScore())
                     bestSmallBotEver.setConditions(smallBot);
-
-            //Удаляем старое поколение
-            List<SmallBot> smallBotsCopy = new ArrayList<>(smallBots);
-            smallBots.clear();
-            for (SmallBot copyBot : smallBotsCopy)
-                if (copyBot.getSteps().size() >= generationDigit)
-                    smallBots.add(copyBot);
-            smallBotsCopy.clear();
-
-
-            //TODO Метод не реализован
-            if (generationDigit > MIN_REDUCED_GENERATION)
-                controlOfSimilarSmallBots();
+            //TODO нереализованный contolOfSimilarBots
 
 
             //Удаляем худших ботов, если лист больше максимально допустимого размера
@@ -405,20 +388,16 @@ final class LeaterBot {
                 for (int i = 0; i < deletedBotsDigit; i++)
                     smallBots.remove(smallBots.size() - 1);
             }
-
         }
 
         List<NextStep> bestSteps = new ArrayList<>(bestSmallBotEver.getSteps());
-        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT || bestSmallBotEver.getGameCondition() != GameCondition.WIN){
+        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT && bestSmallBotEver.getGameCondition() != GameCondition.WIN) {
             bestSteps.add(NextStep.ABORT);
             System.out.println("АБОРТ ЭТО ГРЕХ");
         }
 
 
-        //System.out.println("Flooding = " + bestSmallBotEver.getGameMap().getFlooding());
-        //System.out.println("Water level = " + bestSmallBotEver.getGameMap().getWaterLevel());
-        //System.out.println("Max moves under water = " + bestSmallBotEver.getGameMap().getMaxMovesUnderWater());
-        //System.out.println("Moves under water = " + bestSmallBotEver.getGameMap().getMovesUnderWater());
+
         return bestSteps;
     }
 

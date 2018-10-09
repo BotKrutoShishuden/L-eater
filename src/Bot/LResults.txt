@@ -2,139 +2,167 @@ flood2
 Score = 143
 Report = 
 Steps = RRUUURRA
+ABORTED
 -----------------------------------------
 flood3
 Score = 782
 Report = 
 Steps = LLUUURUURRRRRRULLLULLLRRRRRRURULLDLLULLLDLDLDDRURRRDDRRRRRUUDDDDDDLLA
+ABORTED
 -----------------------------------------
 flood4
 Score = 380
 Report = 
 Steps = DDDDLLLLLUURUUUURURRRRDRRUUUULRULURRRLDDDDDRDDDDDRDLDRRRRRDDLLDLLLLLLUA
+ABORTED
 -----------------------------------------
 flood5
 Score = 365
 Report = 
 Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDLDDDRA
+ABORTED
 -----------------------------------------
 flood1
 Score = 431
 Report = 
 Steps = LLLLDDRRRRRRLLRDDLLA
+ABORTED
 -----------------------------------------
 contest9
 Score = 239
 Report = 
 Steps = RRRULULLDDLA
+ABORTED
 -----------------------------------------
 contest8
 Score = 1050
 Report = 
 Steps = UULLDLLLLLLLRURURRRRRUUUULLLUUUUUUUULLLRDDDDDDDDDDLLRRUUWULLRRULLUURWRUUUULLRRRRRRDDRRDDDRRRRRRDRRDDA
+ABORTED
 -----------------------------------------
 contest7
 Score = 867
 Report = 
-Steps = RDRRRDDLLDLDLLRURURRRDRDRRRLLLULLA
+Steps = RDRRRDDLLDLDLLRURURRRDRDRRRLLLULL
+WIN
 -----------------------------------------
 contest6
 Score = 707
 Report = 
 Steps = RUURRRRLRRRLLLLLLLWWRDDLRUURRRRRRRRRUUURUURUUULULLULLLLLLLLDDLDDDDDDRLUURUURRRRRURULLLLUULLLDA
+ABORTED
 -----------------------------------------
 contest10
 Score = 857
 Report = 
 Steps = UUUUULLLLLLUUULLLLLURUUUUUDDLRRRDDRRRRRUURRDRLURLLLDDRDDRRUULLDLLLUUUUUUUUUULUURRRRRRLLLLDDRRA
+ABORTED
 -----------------------------------------
 contest5
 Score = 786
 Report = 
 Steps = LLUUURUURRRRRRULLLULLLRRRRRRURULLDLLULLDLLULDDDDDRRRRRRRRDRDDDLLA
+ABORTED
 -----------------------------------------
 contest4
 Score = 511
 Report = 
-Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDDLDDRLLLLLLUUUWUUURRRDDDRDWRDLLULUUUULDLDDRDLDDRURURURRRUURA
+Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDDLDDRLLLLLLUUUWUUURRRDDDRDWRDLLULUUUULDLDDRDLDDRURURURRRUUR
+WIN
 -----------------------------------------
 trampoline3
 Score = 939
 Report = 
 Steps = RRRLLDDDLLDDRDDDDRRRRRULURRRRRRUUURRRRULURRRRRDDRLRRRRRRRRRRRA
+ABORTED
 -----------------------------------------
 trampoline1
 Score = 291
 Report = 
 Steps = LDLLULDLUA
+ABORTED
 -----------------------------------------
 trampoline2
 Score = 985
 Report = 
 Steps = RRRLDDRRRDUUULLUULUULLDLDLLLLDRRRRRRDLLLLLLLLURULLLDLDLLRUURRLUUUA
+ABORTED
 -----------------------------------------
 ems1
-Score = 330
+Score = 328
 Report = 
-Steps = DDLWRWLRRLRWWWRRUUURRDDDRLUUUUULUUUUUUUUURLLLA
+Steps = RRDDRWWWLUWRLWLWLLUUULLDDDLRUUUUURUUUUUUUUURLLL
+WIN
 -----------------------------------------
 horock1
 Score = 459
 Report = 
 Steps = DLLLLDDDDRRLURRRRRULRRUWLURURRLRRURULLDRRLURUUUUULDLUUURRRRRRRRLDDLDDDDLDDDRRRULLLUULLLDURRA
+ABORTED
 -----------------------------------------
 horock2
 Score = 233
 Report = 
 Steps = UULRRURRRDURRRRRRA
+ABORTED
 -----------------------------------------
 horock3
 Score = 1570
 Report = 
 Steps = RRRRRLRRRRRLRUURRRULLURDDRDDRLRURUUULLLLLULULLLUULLLDLLDDDDUUUUURUUURRRDDDRDRLDRA
+ABORTED
 -----------------------------------------
 contest3
 Score = 275
 Report = 
-Steps = LDDDRRRRDDLLLLLDRURRUURRRA
+Steps = LDDDRRRRDDLLLLLDRURRUURRR
+WIN
 -----------------------------------------
 contest2
 Score = 172
 Report = 
 Steps = UURRURRLURLLWLLDRRLDLDDRRRRUA
+ABORTED
 -----------------------------------------
 contest1
 Score = 212
 Report = 
-Steps = LRDDDUULLLDDLA
+Steps = LRDDDUULLLDDL
+WIN
 -----------------------------------------
 beard0
 Score = 843
 Report = 
-Steps = RRRRURRDDULDLDDDLLLLLDURRRUULLURUURRDDDDDDLLLDLRRRRURRRURA
+Steps = RRRRURRDDULDLDDDLLLLLDURRRUULLURUURRDDDDDDLLLDLRRRRURRRUR
+WIN
 -----------------------------------------
 beard1
 Score = 563
 Report = 
 Steps = RRRRURRDDDUULDLLLLLUURRRDLDDDDLLLDDRUA
+ABORTED
 -----------------------------------------
 beard2
 Score = 2578
 Report = 
 Steps = RRDRRDRRRRRRRRRRRRRRRRRRRRRRDDDLLRDDDDDLLLLLLLLLLLLLLLLLLLLLLUUUUURLUUULA
+ABORTED
 -----------------------------------------
 beard3
 Score = 885
 Report = 
 Steps = RRRURUURRURRRDDLUUULLRULRRDDRRDDDDDRRRRRRRRRLLLLLULLLLLSLLDLLLDDLA
+ABORTED
 -----------------------------------------
 beard4
 Score = 533
 Report = 
 Steps = LDDDDDDDDLLLLLLLLA
+ABORTED
 -----------------------------------------
 beard5
 Score = 604
 Report = 
 Steps = ULLLLRULWRUUUURRRRRRRUULLDLLLLLLDUUURRURRRRRRRA
+ABORTED
 -----------------------------------------

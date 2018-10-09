@@ -142,12 +142,8 @@ final class SmallBot implements Comparable<SmallBot> {
         return gameMap.getScore();
     }
 
-    boolean[] getCollectedLambdasList() {
+    boolean[] getCollectedLambdas() {
         return gameMap.getCollectedLambdas();
-    }
-
-    NextStep getLastStep() {
-        return getSteps().get(getSteps().size() - 1);
     }
 
     public void addSurvivalRate(int rate) {
@@ -193,12 +189,15 @@ final class SmallBot implements Comparable<SmallBot> {
 
     @Override
     public int compareTo(SmallBot o) {
-        if (getSurvivalRate() > o.getSurvivalRate())
+        //Сначала сравнение по поколениям
+        //Если одно поколение - по survivalRate
+        if (getSteps().size() > o.getSteps().size())
             return 1;
-        else if (getSurvivalRate() < o.getSurvivalRate())
+        else if (getSteps().size() < o.getSteps().size())
             return -1;
-        else//Новые поколения живут
-            return Integer.compare(getSteps().size(), o.getSteps().size());
+        else
+            return Integer.compare(getSurvivalRate(), o.getSurvivalRate());
+
 
     }
 }

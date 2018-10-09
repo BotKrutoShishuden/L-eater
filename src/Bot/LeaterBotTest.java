@@ -17,6 +17,7 @@ public class LeaterBotTest {
     private static Map<String, Integer> resultsMap = new HashMap<>();
     private static Map<String, String> reportMap = new HashMap<>();
     private static Map<String, String> stepsMap = new HashMap<>();
+    private static Map<String, GameCondition> conditionMap = new HashMap<>();
 
     private static Map<String, Integer> parseOldResults(String address) {
         try {
@@ -51,16 +52,20 @@ public class LeaterBotTest {
             Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> stepsSet = stepsMap.entrySet().iterator();
+            Iterator<Map.Entry<String, GameCondition>> conditionSet = conditionMap.entrySet().iterator();
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            while (resultsSet.hasNext() && reportSet.hasNext() && stepsSet.hasNext()) {
+            while (resultsSet.hasNext() && reportSet.hasNext() && stepsSet.hasNext() && conditionSet.hasNext()) {
                 Map.Entry<String, Integer> resultEntry = resultsSet.next();
                 Map.Entry<String, String> reportEntry = reportSet.next();
                 Map.Entry<String, String> stepsEntry = stepsSet.next();
+                Map.Entry<String, GameCondition> conditionEntry = conditionSet.next();
                 stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
                         append(resultEntry.getValue()).append("\nReport = ").
-                        append(reportEntry.getValue()).append("\nSteps = ").append(stepsEntry.getValue()).append("\n").
+                        append(reportEntry.getValue()).append("\nSteps = ").
+                        append(stepsEntry.getValue()).append("\n").
+                        append(conditionEntry.getValue()).append("\n").
                         append("-----------------------------------------\n");
             }
 
@@ -86,6 +91,7 @@ public class LeaterBotTest {
             gameMap.moveAllObjects(nextStep);
             stepsBuilder.append(nextStep.getSymbol());
         }
+        conditionMap.put(testName, gameMap.getGameCondition());
 
         resultsMap.put(testName, gameMap.getScore());
 
@@ -96,7 +102,7 @@ public class LeaterBotTest {
                 reportMap.put(testName, "WORSE");
             else
                 reportMap.put(testName, "");
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             reportMap.put(testName, "");
         }
 
