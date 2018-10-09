@@ -1,29 +1,140 @@
-TestName				Score				Report
-flood2				    172
-flood3				    786
-flood4				    380
-flood5				    511				BETTER
-flood1				    431
-contest9				239				
-contest8				1050				
-contest7				867				BETTER
-contest6				707				
-contest10				857				
-contest5				786				
-contest4				511				BETTER
-trampoline3				939				
-trampoline1				291				
-trampoline2				985				
-ems1				    330				WORSE
-horock1				    459
-horock2				    725				BETTER
-horock3				    1570
-contest3				275				WORSE
-contest2				172				
-contest1				212				WORSE
-beard0				    843				BETTER
-beard1				    563
-beard2				    2616
-beard3				    885
-beard4				    533
-beard5				    604
+flood2
+Score = 172
+Report = 
+Steps = UURRURRLURLLWLLDRRLDLDDRRRRUA
+-----------------------------------------
+flood3
+Score = 786
+Report = 
+Steps = LLUUURUURRRRRRULLLULLLRRRRRRURULLDLLULLDLLULDDDDDRRRRRRRRDRDDDLLA
+-----------------------------------------
+flood4
+Score = 380
+Report = 
+Steps = DDDDLLLLLUURUUUURURRRRDRRUUUULRULURRRLDDDDDRDDDDDRDLDRRRRRDDLLDLLLLLLUA
+-----------------------------------------
+flood5
+Score = 511
+Report = 
+Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDDLDDRLLLLLLUUUWUUURRRDDDRDWRDLLULUUUULDLDDRDLDDRURURURRRUUR
+-----------------------------------------
+flood1
+Score = 431
+Report = 
+Steps = LLLLDDRRRRRRLLRDDLLA
+-----------------------------------------
+contest9
+Score = 239
+Report = 
+Steps = RRRULULLDDLA
+-----------------------------------------
+contest8
+Score = 1050
+Report = 
+Steps = UULLDLLLLLLLRURURRRRRUUUULLLUUUUUUUULLLRDDDDDDDDDDLLRRUUWULLRRULLUURWRUUUULLRRRRRRDDRRDDDRRRRRRDRRDDA
+-----------------------------------------
+contest7
+Score = 867
+Report = 
+Steps = RDRRRDDLLDLDLLRURURRRDRDRRRLLLULL
+-----------------------------------------
+contest6
+Score = 707
+Report = 
+Steps = RUURRRRLRRRLLLLLLLWWRDDLRUURRRRRRRRRUUURUURUUULULLULLLLLLLLDDLDDDDDDRLUURUURRRRRURULLLLUULLLDA
+-----------------------------------------
+contest10
+Score = 857
+Report = 
+Steps = UUUUULLLLLLUUULLLLLURUUUUUDDLRRRDDRRRRRUURRDRLURLLLDDRDDRRUULLDLLLUUUUUUUUUULUURRRRRRLLLLDDRRA
+-----------------------------------------
+contest5
+Score = 786
+Report = 
+Steps = LLUUURUURRRRRRULLLULLLRRRRRRURULLDLLULLDLLULDDDDDRRRRRRRRDRDDDLLA
+-----------------------------------------
+contest4
+Score = 511
+Report = 
+Steps = RDDRDRDLLULUUUURRDDRRRUULURDDDDLDDRLLLLLLUUUWUUURRRDDDRDWRDLLULUUUULDLDDRDLDDRURURURRRUUR
+-----------------------------------------
+trampoline3
+Score = 939
+Report = 
+Steps = RRRLLDDDLLDDRDDDDRRRRRULURRRRRRUUURRRRULURRRRRDDRLRRRRRRRRRRRA
+-----------------------------------------
+trampoline1
+Score = 291
+Report = 
+Steps = LDLLULDLUA
+-----------------------------------------
+trampoline2
+Score = 985
+Report = 
+Steps = RRRLDDRRRDUUULLUULUULLDLDLLLLDRRRRRRDLLLLLLLLURULLLDLDLLRUURRLUUUA
+-----------------------------------------
+ems1
+Score = 330
+Report = 
+Steps = DDLWRWLRRLRWWWRRUUURRDDDRLUUUUULUUUUUUUUURLLL
+-----------------------------------------
+horock1
+Score = 459
+Report = 
+Steps = DLLLLDDDDRRLURRRRRULRRUWLURURRLRRURULLDRRLURUUUUULDLUUURRRRRRRRLDDLDDDDLDDDRRRULLLUULLLDURRA
+-----------------------------------------
+horock2
+Score = 725
+Report = 
+Steps = ULRURRURRRRRRRRLLLLDLLULLDDDRRRRRLRRURRRLDRRRUWULRUWLUULLLRLRLULLLLLLLLLLLRULLLRDULLLLLDLLLLLLDLDDDD
+-----------------------------------------
+horock3
+Score = 1570
+Report = 
+Steps = RRRRRLRRRRRLRUURRRULLURDDRDDRLRURUUULLLLLULULLLUULLLDLLDDDDUUUUURUUURRRDDDRDRLDRA
+-----------------------------------------
+contest3
+Score = 275
+Report = 
+Steps = LDDDRRRRDDLLLLLDRURRUURRR
+-----------------------------------------
+contest2
+Score = 172
+Report = 
+Steps = UURRURRLURLLWLLDRRLDLDDRRRRUA
+-----------------------------------------
+contest1
+Score = 212
+Report = 
+Steps = LRDDDUULLLDDL
+-----------------------------------------
+beard0
+Score = 843
+Report = 
+Steps = RRRRURRDDULDLDDDLLLLLDURRRUULLURUURRDDDDDDLLLDLRRRRURRRUR
+-----------------------------------------
+beard1
+Score = 563
+Report = 
+Steps = RRRRURRDDDUULDLLLLLUURRRDLDDDDLLLDDRUA
+-----------------------------------------
+beard2
+Score = 2616
+Report = 
+Steps = RRDRRDRRRRRRRRRRRRRRRRRRRRRRDDDLLRDDDDDLLLLLLLLLLLLLLLLLLLLLLUUUUURLUUULDDLDLDDDRDDRA
+-----------------------------------------
+beard3
+Score = 885
+Report = 
+Steps = RRRURUURRURRRDDLUUULLRULRRDDRRDDDDDRRRRRRRRRLLLLLULLLLLSLLDLLLDDLA
+-----------------------------------------
+beard4
+Score = 533
+Report = 
+Steps = LDDDDDDDDLLLLLLLLA
+-----------------------------------------
+beard5
+Score = 604
+Report = 
+Steps = ULLLLRULWRUUUURRRRRRRUULLDLLLLLLDUUURRURRRRRRRA
+-----------------------------------------

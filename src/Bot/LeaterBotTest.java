@@ -2,7 +2,6 @@ package Bot;
 
 import GameMap.GameCondition;
 import GameMap.GameMap;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -14,39 +13,36 @@ import static org.junit.Assert.*;
 
 public class LeaterBotTest {
     private static String address = "src/Bot/LResults.txt";
-    private static String resultsStrings[] = parseResultsArray(address);
+    private static Map<String, Integer> oldResultMap = parseOldResults(address);
     private static Map<String, Integer> resultsMap = new HashMap<>();
     private static Map<String, String> reportMap = new HashMap<>();
+    private static Map<String, String> stepsMap = new HashMap<>();
 
-
-    private static String[] parseResultsArray(String address) {
-        StringBuilder stringBuilder = new StringBuilder();
+    private static Map<String, Integer> parseOldResults(String address) {
         try {
+            Map<String, Integer> returnedOldResultMap = new HashMap<>();
+            StringBuilder stringBuilder = new StringBuilder();
+
             BufferedReader bufferedReader = new BufferedReader(new FileReader(address));
             int c;
             while ((c = bufferedReader.read()) != -1)
                 stringBuilder.append((char) c);
 
-            return stringBuilder.toString().replace("\t", " ").split("\n");
+            String lines[] = stringBuilder.toString().split("\n");
+            for (int i = 0; i < lines.length; i++)
+                if (lines[i].contains("Score = "))
+                    returnedOldResultMap.put(lines[i - 1].trim(),
+                            Integer.valueOf(lines[i].replace("Score = ", "")));
+
+            return returnedOldResultMap;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private Integer findValueByKey(String key) {
-        for (String str : resultsStrings)
-            if (str.contains(key + " ")) {
-                String stringBuilder = str.replace(key, " ").
-                        replace("BETTER", " ").
-                        replace("WORSE", " ").trim();
-
-                return Integer.valueOf(stringBuilder);
-            }
-
-        return 0;
-
-    }
+    //TODO сравнить счет из LResults.txt с результатами в симуляторе
 
     @AfterClass
     public static void reWriteOfLeaterResults() {
@@ -55,20 +51,23 @@ public class LeaterBotTest {
 
             Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
+            Iterator<Map.Entry<String, String>> stepsSet = stepsMap.entrySet().iterator();
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            while (resultsSet.hasNext() && reportSet.hasNext()) {
+            while (resultsSet.hasNext() && reportSet.hasNext() && stepsSet.hasNext()) {
                 Map.Entry<String, Integer> resultEntry = resultsSet.next();
                 Map.Entry<String, String> reportEntry = reportSet.next();
-                stringBuilder.append(resultEntry.getKey()).append("\t\t\t\t").
-                        append(resultEntry.getValue()).append("\t\t\t\t").
-                        append(reportEntry.getValue()).append("\n");
+                Map.Entry<String, String> stepsEntry = stepsSet.next();
+                stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
+                        append(resultEntry.getValue()).append("\nReport = ").
+                        append(reportEntry.getValue()).append("\nSteps = ").append(stepsEntry.getValue()).append("\n").
+                        append("-----------------------------------------\n");
             }
 
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
-            bufferedWriter.write("TestName\t\t\t\tScore\t\t\t\tReport\n" + stringBuilder.toString());
+            bufferedWriter.write(stringBuilder.toString());
             bufferedWriter.flush();
             bufferedWriter.close();
         } catch (IOException e) {
@@ -79,33 +78,27 @@ public class LeaterBotTest {
 
 
     private void testBotOnMap(String address, String testName, int humansScore) {
-
-        System.out.println(testName);
-
-        resultsMap.put(testName, findValueByKey(testName));
         GameMap gameMap = GameMap.cutNormalMap(address);
         LeaterBot leaterBot = new LeaterBot(gameMap);
         List<NextStep> bestWay = leaterBot.calculateBestSteps();
 
-        System.out.println("Steps");
+        StringBuilder stepsBuilder = new StringBuilder();
         for (NextStep nextStep : bestWay) {
-            System.out.print(nextStep.getSymbol());
             gameMap.moveAllObjects(nextStep);
+            stepsBuilder.append(nextStep.getSymbol());
         }
 
+        resultsMap.put(testName, gameMap.getScore());
 
-        if (gameMap.getScore() > resultsMap.get(testName)) {
-            resultsMap.put(testName, gameMap.getScore());
+        if (gameMap.getScore() > oldResultMap.get(testName))
             reportMap.put(testName, "BETTER");
-        } else if (gameMap.getScore() < resultsMap.get(testName)) {
-            resultsMap.put(testName, gameMap.getScore());
+        else if (gameMap.getScore() < oldResultMap.get(testName))
             reportMap.put(testName, "WORSE");
-        } else
+        else
             reportMap.put(testName, "");
 
-        System.out.println("\n" + gameMap.getGameCondition());
-        System.out.println("Score = " + gameMap.getScore());
-        System.out.println("------------------------------------");
+        stepsMap.put(testName, stepsBuilder.toString());
+
 
         //assertEquals(bestWay.size(), gameMap.getAmountOfSteps());
         assertTrue(gameMap.getScore() > 0);
