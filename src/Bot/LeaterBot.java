@@ -22,8 +22,8 @@ final class LeaterBot {
     static final int BONUS_FOR_RARE_LAMBDA = 10;
 
     //Для анализа игры
-    private List<List<NextStep>> observedBotsList;
     private final boolean OBSERVING_BOTS_MODE = true;
+    private List<List<NextStep>> observedStepsSequences;
 
 
     LeaterBot(GameMap mainGameMap) {
@@ -44,9 +44,8 @@ final class LeaterBot {
     //Для наблюдения за конкретными последовательностиями шагов на карте на разных этапах
     //-----------------------------------------------------------------------------------
     private void initObservedBotsList() {
-        observedBotsList = new ArrayList<>();
-        observedBotsList.add(stringToListOfSteps("WRRULUUWDWULUUUUUUUUUUURRDDDDDDDDDDLULDDDDDLA"));
-        observedBotsList.add(stringToListOfSteps("DDLWWWWWWWWWWRUUURRDDDRLUUUUUUUUUUUUUULLL"));
+        observedStepsSequences = new ArrayList<>();
+        observedStepsSequences.add(stringToListOfSteps("RRRRURRDDDUULDLLLLLUURRRDLDDDDLLLDDRUA"));
     }
 
     //Перевод строки с шагами в List этих шагов
@@ -94,7 +93,7 @@ final class LeaterBot {
         int digit = 0;
         for (SmallBot smallBot : smallBots)
             if (smallBot.getSteps().size() >= stepSequence.size())
-                if (smallBot.copyListStepsOfRange(0, stepSequence.size()).equals(stepSequence))
+                if (smallBot.getListOfStepInRange(0, stepSequence.size()).equals(stepSequence))
                     digit++;
 
         return digit;
@@ -120,8 +119,8 @@ final class LeaterBot {
     }
 
     //Полезные
-    private SmallBot foundbotWithSteps(List<NextStep> steps, int generation) {
-        steps = headList(steps, generation);
+    private SmallBot findBotWithSteps(List<NextStep> steps, int generation) {
+        steps = headListOfSteps(steps, generation);
 
         for (SmallBot smallBot : smallBots) {
             if (smallBot.getSteps().equals(steps))
@@ -131,8 +130,8 @@ final class LeaterBot {
         return null;
     }
 
-    private int botWithStepsIndex(List<NextStep> steps, int generation) {
-        steps = headList(steps, generation);
+    private int botWithStepsIndexInSmallBots(List<NextStep> steps, int generation) {
+        steps = headListOfSteps(steps, generation);
         int i = 0;
         for (SmallBot smallBot : smallBots) {
             if (smallBot.getSteps().equals(steps))
@@ -144,7 +143,7 @@ final class LeaterBot {
     }
 
     private int amountOfBotsBySteps(List<NextStep> steps, int generation) {
-        steps = headList(steps, generation);
+        steps = headListOfSteps(steps, generation);
         int number = 0;
         for (SmallBot smallBot : smallBots)
             if (smallBot.getSteps().equals(steps))
@@ -154,7 +153,7 @@ final class LeaterBot {
 
     }
 
-    private List<NextStep> headList(List<NextStep> list, int to) {
+    private List<NextStep> headListOfSteps(List<NextStep> list, int to) {
         List<NextStep> copyList = new ArrayList<>(list);
         List<NextStep> result = new ArrayList<>();
         int i = 0;
@@ -170,15 +169,15 @@ final class LeaterBot {
     }
 
 
-    //Контроль ненужных добавлений (типа ботов идущих в стену или проигравших ботов)
-    //-----------------------------------------------------------------------------------
-    private static boolean SpeciesIsAcceptable(Species species) {
+    /*Контроль ненужных добавлений (типо ботов идущих в стену или проигравших ботов)
+    -----------------------------------------------------------------------------------*/
+    //Проверка, что объект в который идет является проходимым
+    private boolean speciesIsAcceptable(Species species) {
         return species != Species.PORTAL_OUT && species != Species.WALL && species != Species.BEARD;
     }
 
-    //Возвращает true, есл
-    // и в радиусе 1 клетки есть хотя бы одна борода
-    private static boolean UsingOfRazorIsAcceptable(GameMap gameMap, int botX, int botY) {
+    //Возвращает true, еслии в радиусе 1 клетки есть хотя бы одна борода
+    private boolean usingOfRazorIsAcceptable(GameMap gameMap, int botX, int botY) {
 
         for (int i = botX - 1; i < botX + 2; i++)
             for (int j = botY - 1; j < botY + 2; j++)
@@ -198,28 +197,28 @@ final class LeaterBot {
 
         switch (nextStep) {
             case UP:
-                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX()][oldBot.getY() - 1].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                if (speciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX()][oldBot.getY() - 1].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
                     smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case DOWN:
-                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX()][oldBot.getY() + 1].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                if (speciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX()][oldBot.getY() + 1].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
                     smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case LEFT:
-                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX() - 1][oldBot.getY()].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                if (speciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX() - 1][oldBot.getY()].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
                     smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
                 }
                 break;
             case RIGHT:
-                if (SpeciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX() + 1][oldBot.getY()].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                if (speciesIsAcceptable(oldBot.getGameMap().getMapObjects()[oldBot.getX() + 1][oldBot.getY()].getSpecies()) && oldBot.getSteps().size() + 1 == generationDigit) {
                     smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
@@ -233,7 +232,7 @@ final class LeaterBot {
                 }
                 break;
             case USE_RAZOR:
-                if (UsingOfRazorIsAcceptable(oldBot.getGameMap(), oldBot.getX(), oldBot.getY()) && oldBot.getSteps().size() + 1 == generationDigit) {
+                if (usingOfRazorIsAcceptable(oldBot.getGameMap(), oldBot.getX(), oldBot.getY()) && oldBot.getSteps().size() + 1 == generationDigit) {
                     smallBot = new SmallBot(oldBot.getGameMap(), oldBot.getSteps(), nextStep, oldBot.getSurvivalRate(), oldBot.getBonusOfLocalResearch());
                     if (smallBot.getGameCondition() != GameCondition.RB_DROWNED && smallBot.getGameCondition() != GameCondition.RB_CRUSHED)
                         smallBots.add(smallBot);
@@ -246,71 +245,28 @@ final class LeaterBot {
 
     }
 
-    //Контроль похожих ботов
-    //-----------------------------------------------------------------------------------
-    //Возвращает количество разных ботов в smallBots
-    private int calculateAmountsOfSimilarBots() {
-        int differentBotDigit = 1;
-        SmallBot diffBot = smallBots.get(0);
-        for (SmallBot smallBot : smallBots)
-            if (diffBot.compareTo(smallBot) != 0) {
-                diffBot = smallBot;
-                differentBotDigit++;
-            }
-        return differentBotDigit;
-
-    }
-
-    //TODO очень опасное дерьмо в данный момент, надо попробовать это нормально реализовать
-    //TODO//List<SmallBot> должен быть предварительно отсоритрован
-    private void controlOfSimilarSmallBots() {
-//        ArrayList<SmallBot> copySmallBots = new ArrayList<>(smallBots);
-//        smallBots.clear();
-//
-//        SmallBot indexBot = copySmallBots.get(0);
-//        int numberOfSavedSimilarBots = 0;
-//        for (int i = 0; i < copySmallBots.size(); i++)
-//            if (indexBot.compareTo(copySmallBots.get(i)) == 0) {
-//                if (numberOfSavedSimilarBots < MAX_SIMILAR_BOTS) {
-//                    smallBots.add(copySmallBots.get(i));
-//                    numberOfSavedSimilarBots++;
-//                }
-//            } else {
-//                indexBot = copySmallBots.get(i);
-//                numberOfSavedSimilarBots = 0;
-//                i--;
-//            }
-//
-
-    }
-
-    //TODO Высчитывает редкость каждой лямбды относительно текущего поколения
-    //TODO выживаемость бота должна зависеть не только от количества лямбд
-    //TODO но и от их редкости (при хорошей реализации бот должен пройти contest 6)
+    /*Контроль похожих ботов
+    -----------------------------------------------------------------------------------
+    Высчитывает редкость каждой лямбды относительно текущего поколения
+    выживаемость бота должна зависеть не только от количества лямбд
+    но и от их редкости (при хорошей реализации бот должен пройти contest 6)*/
     private void calculateBonusForRareLamdasFounder(List<SmallBot> smallBots) {
         int[] bonusForLambdas = new int[mainGameMap.getLambdas().size()];
-        int[] numberOfPickups = new int[mainGameMap.getLambdas().size()];
+
         for (SmallBot smallBot : smallBots) {
             int i = 0;
             for (boolean lambda : smallBot.getCollectedLambdas()) {
-                if (lambda)
-                    numberOfPickups[i]++;
-                else
+                if (!lambda)
                     bonusForLambdas[i] += BONUS_FOR_RARE_LAMBDA;
                 i++;
             }
         }
 
-        //TODO не использовать магические числа, привязать все к полям класса
         for (SmallBot smallBot : smallBots) {
             int i = 0;
             for (boolean lambda : smallBot.getCollectedLambdas()) {
-                if (lambda && numberOfPickups[i] < smallBots.size() / 100)
-                    smallBot.addSurvivalRate(bonusForLambdas[i] * 50);
-                else if (lambda && numberOfPickups[i] > smallBots.size() * 0.75)
-                    smallBot.addSurvivalRate(bonusForLambdas[i] / 2);
-                else
-                    smallBot.addSurvivalRate(bonusForLambdas[i]);
+                if (lambda)
+                    smallBot.addBonusForRareLambda(bonusForLambdas[i]);
                 i++;
             }
         }
@@ -378,7 +334,7 @@ final class LeaterBot {
             //Ищем лучшего бота по очкам среди всех ботов
             for (SmallBot smallBot : smallBots)
                 if (smallBot.getScore() >= bestSmallBotEver.getScore())
-                    bestSmallBotEver.setConditions(smallBot);
+                    bestSmallBotEver.copyParamsOfAnotherBot(smallBot);
             //TODO нереализованный contolOfSimilarBots
 
 
@@ -393,9 +349,8 @@ final class LeaterBot {
         List<NextStep> bestSteps = new ArrayList<>(bestSmallBotEver.getSteps());
         if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT && bestSmallBotEver.getGameCondition() != GameCondition.WIN) {
             bestSteps.add(NextStep.ABORT);
-            System.out.println("АБОРТ ЭТО ГРЕХ");
+            //System.out.println("АБОРТ ЭТО ГРЕХ");
         }
-
 
 
         return bestSteps;

@@ -11,7 +11,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class LeaterBotTest {
+public final class LeaterBotTest {
     private static String address = "src/Bot/LResults.txt";
     private static Map<String, Integer> oldResultMap = parseOldResults(address);
     private static Map<String, Integer> resultsMap = new HashMap<>();
@@ -108,6 +108,9 @@ public class LeaterBotTest {
 
         stepsMap.put(testName, stepsBuilder.toString());
 
+        System.out.println(stepsBuilder.toString());
+        System.out.println(gameMap.getGameCondition());
+
 
         //assertEquals(bestWay.size(), gameMap.getAmountOfSteps());
         assertTrue(gameMap.getScore() > 0);
@@ -116,152 +119,171 @@ public class LeaterBotTest {
 
     }
 
-    @Test //ЭТО ВООБЩЕ ХУИТА КАКАЯ-ТО, ТУТ БОРОД И БРИТВ НЕТ
+    //CONFIRMED
+    @Test
     public void beard0() {
-        testBotOnMap("maps/beard0.map", "beard0", 0);
+        testBotOnMap("maps/beard0.map", "beard0", 858);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void beard1() {
         testBotOnMap("maps/beard1.map", "beard1", 858);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void beard2() {
         testBotOnMap("maps/beard2.map", "beard2", 4497);
     }
 
-    //TODO технически проходит, но почему-то абортится в двух шагах от лямбды
+    //CONFIRMED
     @Test
     public void beard3() {
         testBotOnMap("maps/beard3.map", "beard3", 1162);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void beard4() {
         testBotOnMap("maps/beard4.map", "beard4", 2013);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void beard5() {
         testBotOnMap("maps/beard5.map", "beard5", 657);
     }
 
-    @Test //CONFIRMED только там очков на 100 меньше должно быть
+    //CONFIRMED
+    @Test
     public void contest1() {
         testBotOnMap("maps/contest1.map", "contest1", 210);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void contest2() {
         testBotOnMap("maps/contest2.map", "contest2", 280);
     }
 
-    @Test //CONFIRMED, опять себе лишних очков нарисовал
+    //CONFIRMED
+    @Test
     public void contest3() {
         testBotOnMap("maps/contest3.map", "contest3", 275);
     }
 
-    @Test //CONFIRMED, а тут наоборот, меньше дал, чем на самом деле, скромняга
+    //CONFIRMED
+    @Test
     public void contest4() {
         testBotOnMap("maps/contest4.map", "contest4", 575);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void contest5() {
         testBotOnMap("maps/contest5.map", "contest5", 1297);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     //Не ест дальнюю лямбду, а надо бы
     public void contest6() {
         testBotOnMap("maps/contest6.map", "contest6", 1177);
     }
 
-    @Test //CONFIRMED, BUT STILL WRONG SCORE (DANEK PRIVET)
+    //CONFIRMED
+    @Test
     public void contest7() {
         testBotOnMap("maps/contest7.map", "contest7", 869);
     }
 
-    @Test //CONFIRMED
+    //Мало шагов
+    @Test
     public void contest8() {
         testBotOnMap("maps/contest8.map", "contest8", 1952);
     }
 
-    @Test //CONFIRMED, НО ОН КАК-ТО ТУПО СДЕЛАЛ (НО ОН ВСЕ РАВНО КРУТОЙ)
+    //Мало шагов
+    @Test
     public void contest9() {
         testBotOnMap("maps/contest9.map", "contest9", 3088);
     }
 
-    @Test //CONFIRMED
+    //Мало шагов
+    @Test
     public void contest10() {
         testBotOnMap("maps/contest10.map", "contest10", 3594);
     }
 
-    @Test //CONFIRMED, OPYAT OCHKI SCHITAET NE TAK, A MNE LEN' MENYAT' RASKLADKU
+    @Test
     public void ems1() {
         testBotOnMap("maps/ems1.map", "ems1", 334);
     }
 
-    @Test //CONFIRMED
+    //TODO Шаг влево и было бы на лямбду лучше
+    @Test
     public void flood1() {
         testBotOnMap("maps/flood1.map", "flood1", 937);
     }
 
-    //TODO а тут робот сдох (утонул лох)
+    //CONFIRMED
     @Test
     public void flood2() {
         testBotOnMap("maps/flood2.map", "flood2", 281);
     }
 
-    //TODO опять утонул лох
+    //CONFIRMED
     @Test
     public void flood3() {
         testBotOnMap("maps/flood3.map", "flood3", 1293);
     }
 
-    @Test //CONFIRMED NE LOX
+    //Мало шагов
+    @Test
     public void flood4() {
         testBotOnMap("maps/flood4.map", "flood4", 826);
     }
 
-    //TODO снова лох, чето с водой походу, он в ней вообще на похуй ходит
+    //TODO не хочет искать открытый лифт
     @Test
     public void flood5() {
         testBotOnMap("maps/flood5.map", "flood5", 567);
     }
 
-    @Test //CONFIRMED
+
+    //CONFIRMED
+    @Test
     public void trampoline1() {
         testBotOnMap("maps/trampoline1.map", "trampoline1", 407);
     }
 
-    //TODO технически, соответствует оригинальному симулятору, но что-то странное со сбором лямбд, мог бы и выйти в WIN
+    //CONFIRMED
     @Test
     public void trampoline2() {
         testBotOnMap("maps/trampoline2.map", "trampoline2", 1724);
     }
 
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void trampoline3() {
         testBotOnMap("maps/trampoline3.map", "trampoline3", 5467);
     }
 
+    //CONFIRMED
     @Test
     public void horock1() {
         testBotOnMap("maps/horock1.map", "horock1", 735);
     }
 
-    //TODO говорю же, что-то с водой
+    //CONFIRMED
     @Test
     public void horock2() {
         testBotOnMap("maps/horock2.map", "horock2", 735);
     }
 
-
-    //TODO в нормальном симуляторе при текущей выходной последовательности бот ломается под камнем
-    //TODO Проверить этот тест после отладки лямбда камней
-    @Test //CONFIRMED
+    //CONFIRMED
+    @Test
     public void horock3() {
         testBotOnMap("maps/horock3.map", "horock3", 2365);
     }
