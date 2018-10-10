@@ -56,6 +56,7 @@ public class GameMap {
 
         //Считаем размер карты
         while (!(currentLine = new StringBuilder(bufferedReader.readLine())).toString().equals(end)) {
+            //НЕ ПОНЯЛ
             if (currentLine.length() > gameMap.maxX) {
                 gameMap.maxX = currentLine.length();
             }
@@ -63,7 +64,7 @@ public class GameMap {
             mapStrBuilder.append(currentLine).append("\n");
         }
 
-        //Собираем информацию для о порталах
+        //Собираем информацию о порталах
         HashMap<Character, Character> portalCompliance = new HashMap<>();
         try {
 
@@ -73,8 +74,10 @@ public class GameMap {
                 trampolineInf = new StringBuilder(bufferedReader.readLine());
             while (trampolineInf.toString().contains("Trampoline") &&
                     trampolineInf.toString().contains("targets")) {
+                //находим символы входов и выходов
                 Character in = trampolineInf.charAt(11);
                 Character out = trampolineInf.charAt(21);
+                //сопоставляем входы с выходами
                 portalCompliance.put(in, out);
                 trampolineInf = new StringBuilder(bufferedReader.readLine());
 
@@ -83,7 +86,7 @@ public class GameMap {
             //Порталов нет
         }
 
-
+        //Создаем матрицу всех объектов
         gameMap.mapObjects = new MapObject[gameMap.maxX][gameMap.maxY];
 
         int currentX = 0;
@@ -124,7 +127,7 @@ public class GameMap {
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.STONE, currentX, currentY);
                     break;
-                case 92:/* \-лямбда */
+                case 92: /* \-лямбда */
                     symbolDefined = true;
                     gameMap.mapObjects[currentX][currentY] =
                             new MapObject(Species.LAMBDA, currentX, currentY);
@@ -161,7 +164,7 @@ public class GameMap {
                             new MapObject(Species.BEARD, currentX, currentY);
                     gameMap.beardsNumber++;
                     break;
-                case 13://CR
+                case 13://CR - возврат каретки
                     while (currentX < gameMap.maxX) {
                         gameMap.mapObjects[currentX][currentY] = new MapObject(Species.AIR, currentX, currentY);
                         currentX++;
@@ -276,7 +279,6 @@ public class GameMap {
             return NULL_CONDITION;
         }
     }
-
 
     public static GameMap cutMapBetweenStartAndEnd(String address, String start, String end)
             throws IOException {
@@ -766,7 +768,6 @@ public class GameMap {
         }
     }
 
-
     private void growBeard(GameMap workMap, int xBeard, int yBeard) {
         if (beardsNumber != 0) {
             for (int i = xBeard - 1; i < xBeard + 2; i++)
@@ -776,7 +777,7 @@ public class GameMap {
                         if (current.getSpecies() == Species.AIR)
                             mapObjects[i][j].setSpecies(Species.BEARD);
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        continue;
+                        //вышли за границы
                     }
                 }
         }
@@ -788,7 +789,7 @@ public class GameMap {
         else
             movesUnderWater = 0;
 
-        if (flooding != 0 && amountOfSteps % flooding == 0 && amountOfSteps != 0)
+        if (flooding != 0 && amountOfSteps != 0 && amountOfSteps % flooding == 0)
             waterLevel++;
 
         if (gameCondition == WIN)
@@ -797,7 +798,6 @@ public class GameMap {
         if (movesUnderWater > maxMovesUnderWater)
             gameCondition = RB_DROWNED;
     }
-
 
     private void backToLastCondition() {
         mapObjects = previousMap.copyMapObjects();
