@@ -12,7 +12,7 @@ final class LeaterBot {
     static int nobodyNotVisitedWays[][];
 
     //Управление отбором
-    private final int MAX_GENERATION_DIGIT = 100;//TODO высчитывать относительно карты
+    private final int MAX_GENERATION_DIGIT = 100;
     private final int MAX_SMALL_BOT_SIZE = 500;
 
     //Математика бонусов
@@ -45,7 +45,7 @@ final class LeaterBot {
     //-----------------------------------------------------------------------------------
     private void initObservedBotsList() {
         observedStepsSequences = new ArrayList<>();
-        observedStepsSequences.add(stringToListOfSteps("RRRRURRDDDUULDLLLLLUURRRDLDDDDLLLDDRUA"));
+        observedStepsSequences.add(stringToListOfSteps("DRDRDRDRRLUUURUULURDDDLLLLLUUA"));
     }
 
     //Перевод строки с шагами в List этих шагов
@@ -88,20 +88,8 @@ final class LeaterBot {
 
     //Методы для анализирования в процесса отладки(ужасная грязь)
     //-----------------------------------------------------------------------------------
-    //Возвращает количество ботов с указанной последовательностью шагов
-    private int calculateAmountsOfBotsByStep(List<NextStep> stepSequence) {
-        int digit = 0;
-        for (SmallBot smallBot : smallBots)
-            if (smallBot.getSteps().size() >= stepSequence.size())
-                if (smallBot.getListOfStepInRange(0, stepSequence.size()).equals(stepSequence))
-                    digit++;
-
-        return digit;
-    }
-
-
     //Считает количество ботов из поколения
-    private int calculateBotWithGenerationNumber(int generationNumber) {
+    private int obsCalculateBotWithGenerationNumber(int generationNumber) {
         int result = 0;
         for (SmallBot smallBot : smallBots)
             if (smallBot.getSteps().size() == generationNumber)
@@ -119,7 +107,7 @@ final class LeaterBot {
     }
 
     //Полезные
-    private SmallBot findBotWithSteps(List<NextStep> steps, int generation) {
+    private SmallBot obsFindBotWithSteps(List<NextStep> steps, int generation) {
         steps = headListOfSteps(steps, generation);
 
         for (SmallBot smallBot : smallBots) {
@@ -130,7 +118,7 @@ final class LeaterBot {
         return null;
     }
 
-    private int botWithStepsIndexInSmallBots(List<NextStep> steps, int generation) {
+    private int obsBotWithStepsIndexInSmallBots(List<NextStep> steps, int generation) {
         steps = headListOfSteps(steps, generation);
         int i = 0;
         for (SmallBot smallBot : smallBots) {
@@ -142,7 +130,7 @@ final class LeaterBot {
 
     }
 
-    private int amountOfBotsBySteps(List<NextStep> steps, int generation) {
+    private int obsAmountOfBotsBySteps(List<NextStep> steps, int generation) {
         steps = headListOfSteps(steps, generation);
         int number = 0;
         for (SmallBot smallBot : smallBots)
