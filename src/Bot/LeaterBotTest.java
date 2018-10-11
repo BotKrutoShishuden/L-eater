@@ -54,7 +54,7 @@ public final class LeaterBotTest {
             int abortNumber = 0;
             int worseNumber = 0;
             int betterNumber = 0;
-            int averageScore = 0;
+            int sumOfScore = 0;
             Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> stepsSet = stepsMap.entrySet().iterator();
@@ -80,7 +80,7 @@ public final class LeaterBotTest {
                 else if (conditionEntry.getValue().toString().equals("ABORTED"))
                     abortNumber++;
 
-                averageScore += resultEntry.getValue() / testNumber;
+                sumOfScore += resultEntry.getValue();
 
                 stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
                         append(resultEntry.getValue()).append("\nReport = ").
@@ -99,7 +99,7 @@ public final class LeaterBotTest {
             stringBuilder.append("\nWIN NUMBER = ").append(winNumber).append(" / ").append(gameNumber).append("\n").
                     append("ABORT NUMBER =  ").append(abortNumber).append(" / ").append(gameNumber);
 
-            stringBuilder.append("\nAVERAGE SCORE = ").append(averageScore);
+            stringBuilder.append("\nAVERAGE SCORE = ").append(sumOfScore / testNumber);
 
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputAddress));
