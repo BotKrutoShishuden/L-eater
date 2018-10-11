@@ -1,0 +1,175 @@
+flood2
+Score = 143
+Report = 
+Steps = RRUUURRA
+ABORTED
+-----------------------------------------
+flood3
+Score = 800
+Report = 
+Steps = LLUUURUURRUURRRDDRLLLLULULULULRRRDRRRRRDDRDDDDDDLLA
+ABORTED
+-----------------------------------------
+flood4
+Score = 265
+Report = WORSE
+Steps = DDDDLLLLLUURUUUURURRRRDRRRDDDLDDDDDA
+ABORTED
+-----------------------------------------
+flood5
+Score = 371
+Report = 
+Steps = DRDRDRDRRLUUURUULURDDDLLLLLUUA
+ABORTED
+-----------------------------------------
+flood1
+Score = 383
+Report = 
+Steps = LLLLDDRRRLDRDRRDLA
+ABORTED
+-----------------------------------------
+contest9
+Score = 1185
+Report = WORSE
+Steps = LURURRRDULRRLLLLDDRRRRRLRRRRRRRRRRRRRRRRRUULLLDLULLRDDLLULLULULLLA
+ABORTED
+-----------------------------------------
+contest8
+Score = 709
+Report = WORSE
+Steps = UULLDLLLLLLLRURURRRRRUUUULLLUUUUUUUULLLLRRDDDDDDLDLRRDDDLLRRUUUULLUDUURRUUUURRRRRDDRDRDDRRRA
+ABORTED
+-----------------------------------------
+contest7
+Score = 867
+Report = 
+Steps = RDRRRDDLLDLDLLRURURRRDRDRRRLLLULLA
+WIN
+-----------------------------------------
+contest6
+Score = 705
+Report = 
+Steps = RUULRRRRRRRRRRUUURUURUUULULLULLLLLLLLLDRDLDDDDDDRRRUURDDRRRURULLRRURLDLDLWULDWLLDLLLUUUURRRRRRUA
+ABORTED
+-----------------------------------------
+contest10
+Score = 705
+Report = WORSE
+Steps = UUUUULLLLLLUUULLLLLURULUUURURDRDDDRRRRRUURRDRA
+ABORTED
+-----------------------------------------
+contest5
+Score = 800
+Report = 
+Steps = LLUUURUURRUURRRDDRLLLLULULULULRRRDRRRRRDDRDDDDDDLLA
+ABORTED
+-----------------------------------------
+contest4
+Score = 551
+Report = 
+Steps = DRDRDRDRRLUUULLULLURRULLLDDDDDDRURDRURURURUUULDRRA
+WIN
+-----------------------------------------
+trampoline3
+Score = 228
+Report = WORSE
+Steps = RRRLLDDLDDLDDRDDDRRRRRA
+ABORTED
+-----------------------------------------
+trampoline1
+Score = 291
+Report = 
+Steps = LDLLULDLUA
+ABORTED
+-----------------------------------------
+trampoline2
+Score = 1723
+Report = 
+Steps = RRRLDDDRRRULLULUUURRULLULLDLDLLLLDRRRRDRRUULLRDLDLLLLLLURULLLULURUURRDLLULLLLA
+WIN
+-----------------------------------------
+ems1
+Score = 326
+Report = 
+Steps = RRDDRWWWLUWRLWLWLLUUUULLDDDDLRUUUUURUUUUUUUUURLLLA
+WIN
+-----------------------------------------
+horock1
+Score = 428
+Report = 
+Steps = DLLLLDDDDRRLURRRRRULRURDDDDLLLRWLRDDDRRRULLUURRUULDLLLUUUURRRURRURULLDRRA
+ABORTED
+-----------------------------------------
+horock2
+Score = 233
+Report = 
+Steps = UUULRRRRRDURRRRRRA
+ABORTED
+-----------------------------------------
+horock3
+Score = 1336
+Report = 
+Steps = URRUULLUUUUURRRRRLRDRRDDRRDDRLDRRRDDRLRURULLLUUULULULLLUUULLULLLA
+ABORTED
+-----------------------------------------
+contest3
+Score = 275
+Report = 
+Steps = LDDDRRRRDDLLLLLDRURRUURRRA
+WIN
+-----------------------------------------
+contest2
+Score = 172
+Report = 
+Steps = UURRURRLURLLWLLDRRLDLDDRRRRUA
+ABORTED
+-----------------------------------------
+contest1
+Score = 210
+Report = 
+Steps = DLLDLRDRRLULLDLA
+WIN
+-----------------------------------------
+beard0
+Score = 857
+Report = 
+Steps = RURRRRRDDULDLDDDLLLLLDDRURRUUULLURRRDRRRDDRA
+WIN
+-----------------------------------------
+beard1
+Score = 845
+Report = 
+Steps = RURRRRRDDDUULDLDDDLLLLLDDRURURUUULLDLUURULRDRRRDDRRRDDRA
+WIN
+-----------------------------------------
+beard2
+Score = 2340
+Report = WORSE
+Steps = DDRRRRRRRRRRRRRRRRRRRRRRRRRRDDDLLRDDDDDLLLLLLLLLLLLLLLLLLLLLA
+ABORTED
+-----------------------------------------
+beard3
+Score = 999
+Report = 
+Steps = RRRRULULRRURRURRRULLRDLDDRRDDDRRRUDDDRWRLUURUDRRRRRA
+ABORTED
+-----------------------------------------
+beard4
+Score = 629
+Report = 
+Steps = LLRDDDDDRDLDDLLLLLLLLA
+ABORTED
+-----------------------------------------
+beard5
+Score = 662
+Report = 
+Steps = ULLLLRULLRUUUUURDRURRRRDRRULUUURRRRRRRA
+ABORTED
+-----------------------------------------
+
+Compare with src/Bot/Reports/DResultWithoutTimeLimit.txt
+BETTER NUMBER = 0 / 28
+WORSE NUMBER =  6 / 28
+WIN NUMBER = 8 / 28
+ABORT NUMBER =  20 / 28
+AVERAGE SCORE = 679
