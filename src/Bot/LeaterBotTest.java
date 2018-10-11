@@ -12,12 +12,14 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public final class LeaterBotTest {
-    private static String address = "src/Bot/LResults.txt";
-    private static Map<String, Integer> oldResultMap = parseOldResults(address);
+    private static String inputAddress = "src/Bot/Reports/DResultWithoutTimeLimit.txt";
+    private static String outputAddress = "src/Bot/Reports/DResultWithLimit.txt";
+    private static Map<String, Integer> oldResultMap = parseOldResults(inputAddress);
     private static Map<String, Integer> resultsMap = new HashMap<>();
     private static Map<String, String> reportMap = new HashMap<>();
     private static Map<String, String> stepsMap = new HashMap<>();
     private static Map<String, GameCondition> conditionMap = new HashMap<>();
+    private static int TIME_LIMIT = 10;
 
     private static Map<String, Integer> parseOldResults(String address) {
         try {
@@ -42,13 +44,15 @@ public final class LeaterBotTest {
         return null;
     }
 
-    //TODO сравнить счет из LResults.txt с результатами в симуляторе
-
     @AfterClass
     public static void reWriteOfLeaterResults() {
         try {
 
-
+            int winNumber = 0;
+            int gameNumber = 0;
+            int abortNumber = 0;
+            int worseNumber = 0;
+            int betterNumber = 0;
             Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> stepsSet = stepsMap.entrySet().iterator();
@@ -57,10 +61,23 @@ public final class LeaterBotTest {
             StringBuilder stringBuilder = new StringBuilder();
 
             while (resultsSet.hasNext() && reportSet.hasNext() && stepsSet.hasNext() && conditionSet.hasNext()) {
+                gameNumber++;
+
                 Map.Entry<String, Integer> resultEntry = resultsSet.next();
                 Map.Entry<String, String> reportEntry = reportSet.next();
                 Map.Entry<String, String> stepsEntry = stepsSet.next();
                 Map.Entry<String, GameCondition> conditionEntry = conditionSet.next();
+
+                if (reportEntry.getValue().equals("BETTER"))
+                    betterNumber++;
+                else if (reportEntry.getValue().equals("WORSE"))
+                    worseNumber++;
+
+                if (conditionEntry.getValue().equals("WIN"))
+                    winNumber++;
+                else if (conditionEntry.getValue().equals("ABORTED"))
+                    abortNumber++;
+
                 stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
                         append(resultEntry.getValue()).append("\nReport = ").
                         append(reportEntry.getValue()).append("\nSteps = ").
@@ -69,8 +86,15 @@ public final class LeaterBotTest {
                         append("-----------------------------------------\n");
             }
 
+            stringBuilder.append("\nBETTER NUMBER = ").append(betterNumber).append(" / ").append(gameNumber).append("\n").
+                    append("WORSE NUMBER =  ").append(worseNumber).append(" / ").append(gameNumber);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
+
+            stringBuilder.append("\nWIN NUMBER = ").append(winNumber).append(" / ").append(gameNumber).append("\n").
+                    append("ABORT NUMBER =  ").append(abortNumber).append(" / ").append(gameNumber);
+
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputAddress));
             bufferedWriter.write(stringBuilder.toString());
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -84,13 +108,21 @@ public final class LeaterBotTest {
     private void testBotOnMap(String address, String testName, int humansScore) {
         GameMap gameMap = GameMap.cutNormalMap(address);
         LeaterBot leaterBot = new LeaterBot(gameMap);
-        List<NextStep> bestWay = leaterBot.calculateBestSteps();
 
-        StringBuilder stepsBuilder = new StringBuilder();
-        for (NextStep nextStep : bestWay) {
-            gameMap.moveAllObjects(nextStep);
-            stepsBuilder.append(nextStep.getSymbol());
+        Thread thread = new Thread(leaterBot);
+        thread.start();
+
+        try {
+            Thread.sleep(TIME_LIMIT * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        thread.stop();
+
+        for (NextStep nextStep : leaterBot.getBestStepsList())
+            gameMap.moveAllObjects(nextStep);
+
         conditionMap.put(testName, gameMap.getGameCondition());
 
         resultsMap.put(testName, gameMap.getScore());
@@ -106,14 +138,14 @@ public final class LeaterBotTest {
             reportMap.put(testName, "");
         }
 
-        stepsMap.put(testName, stepsBuilder.toString());
+        stepsMap.put(testName, leaterBot.getBestStepsString());
 
-        System.out.println(stepsBuilder.toString());
+        System.out.println(leaterBot.getBestStepsString());
         System.out.println(gameMap.getGameCondition());
 
 
         //assertEquals(bestWay.size(), gameMap.getAmountOfSteps());
-        assertTrue(gameMap.getScore() > 0);
+        assertTrue(gameMap.getScore() >= 0);
         assertTrue(gameMap.getGameCondition() == GameCondition.WIN ||
                 gameMap.getGameCondition() == GameCondition.ABORTED);
 

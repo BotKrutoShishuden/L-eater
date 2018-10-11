@@ -6,37 +6,37 @@ ABORTED
 -----------------------------------------
 flood3
 Score = 800
-Report = BETTER
+Report =
 Steps = LLUUURUURRUURRRDDRLLLLULULULULRRRDRRRRRDDRDDDDDDLLA
 ABORTED
 -----------------------------------------
 flood4
 Score = 377
-Report = WORSE
+Report =
 Steps = DDDDLLLLLUURUUUURURRRDRRRUUUUULLURRRRRDLDDDRDDDDDDRDLDRRRRRDDDLLLLULULLLDA
 ABORTED
 -----------------------------------------
 flood5
 Score = 371
-Report = BETTER
+Report =
 Steps = DRDRDRDRRLUUURUULURDDDLLLLLUUA
 ABORTED
 -----------------------------------------
 flood1
 Score = 383
-Report = WORSE
+Report =
 Steps = LLLLDDRRRLDRDRRDLA
 ABORTED
 -----------------------------------------
 contest9
 Score = 1552
-Report = BETTER
+Report =
 Steps = LURURRRDULRRLLLLDDRRRRRLRRRRRRRRRRRRRRRRRUULLLDLULLRDDLLULULLULLLLDRRRDLLLLUUURRRRLUUUULLLLLLURRUUA
 ABORTED
 -----------------------------------------
 contest8
 Score = 1052
-Report = BETTER
+Report =
 Steps = UULLDLLLLLLLRURURRRRRUUUULLLUUUUUUUULLLLRRDDDDDDLDLRRDDDLLRRUUUULLUDUURRUUUURRRRRRDDDDRDRRRRRDRRDDA
 ABORTED
 -----------------------------------------
@@ -48,25 +48,25 @@ WIN
 -----------------------------------------
 contest6
 Score = 705
-Report = WORSE
+Report =
 Steps = RUULRRRRRRRRRRUUURUURUUULULLULLLLLLLLLDRDLDDDDDDRRRUURDDRRRURULLRRURLDLDLWULDWLLDLLLUUUURRRRRRUA
 ABORTED
 -----------------------------------------
 contest10
 Score = 1251
-Report = BETTER
+Report =
 Steps = UUUUULLLLLLUUULLLLLURULUUURURDRDDDRURUUURUUUUULRRRRDDDRRUUUUULLLLLLLLLLLLLLLLLDDLLLLLDRULLULDDDLDDLA
 ABORTED
 -----------------------------------------
 contest5
 Score = 800
-Report = BETTER
+Report =
 Steps = LLUUURUURRUURRRDDRLLLLULULULULRRRDRRRRRDDRDDDDDDLLA
 ABORTED
 -----------------------------------------
 contest4
 Score = 551
-Report = BETTER
+Report =
 Steps = DRDRDRDRRLUUULLULLURRULLLDDDDDDRURDRURURURUUULDRR
 WIN
 -----------------------------------------
@@ -84,19 +84,19 @@ ABORTED
 -----------------------------------------
 trampoline2
 Score = 1723
-Report = BETTER
+Report =
 Steps = RRRLDDDRRRULLULUUURRULLULLDLDLLLLDRRRRDRRUULLRDLDLLLLLLURULLLULURUURRDLLULLLL
 WIN
 -----------------------------------------
 ems1
 Score = 326
-Report = WORSE
+Report =
 Steps = RRDDRWWWLUWRLWLWLLUUUULLDDDDLRUUUUURUUUUUUUUURLLL
 WIN
 -----------------------------------------
 horock1
 Score = 428
-Report = WORSE
+Report =
 Steps = DLLLLDDDDRRLURRRRRULRURDDDDLLLRWLRDDDRRRULLUURRUULDLLLUUUURRRURRURULLDRRA
 ABORTED
 -----------------------------------------
@@ -108,7 +108,7 @@ ABORTED
 -----------------------------------------
 horock3
 Score = 1336
-Report = WORSE
+Report =
 Steps = URRUULLUUUUURRRRRLRDRRDDRRDDRLDRRRDDRLRURULLLUUULULULLLUUULLULLLA
 ABORTED
 -----------------------------------------
@@ -126,43 +126,43 @@ ABORTED
 -----------------------------------------
 contest1
 Score = 210
-Report = WORSE
+Report =
 Steps = DLLDLRDRRLULLDL
 WIN
 -----------------------------------------
 beard0
 Score = 857
-Report = BETTER
+Report =
 Steps = RURRRRRDDULDLDDDLLLLLDDRURRUUULLURRRDRRRDDR
 WIN
 -----------------------------------------
 beard1
 Score = 845
-Report = BETTER
+Report =
 Steps = RURRRRRDDDUULDLDDDLLLLLDDRURURUUULLDLUURULRDRRRDDRRRDDR
 WIN
 -----------------------------------------
 beard2
 Score = 2806
-Report = BETTER
+Report =
 Steps = DDRRRRRRRRRRRRRRRRRRRRRRRRRRDDDLLRDDDDDLLLLLLLLLLLLLLLLLLLLLLLURUUUUWLDLDLRRRRRRRLDDRRRUURLUUUA
 ABORTED
 -----------------------------------------
 beard3
 Score = 999
-Report = BETTER
+Report =
 Steps = RRRRULULRRURRURRRULLRDLDDRRDDDRRRUDDDRWRLUURUDRRRRRA
 ABORTED
 -----------------------------------------
 beard4
 Score = 629
-Report = BETTER
+Report =
 Steps = LLRDDDDDRDLDDLLLLLLLLA
 ABORTED
 -----------------------------------------
 beard5
 Score = 662
-Report = BETTER
+Report =
 Steps = ULLLLRULLRUUUUURDRURRRRDRRULUUURRRRRRRA
 ABORTED
 -----------------------------------------

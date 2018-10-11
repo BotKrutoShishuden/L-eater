@@ -6,13 +6,16 @@ import MapObject.*;
 import java.util.*;
 
 
-final class LeaterBot {
+final class LeaterBot implements Runnable {
     private GameMap mainGameMap;
     private List<SmallBot> smallBots;
     static int nobodyNotVisitedWays[][];
 
+    private List<NextStep> bestStepsList;
+    private String bestStepsString = "A";
+
     //Управление отбором
-    private final int MAX_GENERATION_DIGIT = 100;
+    private final int MAX_GENERATION_DIGIT = 10000;
     private final int MAX_SMALL_BOT_SIZE = 500;
 
     //Математика бонусов
@@ -25,6 +28,7 @@ final class LeaterBot {
     private final boolean OBSERVING_BOTS_MODE = true;
     private List<List<NextStep>> observedStepsSequences;
 
+    private Timer timer = new Timer();
 
     LeaterBot(GameMap mainGameMap) {
         this.mainGameMap = mainGameMap;
@@ -263,7 +267,7 @@ final class LeaterBot {
 
     //Главный метод
     //-----------------------------------------------------------------------------------
-    List<NextStep> calculateBestSteps() {
+    private void calculateBestSteps() {
         SmallBot initBot = new SmallBot(mainGameMap);
 
         SmallBot bestSmallBotEver = new SmallBot(mainGameMap, initBot.getSteps(), NextStep.ABORT,
@@ -312,9 +316,10 @@ final class LeaterBot {
                         bestSmallBot = smallBot;
                     System.out.println(smallBot.toString());
                 }
-                System.out.println("\nBestSmallBot");
-                System.out.println(bestSmallBot.toString());
-                return bestSmallBot.getSteps();
+                this.bestStepsList = new ArrayList<>(bestSmallBot.getSteps());
+                this.bestStepsList.add(NextStep.ABORT);
+                this.bestStepsString = bestSmallBot.toStringStepsSequence()+"A";
+
 
             }
 
@@ -323,8 +328,10 @@ final class LeaterBot {
             for (SmallBot smallBot : smallBots)
                 if (smallBot.getScore() >= bestSmallBotEver.getScore())
                     bestSmallBotEver.copyParamsOfAnotherBot(smallBot);
-            //TODO нереализованный contolOfSimilarBots
 
+            this.bestStepsList = new ArrayList<>(bestSmallBotEver.getSteps());
+            this.bestStepsList.add(NextStep.ABORT);
+            this.bestStepsString = bestSmallBotEver.toStringStepsSequence()+"A";
 
             //Удаляем худших ботов, если лист больше максимально допустимого размера
             if (smallBots.size() > MAX_SMALL_BOT_SIZE) {
@@ -333,16 +340,19 @@ final class LeaterBot {
                     smallBots.remove(smallBots.size() - 1);
             }
         }
-
-        List<NextStep> bestSteps = new ArrayList<>(bestSmallBotEver.getSteps());
-        if (bestSteps.get(bestSteps.size() - 1) != NextStep.ABORT && bestSmallBotEver.getGameCondition() != GameCondition.WIN) {
-            bestSteps.add(NextStep.ABORT);
-            //System.out.println("АБОРТ ЭТО ГРЕХ");
-        }
-
-
-        return bestSteps;
     }
 
 
+    public List<NextStep> getBestStepsList() {
+        return bestStepsList;
+    }
+
+    public String getBestStepsString() {
+        return bestStepsString;
+    }
+
+    @Override
+    public void run() {
+        calculateBestSteps();
+    }
 }
