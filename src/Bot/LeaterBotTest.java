@@ -19,6 +19,7 @@ public final class LeaterBotTest {
     private static Map<String, String> reportMap = new HashMap<>();
     private static Map<String, String> stepsMap = new HashMap<>();
     private static Map<String, GameCondition> conditionMap = new HashMap<>();
+    private static int testNumber = 0;
     private static int TIME_LIMIT = 10;
 
     private static Map<String, Integer> parseOldResults(String address) {
@@ -53,6 +54,7 @@ public final class LeaterBotTest {
             int abortNumber = 0;
             int worseNumber = 0;
             int betterNumber = 0;
+            int averageScore = 0;
             Iterator<Map.Entry<String, Integer>> resultsSet = resultsMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> reportSet = reportMap.entrySet().iterator();
             Iterator<Map.Entry<String, String>> stepsSet = stepsMap.entrySet().iterator();
@@ -78,6 +80,8 @@ public final class LeaterBotTest {
                 else if (conditionEntry.getValue().toString().equals("ABORTED"))
                     abortNumber++;
 
+                averageScore += resultEntry.getValue();
+
                 stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
                         append(resultEntry.getValue()).append("\nReport = ").
                         append(reportEntry.getValue()).append("\nSteps = ").
@@ -93,6 +97,8 @@ public final class LeaterBotTest {
             stringBuilder.append("\nWIN NUMBER = ").append(winNumber).append(" / ").append(gameNumber).append("\n").
                     append("ABORT NUMBER =  ").append(abortNumber).append(" / ").append(gameNumber);
 
+            stringBuilder.append("\nAVERAGE SCORE = ").append(averageScore);
+
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputAddress));
             bufferedWriter.write(stringBuilder.toString());
@@ -106,6 +112,8 @@ public final class LeaterBotTest {
 
 
     private void testBotOnMap(String address, String testName, int humansScore) {
+        testNumber++;
+
         GameMap gameMap = GameMap.cutNormalMap(address);
         LeaterBot leaterBot = new LeaterBot(gameMap);
 

@@ -28,8 +28,6 @@ final class LeaterBot implements Runnable {
     private final boolean OBSERVING_BOTS_MODE = true;
     private List<List<NextStep>> observedStepsSequences;
 
-    private Timer timer = new Timer();
-
     LeaterBot(GameMap mainGameMap) {
         this.mainGameMap = mainGameMap;
         smallBots = new ArrayList<>();
