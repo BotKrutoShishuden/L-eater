@@ -80,7 +80,7 @@ public final class LeaterBotTest {
                 else if (conditionEntry.getValue().toString().equals("ABORTED"))
                     abortNumber++;
 
-                averageScore += resultEntry.getValue();
+                averageScore += resultEntry.getValue() / testNumber;
 
                 stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
                         append(resultEntry.getValue()).append("\nReport = ").
