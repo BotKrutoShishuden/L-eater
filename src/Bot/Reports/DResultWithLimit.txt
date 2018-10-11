@@ -53,9 +53,9 @@ Steps = RUULRRRRRRRRRRUUURUURUUULULLULLLLLLLLLDRDLDDDDDDA
 ABORTED
 -----------------------------------------
 contest10
-Score = 430
+Score = 381
 Report = WORSE
-Steps = UUUUULLLLLLDLLLDLLLLA
+Steps = UUUUULLLLLLLLLDDLLLA
 ABORTED
 -----------------------------------------
 contest5
@@ -143,15 +143,15 @@ Steps = RURRRRRDDDUULDLDDDLLLLLDDRURURUUULLDLUURULRDRRRDDRRRDDRA
 WIN
 -----------------------------------------
 beard2
-Score = 977
+Score = 928
 Report = WORSE
-Steps = DRRDRRRRRRRRRRRRRRRRRRRA
+Steps = DDRRRRRRRRRRRRRRRRRRRRA
 ABORTED
 -----------------------------------------
 beard3
-Score = 766
+Score = 681
 Report = WORSE
-Steps = RRRRULULRRURRURRRULLRDLDDRRDRDDRRUA
+Steps = RRRRULULRRURRURRRLUA
 ABORTED
 -----------------------------------------
 beard4
@@ -172,4 +172,4 @@ BETTER NUMBER = 0 / 28
 WORSE NUMBER =  11 / 28
 WIN NUMBER = 7 / 28
 ABORT NUMBER =  21 / 28
-AVERAGE SCORE = 483
+AVERAGE SCORE = 476

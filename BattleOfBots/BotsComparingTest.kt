@@ -13,24 +13,31 @@ import java.lang.StringBuilder
 
 internal class BotsComparingTest {
 
+    companion object {
 
-    val outputAddress = "BattleOfBots/battle.txt"
-    val TIME_LIMIT = 10
 
-    var resultBuilder = StringBuilder()
-    var numberOfLeaterWin = 0
-    var numberOfLestwaldWin = 0
-    var numberOfDraw = 0
-    var numberOfGames = 0
+        val outputAddress = "BattleOfBots/Battle.txt"
+        val TIME_LIMIT = 10
 
-    @AfterClass
-    @JvmStatic fun reWriteOfLeaterResults() {
-        resultBuilder.append("LeaterBot win = ").append(numberOfLeaterWin).append(" / ").append(numberOfGames)
-        resultBuilder.append("Lestwald win = ").append(numberOfLestwaldWin).append(" / ").append(numberOfGames)
-        resultBuilder.append("Draw = ").append(numberOfDraw)
-        val outputBuffer = BufferedWriter(FileWriter(outputAddress))
-        outputBuffer.write(resultBuilder.toString())
+        var resultBuilder = StringBuilder()
+        var numberOfLeaterWin = 0
+        var numberOfLestwaldWin = 0
+        var numberOfDraw = 0
+        var numberOfGames = 0
 
+
+        @AfterClass
+        @JvmStatic
+        fun reWriteOfLeaterResults() {
+            resultBuilder.append("\nLeaterBot win = ").append(numberOfLeaterWin).append(" / ").append(numberOfGames)
+            resultBuilder.append("\nLestwald win = ").append(numberOfLestwaldWin).append(" / ").append(numberOfGames)
+            resultBuilder.append("\nDraw = ").append(numberOfDraw)
+            val outputBuffer = BufferedWriter(FileWriter(outputAddress))
+            outputBuffer.write(resultBuilder.toString())
+            outputBuffer.flush()
+            outputBuffer.close()
+
+        }
     }
 
     fun testBotsOnMap(mapAddress: String, testName: String, humanScore: Int) {
@@ -69,7 +76,7 @@ internal class BotsComparingTest {
         resultBuilder.append(testName)
         resultBuilder.append("\nLestwaldScore = ").append(gameboard.score)
         resultBuilder.append("\nLeaterBotScore = ").append(gameMap.score)
-        resultBuilder.append("-------------------------------------------------------------------")
+        resultBuilder.append("\n-------------------------------------------------------------------\n")
 
 
     }
