@@ -73,9 +73,9 @@ public final class LeaterBotTest {
                 else if (reportEntry.getValue().equals("WORSE"))
                     worseNumber++;
 
-                if (conditionEntry.getValue().equals("WIN"))
+                if (conditionEntry.getValue().toString().equals("WIN"))
                     winNumber++;
-                else if (conditionEntry.getValue().equals("ABORTED"))
+                else if (conditionEntry.getValue().toString().equals("ABORTED"))
                     abortNumber++;
 
                 stringBuilder.append(resultEntry.getKey()).append("\nScore = ").
