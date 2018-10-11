@@ -6,7 +6,7 @@ import MapObject.*;
 import java.util.*;
 
 
-final class LeaterBot implements Runnable {
+public final class LeaterBot implements Runnable {
     private GameMap mainGameMap;
     private List<SmallBot> smallBots;
     static int nobodyNotVisitedWays[][];
@@ -28,7 +28,7 @@ final class LeaterBot implements Runnable {
     private final boolean OBSERVING_BOTS_MODE = true;
     private List<List<NextStep>> observedStepsSequences;
 
-    LeaterBot(GameMap mainGameMap) {
+    public LeaterBot(GameMap mainGameMap) {
         this.mainGameMap = mainGameMap;
         smallBots = new ArrayList<>();
         if (OBSERVING_BOTS_MODE)
