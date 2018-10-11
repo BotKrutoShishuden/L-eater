@@ -90,6 +90,8 @@ public final class LeaterBotTest {
                         append("-----------------------------------------\n");
             }
 
+            stringBuilder.append("\nCompare with ").append(inputAddress);
+
             stringBuilder.append("\nBETTER NUMBER = ").append(betterNumber).append(" / ").append(gameNumber).append("\n").
                     append("WORSE NUMBER =  ").append(worseNumber).append(" / ").append(gameNumber);
 
