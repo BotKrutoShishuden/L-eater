@@ -11,9 +11,9 @@ Steps = LLUUURUURRUURRRDDRLLLLULULULULRRRDRRRRRDDRDDDDDDLLA
 ABORTED
 -----------------------------------------
 flood4
-Score = 95
+Score = 181
 Report = WORSE
-Steps = DDDDLA
+Steps = DDDDLLLLLUURRUUUUURA
 ABORTED
 -----------------------------------------
 flood5
@@ -97,7 +97,7 @@ WIN
 horock1
 Score = 428
 Report = 
-Steps = DLLLLDDDDRRLURRRRRULRURDDDDLLLRWLRDDDRRRULLUURRUULDLLLUUUURRURRRURULLDRRA
+Steps = DLLLLDDDDRRLURRRRRULRURDDDDLLLRWLRDDDRRRULLUURRUULDLLLUUUURRRURRURULLDRRA
 ABORTED
 -----------------------------------------
 horock2
@@ -161,13 +161,15 @@ Steps = LLRDDDDDRDLDDLLLLLLLLA
 ABORTED
 -----------------------------------------
 beard5
-Score = 327
+Score = 281
 Report = WORSE
-Steps = ULLLLRULLRUUUUURDRURRRRA
+Steps = ULLLLRULWRUUUULURRDA
 ABORTED
 -----------------------------------------
 
+Compare with src/Bot/Reports/DResultWithoutTimeLimit.txt
 BETTER NUMBER = 0 / 28
 WORSE NUMBER =  11 / 28
-WIN NUMBER = 0 / 28
-ABORT NUMBER =  0 / 28
+WIN NUMBER = 7 / 28
+ABORT NUMBER =  21 / 28
+AVERAGE SCORE = 483
