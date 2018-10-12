@@ -4,51 +4,51 @@ LeaterBotScore = 291
 ------------------------------------------
 trampoline2
 LestwaldScore = 329
-LeaterBotScore = 717
+LeaterBotScore = 1734
 ------------------------------------------
 trampoline3
 LestwaldScore = 783
-LeaterBotScore = 0
+LeaterBotScore = 560
 ------------------------------------------
 beard0
 LestwaldScore = 859
-LeaterBotScore = 857
+LeaterBotScore = 849
 ------------------------------------------
 beard1
 LestwaldScore = 571
-LeaterBotScore = 845
+LeaterBotScore = 840
 ------------------------------------------
 beard2
 LestwaldScore = 2764
-LeaterBotScore = 928
+LeaterBotScore = 2756
 ------------------------------------------
 beard3
 LestwaldScore = 627
-LeaterBotScore = 766
+LeaterBotScore = 764
 ------------------------------------------
 beard4
 LestwaldScore = 677
-LeaterBotScore = 629
+LeaterBotScore = 924
 ------------------------------------------
 beard5
 LestwaldScore = 0
-LeaterBotScore = 281
+LeaterBotScore = 659
 ------------------------------------------
 flood1
 LestwaldScore = 337
-LeaterBotScore = 383
+LeaterBotScore = 337
 ------------------------------------------
 flood2
 LestwaldScore = 143
 LeaterBotScore = 143
 ------------------------------------------
 flood3
-LestwaldScore = 385
-LeaterBotScore = 800
+LestwaldScore = 360
+LeaterBotScore = 804
 ------------------------------------------
 flood4
 LestwaldScore = 792
-LeaterBotScore = 95
+LeaterBotScore = 463
 ------------------------------------------
 flood5
 LestwaldScore = 575
@@ -56,102 +56,102 @@ LeaterBotScore = 371
 ------------------------------------------
 contest1
 LestwaldScore = 212
-LeaterBotScore = 210
+LeaterBotScore = 206
 ------------------------------------------
 contest2
 LestwaldScore = 143
-LeaterBotScore = 172
+LeaterBotScore = 173
 ------------------------------------------
 contest3
 LestwaldScore = 182
-LeaterBotScore = 275
+LeaterBotScore = 263
 ------------------------------------------
 contest4
 LestwaldScore = 575
-LeaterBotScore = 551
+LeaterBotScore = 526
 ------------------------------------------
 contest5
 LestwaldScore = 810
-LeaterBotScore = 800
+LeaterBotScore = 804
 ------------------------------------------
 contest6
 LestwaldScore = 741
-LeaterBotScore = 702
+LeaterBotScore = 710
 ------------------------------------------
 contest7
 LestwaldScore = 433
-LeaterBotScore = 867
+LeaterBotScore = 861
 ------------------------------------------
 contest8
 LestwaldScore = 847
-LeaterBotScore = 240
+LeaterBotScore = 1098
 ------------------------------------------
 contest9
 LestwaldScore = 1190
-LeaterBotScore = 242
+LeaterBotScore = 1926
 ------------------------------------------
 contest10
 LestwaldScore = 2260
-LeaterBotScore = 430
+LeaterBotScore = 1520
 ------------------------------------------
 ems1
 LestwaldScore = 47
-LeaterBotScore = 326
+LeaterBotScore = 162
 ------------------------------------------
 horock1
 LestwaldScore = 281
-LeaterBotScore = 428
+LeaterBotScore = 724
 ------------------------------------------
 horock2
 LestwaldScore = 0
-LeaterBotScore = 233
+LeaterBotScore = 227
 ------------------------------------------
 horock3
 LestwaldScore = 577
-LeaterBotScore = 768
+LeaterBotScore = 1378
 ------------------------------------------
 
-LeaterBot win = 14 / 28
-Lestwald win = 13 / 28
-Draw = 1
+LeaterBot win = 16 / 28
+Lestwald win = 10 / 28
+Draw = 2
 ------------------------------------------
 Leater wins :
 trampoline1	benefit = 291
-trampoline2	benefit = 388
-beard1	    benefit = 274
-beard3	    benefit = 139
-beard5	    benefit = 281
-flood1	    benefit = 46
-flood3	    benefit = 415
-contest2	benefit = 29
-contest3	benefit = 93
-contest7	benefit = 434
-ems1	    benefit = 279
-horock1	    benefit = 147
-horock2	    benefit = 233
-horock3	    benefit = 191
+trampoline2	benefit = 1405
+beard1	benefit = 269
+beard3	benefit = 137
+beard4	benefit = 247
+beard5	benefit = 659
+flood3	benefit = 444
+contest2	benefit = 30
+contest3	benefit = 81
+contest7	benefit = 428
+contest8	benefit = 251
+contest9	benefit = 736
+ems1	benefit = 115
+horock1	benefit = 443
+horock2	benefit = 227
+horock3	benefit = 801
 
 ------------------------------------------
 Lestwald wins :
-trampoline3	benefit = 783
-beard0	    benefit = 2
-beard2	    benefit = 1836
-beard4	    benefit = 48
-flood4	    benefit = 697
-flood5	    benefit = 204
-contest1	benefit = 2
-contest4	benefit = 24
-contest5	benefit = 10
-contest6	benefit = 39
-contest8	benefit = 607
-contest9	benefit = 948
-contest10	benefit = 1830
+trampoline3	benefit = 223
+beard0	benefit = 10
+beard2	benefit = 8
+flood4	benefit = 329
+flood5	benefit = 204
+contest1	benefit = 6
+contest4	benefit = 49
+contest5	benefit = 6
+contest6	benefit = 31
+contest10	benefit = 740
 
 ------------------------------------------
-Draws:
+Draws :
+flood1
 flood2
 
 ------------------------------------------
 
-leater score    = 13350
-lestwald score  = 17140
+leater score = 22073
+lestwald score = 17115

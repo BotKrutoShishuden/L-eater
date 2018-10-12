@@ -16,13 +16,13 @@ public final class LeaterBot implements Runnable {
 
     //Управление отбором
     private final int MAX_GENERATION_DIGIT = 10000;
-    private final int MAX_SMALL_BOT_SIZE = 500;
+    private final int MAX_SMALL_BOT_SIZE = 100;
 
     //Математика бонусов
     static final int LOCAL_START_BONUS_OF_RESEARCH = 30;
     static final int BONUS_OF_LOCAL_RESEARCH_DIVIDER = 5;
     static final int GLOBAL_BONUS_OF_RESEARCH = 100;
-    static final int BONUS_FOR_RARE_LAMBDA = 10;
+    static final int BONUS_FOR_RARE_LAMBDA = 0;
 
     //Для анализа игры
     private final boolean OBSERVING_BOTS_MODE = true;

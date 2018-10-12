@@ -7,8 +7,10 @@ import static GameMap.PortalCondition.*;
 
 import MapObject.MapObject;
 import MapObject.Species;
+import org.omg.CosNaming.NamingContextExt;
 
 import java.io.*;
+import java.rmi.UnexpectedException;
 import java.util.*;
 
 import static GameMap.GameCondition.*;
@@ -978,6 +980,48 @@ public class GameMap {
 
     }
 
+    public void moveAllObjects(String stepSequences) {
+        for (NextStep nextStep : stringToListOfSteps(stepSequences))
+            moveAllObjects(nextStep);
+    }
+
+    private List<NextStep> stringToListOfSteps(String string) {
+        StringBuilder stringBuilder = new StringBuilder(string);
+        List<NextStep> result = new ArrayList<>();
+        for (int i = 0; i < stringBuilder.length(); i++)
+            switch (stringBuilder.charAt(i)) {
+                case 'R':
+                    result.add(NextStep.RIGHT);
+                    break;
+                case 'L':
+                    result.add(NextStep.LEFT);
+                    break;
+                case 'D':
+                    result.add(NextStep.DOWN);
+                    break;
+                case 'U':
+                    result.add(NextStep.UP);
+                    break;
+                case 'W':
+                    result.add(NextStep.WAIT);
+                    break;
+                case 'A':
+                    result.add(NextStep.ABORT);
+                    break;
+                case 'S':
+                    result.add(NextStep.USE_RAZOR);
+                    break;
+                case 'B':
+                    result.add(NextStep.BACK);
+                    break;
+                default:
+                    throw new UnsupportedOperationException();
+
+            }
+        return result;
+
+
+    }
 
     //Override
     //-----------------------------------------------------------------------------------
