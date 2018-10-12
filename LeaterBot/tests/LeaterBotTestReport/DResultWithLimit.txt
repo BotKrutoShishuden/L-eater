@@ -11,9 +11,9 @@ Steps = LLUUURUURRUURRRDDRLLLLULULULULRRRDRRRRRDDRDDDDDDLLA
 ABORTED
 -----------------------------------------
 flood4
-Score = 265
+Score = 181
 Report = WORSE
-Steps = DDDDLLLLLUURUUUURURRRRDRRRDDDLDDDDDA
+Steps = DDDDLLLLLUURRUUUUURA
 ABORTED
 -----------------------------------------
 flood5
@@ -29,15 +29,15 @@ Steps = LLLLDDRRRLDRDRRDLA
 ABORTED
 -----------------------------------------
 contest9
-Score = 1185
+Score = 242
 Report = WORSE
-Steps = LURURRRDULRRLLLLDDRRRRRLRRRRRRRRRRRRRRRRRUULLLDLULLRDDLLULLULULLLA
+Steps = LRUURRRDA
 ABORTED
 -----------------------------------------
 contest8
-Score = 709
+Score = 240
 Report = WORSE
-Steps = UULLDLLLLLLLRURURRRRRUUUULLLUUUUUUUULLLLRRDDDDDDLDLRRDDDLLRRUUUULLUDUURRUUUURRRRRDDRDRDDRRRA
+Steps = UULLLDLLLLA
 ABORTED
 -----------------------------------------
 contest7
@@ -47,15 +47,15 @@ Steps = RDRRRDDLLDLDLLRURURRRDRDRRRLLLULLA
 WIN
 -----------------------------------------
 contest6
-Score = 705
-Report = 
-Steps = RUULRRRRRRRRRRUUURUURUUULULLULLLLLLLLLDRDLDDDDDDRRRUURDDRRRURULLRRURLDLDLWULDWLLDLLLUUUURRRRRRUA
+Score = 702
+Report = WORSE
+Steps = RUULRRRRRRRRRRUUURUURUUULULLULLLLLLLLLDRDLDDDDDDA
 ABORTED
 -----------------------------------------
 contest10
-Score = 705
+Score = 430
 Report = WORSE
-Steps = UUUUULLLLLLUUULLLLLURULUUURURDRDDDRRRRRUURRDRA
+Steps = UUUUULLLLLLDLLLDLLLLA
 ABORTED
 -----------------------------------------
 contest5
@@ -71,9 +71,9 @@ Steps = DRDRDRDRRLUUULLULLURRULLLDDDDDDRURDRURURURUUULDRRA
 WIN
 -----------------------------------------
 trampoline3
-Score = 228
+Score = 0
 Report = WORSE
-Steps = RRRLLDDLDDLDDRDDDRRRRRA
+Steps = AA
 ABORTED
 -----------------------------------------
 trampoline1
@@ -83,10 +83,10 @@ Steps = LDLLULDLUA
 ABORTED
 -----------------------------------------
 trampoline2
-Score = 1723
-Report = 
-Steps = RRRLDDDRRRULLULUUURRULLULLDLDLLLLDRRRRDRRUULLRDLDLLLLLLURULLLULURUURRDLLULLLLA
-WIN
+Score = 717
+Report = WORSE
+Steps = RRRLDDDRRRULLULUUURRLUULLLDLDLLLLA
+ABORTED
 -----------------------------------------
 ems1
 Score = 326
@@ -107,9 +107,9 @@ Steps = UUULRRRRRDURRRRRRA
 ABORTED
 -----------------------------------------
 horock3
-Score = 1336
-Report = 
-Steps = URRUULLUUUUURRRRRLRDRRDDRRDDRLDRRRDDRLRURULLLUUULULULLLUUULLULLLA
+Score = 816
+Report = WORSE
+Steps = URRUULLUUUUURRRRRLRDRRDDRRDDRRUDDLA
 ABORTED
 -----------------------------------------
 contest3
@@ -143,15 +143,15 @@ Steps = RURRRRRDDDUULDLDDDLLLLLDDRURURUUULLDLUURULRDRRRDDRRRDDRA
 WIN
 -----------------------------------------
 beard2
-Score = 2340
+Score = 977
 Report = WORSE
-Steps = DDRRRRRRRRRRRRRRRRRRRRRRRRRRDDDLLRDDDDDLLLLLLLLLLLLLLLLLLLLLA
+Steps = DRRDRRRRRRRRRRRRRRRRRRRA
 ABORTED
 -----------------------------------------
 beard3
-Score = 999
-Report = 
-Steps = RRRRULULRRURRURRRULLRDLDDRRDDDRRRUDDDRWRLUURUDRRRRRA
+Score = 766
+Report = WORSE
+Steps = RRRRULULRRURRURRRULLRDLDDRRRDDDRRUA
 ABORTED
 -----------------------------------------
 beard4
@@ -161,15 +161,15 @@ Steps = LLRDDDDDRDLDDLLLLLLLLA
 ABORTED
 -----------------------------------------
 beard5
-Score = 662
-Report = 
-Steps = ULLLLRULLRUUUUURDRURRRRDRRULUUURRRRRRRA
+Score = 281
+Report = WORSE
+Steps = ULLLLRULWRUUUULURRDA
 ABORTED
 -----------------------------------------
 
-Compare with src/Bot/Reports/DResultWithoutTimeLimit.txt
+Compare with LeaterBot/tests/LeaterBotTestReport/DResultWithoutTimeLimit.txt
 BETTER NUMBER = 0 / 28
-WORSE NUMBER =  6 / 28
-WIN NUMBER = 8 / 28
-ABORT NUMBER =  20 / 28
-AVERAGE SCORE = 679
+WORSE NUMBER =  11 / 28
+WIN NUMBER = 7 / 28
+ABORT NUMBER =  21 / 28
+AVERAGE SCORE = 483

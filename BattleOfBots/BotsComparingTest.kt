@@ -4,9 +4,7 @@ import Bot.*
 import gameboard.*
 import org.junit.AfterClass
 import robot.*
-import java.io.BufferedReader
 import java.io.BufferedWriter
-import java.io.FileReader
 import java.io.FileWriter
 
 import java.lang.StringBuilder
@@ -18,12 +16,18 @@ internal class BotsComparingTest {
 
         val outputAddress = "BattleOfBots/Battle.txt"
         val TIME_LIMIT = 10
+        val divisor = "\n------------------------------------------\n"
 
         var resultBuilder = StringBuilder()
         var numberOfLeaterWin = 0
         var numberOfLestwaldWin = 0
         var numberOfDraw = 0
         var numberOfGames = 0
+        var leaterSummaryScore = 0
+        var lestwaldSummaryScore = 0
+        var lestwaldWinsBuilder = StringBuilder("Lestwald wins :\n")
+        var leaterWinsBuilder = StringBuilder("Leater wins :\n")
+        var drawsBuilder = StringBuilder("Draws :\n")
 
 
         @AfterClass
@@ -32,6 +36,12 @@ internal class BotsComparingTest {
             resultBuilder.append("\nLeaterBot win = ").append(numberOfLeaterWin).append(" / ").append(numberOfGames)
             resultBuilder.append("\nLestwald win = ").append(numberOfLestwaldWin).append(" / ").append(numberOfGames)
             resultBuilder.append("\nDraw = ").append(numberOfDraw)
+            resultBuilder.append(divisor).append(leaterWinsBuilder)
+            resultBuilder.append(divisor).append(lestwaldWinsBuilder)
+            resultBuilder.append(divisor).append(drawsBuilder)
+            resultBuilder.append(divisor)
+            resultBuilder.append("\nleater score = ").append(leaterSummaryScore)
+            resultBuilder.append("\nlestwald score = ").append(lestwaldSummaryScore)
             val outputBuffer = BufferedWriter(FileWriter(outputAddress))
             outputBuffer.write(resultBuilder.toString())
             outputBuffer.flush()
@@ -64,19 +74,26 @@ internal class BotsComparingTest {
         gameboard.act(path)
 
 
-        if (gameMap.score < gameboard.score)
+        if (gameMap.score < gameboard.score) {
+            lestwaldWinsBuilder.append(testName).append("\tbenefit = ").append(Math.abs(gameMap.score-gameboard.score)).append("\n")
             numberOfLestwaldWin++
-        else if (gameMap.score > gameboard.score)
+        } else if (gameMap.score > gameboard.score) {
+            leaterWinsBuilder.append(testName).append("\tbenefit = ").append(Math.abs(gameMap.score-gameboard.score)).append("\n")
             numberOfLeaterWin++
-        else
+        } else {
+            drawsBuilder.append(testName).append("\n")
             numberOfDraw++
+        }
+
+        leaterSummaryScore += gameMap.score
+        lestwaldSummaryScore += gameboard.score
 
         numberOfGames++
 
         resultBuilder.append(testName)
         resultBuilder.append("\nLestwaldScore = ").append(gameboard.score)
         resultBuilder.append("\nLeaterBotScore = ").append(gameMap.score)
-        resultBuilder.append("\n-------------------------------------------------------------------\n")
+        resultBuilder.append(divisor)
 
 
     }

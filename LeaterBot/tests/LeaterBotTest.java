@@ -1,5 +1,5 @@
-package Bot;
-
+import Bot.LeaterBot;
+import Bot.NextStep;
 import GameMap.GameCondition;
 import GameMap.GameMap;
 import org.junit.AfterClass;
@@ -12,8 +12,8 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public final class LeaterBotTest {
-    private static String inputAddress = "src/Bot/Reports/DResultWithoutTimeLimit.txt";
-    private static String outputAddress = "src/Bot/Reports/DResultWithLimit.txt";
+    private static String inputAddress = "LeaterBot/tests/LeaterBotTestReport/DResultWithoutTimeLimit.txt";
+    private static String outputAddress = "LeaterBot/tests/LeaterBotTestReport/DResultWithLimit.txt";
     private static Map<String, Integer> oldResultMap = parseOldResults(inputAddress);
     private static Map<String, Integer> resultsMap = new HashMap<>();
     private static Map<String, String> reportMap = new HashMap<>();

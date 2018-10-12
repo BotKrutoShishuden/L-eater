@@ -1,6 +1,5 @@
-package GameMap;
-
 import Bot.NextStep;
+import GameMap.GameMap;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
 
