@@ -860,7 +860,6 @@ public class GameMap {
     public GameMap copy() {
         GameMap copyMap = new GameMap();
 
-        copyMap.mapObjects = copyMapObjects();
 
         copyMap.mapObjects = copyMapObjects();
         copyMap.maxX = maxX;

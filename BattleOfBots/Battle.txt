@@ -8,7 +8,7 @@ LeaterBotScore = 1734
 ------------------------------------------
 trampoline3
 LestwaldScore = 783
-LeaterBotScore = 560
+LeaterBotScore = 859
 ------------------------------------------
 beard0
 LestwaldScore = 859
@@ -20,7 +20,7 @@ LeaterBotScore = 840
 ------------------------------------------
 beard2
 LestwaldScore = 2764
-LeaterBotScore = 2756
+LeaterBotScore = 2878
 ------------------------------------------
 beard3
 LestwaldScore = 627
@@ -48,7 +48,7 @@ LeaterBotScore = 804
 ------------------------------------------
 flood4
 LestwaldScore = 792
-LeaterBotScore = 463
+LeaterBotScore = 497
 ------------------------------------------
 flood5
 LestwaldScore = 575
@@ -88,11 +88,11 @@ LeaterBotScore = 1098
 ------------------------------------------
 contest9
 LestwaldScore = 1190
-LeaterBotScore = 1926
+LeaterBotScore = 3030
 ------------------------------------------
 contest10
 LestwaldScore = 2260
-LeaterBotScore = 1520
+LeaterBotScore = 1931
 ------------------------------------------
 ems1
 LestwaldScore = 47
@@ -108,17 +108,19 @@ LeaterBotScore = 227
 ------------------------------------------
 horock3
 LestwaldScore = 577
-LeaterBotScore = 1378
+LeaterBotScore = 1495
 ------------------------------------------
 
-LeaterBot win = 16 / 28
-Lestwald win = 10 / 28
+LeaterBot win = 18 / 28
+Lestwald win = 8 / 28
 Draw = 2
 ------------------------------------------
 Leater wins :
 trampoline1	benefit = 291
 trampoline2	benefit = 1405
+trampoline3	benefit = 76
 beard1	benefit = 269
+beard2	benefit = 114
 beard3	benefit = 137
 beard4	benefit = 247
 beard5	benefit = 659
@@ -127,24 +129,22 @@ contest2	benefit = 30
 contest3	benefit = 81
 contest7	benefit = 428
 contest8	benefit = 251
-contest9	benefit = 736
+contest9	benefit = 1840
 ems1	benefit = 115
 horock1	benefit = 443
 horock2	benefit = 227
-horock3	benefit = 801
+horock3	benefit = 918
 
 ------------------------------------------
 Lestwald wins :
-trampoline3	benefit = 223
 beard0	benefit = 10
-beard2	benefit = 8
-flood4	benefit = 329
+flood4	benefit = 295
 flood5	benefit = 204
 contest1	benefit = 6
 contest4	benefit = 49
 contest5	benefit = 6
 contest6	benefit = 31
-contest10	benefit = 740
+contest10	benefit = 329
 
 ------------------------------------------
 Draws :
@@ -153,5 +153,5 @@ flood2
 
 ------------------------------------------
 
-leater score = 22073
+leater score = 24160
 lestwald score = 17115
