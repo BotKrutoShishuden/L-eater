@@ -167,7 +167,7 @@ Steps = ULLLLRULLRUUUUURDRURRRRDRRULUUURRRRRRRA
 ABORTED
 -----------------------------------------
 
-Compare with src/Bot/Reports/DResultWithoutTimeLimit.txt
+Compare with src/Bot/LeaterBotTestReport/DResultWithoutTimeLimit.txt
 BETTER NUMBER = 0 / 28
 WORSE NUMBER =  6 / 28
 WIN NUMBER = 8 / 28

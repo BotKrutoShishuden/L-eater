@@ -12,7 +12,7 @@ public class CmdSimulator {
 
     public static void main(String[] args) {
         try {
-            String address = "maps/flood2.map";
+            String address = "maps/beard1.map";
 
 
             GameMap inputMap = GameMap.cutNormalMap(address);

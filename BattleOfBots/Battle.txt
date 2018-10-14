@@ -1,0 +1,157 @@
+trampoline1
+LestwaldScore = 0
+LeaterBotScore = 291
+------------------------------------------
+trampoline2
+LestwaldScore = 329
+LeaterBotScore = 1734
+------------------------------------------
+trampoline3
+LestwaldScore = 783
+LeaterBotScore = 859
+------------------------------------------
+beard0
+LestwaldScore = 859
+LeaterBotScore = 849
+------------------------------------------
+beard1
+LestwaldScore = 571
+LeaterBotScore = 840
+------------------------------------------
+beard2
+LestwaldScore = 2764
+LeaterBotScore = 2878
+------------------------------------------
+beard3
+LestwaldScore = 627
+LeaterBotScore = 764
+------------------------------------------
+beard4
+LestwaldScore = 677
+LeaterBotScore = 924
+------------------------------------------
+beard5
+LestwaldScore = 0
+LeaterBotScore = 659
+------------------------------------------
+flood1
+LestwaldScore = 337
+LeaterBotScore = 337
+------------------------------------------
+flood2
+LestwaldScore = 143
+LeaterBotScore = 143
+------------------------------------------
+flood3
+LestwaldScore = 360
+LeaterBotScore = 804
+------------------------------------------
+flood4
+LestwaldScore = 792
+LeaterBotScore = 497
+------------------------------------------
+flood5
+LestwaldScore = 575
+LeaterBotScore = 371
+------------------------------------------
+contest1
+LestwaldScore = 212
+LeaterBotScore = 206
+------------------------------------------
+contest2
+LestwaldScore = 143
+LeaterBotScore = 173
+------------------------------------------
+contest3
+LestwaldScore = 182
+LeaterBotScore = 263
+------------------------------------------
+contest4
+LestwaldScore = 575
+LeaterBotScore = 526
+------------------------------------------
+contest5
+LestwaldScore = 810
+LeaterBotScore = 804
+------------------------------------------
+contest6
+LestwaldScore = 741
+LeaterBotScore = 710
+------------------------------------------
+contest7
+LestwaldScore = 433
+LeaterBotScore = 861
+------------------------------------------
+contest8
+LestwaldScore = 847
+LeaterBotScore = 1098
+------------------------------------------
+contest9
+LestwaldScore = 1190
+LeaterBotScore = 3030
+------------------------------------------
+contest10
+LestwaldScore = 2260
+LeaterBotScore = 1931
+------------------------------------------
+ems1
+LestwaldScore = 47
+LeaterBotScore = 162
+------------------------------------------
+horock1
+LestwaldScore = 281
+LeaterBotScore = 724
+------------------------------------------
+horock2
+LestwaldScore = 0
+LeaterBotScore = 227
+------------------------------------------
+horock3
+LestwaldScore = 577
+LeaterBotScore = 1495
+------------------------------------------
+
+LeaterBot win = 18 / 28
+Lestwald win = 8 / 28
+Draw = 2
+------------------------------------------
+Leater wins :
+trampoline1	benefit = 291
+trampoline2	benefit = 1405
+trampoline3	benefit = 76
+beard1	benefit = 269
+beard2	benefit = 114
+beard3	benefit = 137
+beard4	benefit = 247
+beard5	benefit = 659
+flood3	benefit = 444
+contest2	benefit = 30
+contest3	benefit = 81
+contest7	benefit = 428
+contest8	benefit = 251
+contest9	benefit = 1840
+ems1	benefit = 115
+horock1	benefit = 443
+horock2	benefit = 227
+horock3	benefit = 918
+
+------------------------------------------
+Lestwald wins :
+beard0	benefit = 10
+flood4	benefit = 295
+flood5	benefit = 204
+contest1	benefit = 6
+contest4	benefit = 49
+contest5	benefit = 6
+contest6	benefit = 31
+contest10	benefit = 329
+
+------------------------------------------
+Draws :
+flood1
+flood2
+
+------------------------------------------
+
+leater score = 24160
+lestwald score = 17115
